@@ -1,0 +1,71 @@
+@import "../../theme/theme";
+
+.button-base {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: @button-height;
+  border-radius: @radius-sm;
+  background-color: @button-bg-primary;
+  border: 1px solid transparent;
+  cursor: pointer;
+  flex-shrink: 0;
+  .button-title-base {
+    color: @color-text-base-inverse;
+    font-size: @button-font-size;
+  }
+  .button-title-sm {
+    font-size: @button-font-size-sm;
+    color: @color-text-base-inverse;
+  }
+  .button-title-inverse {
+    color: @button-bg-primary;
+  }
+  .button-title-highlight {
+    color: @button-bg-highlight;
+  };
+  .button-title-disabled {
+    color: @button-bg-inverse;
+    &:hover {
+      opacity: 1;
+    }
+  }
+  .button-title-inverse-disabled {
+    color: @button-bg-disabled;
+  }
+}
+.button-base:hover {
+  opacity: 0.95;
+}
+.button-border {
+  border-color: @button-bg-primary;
+}
+.button-sm {
+  height: @button-height-sm;
+  width: @button-width-sm;
+  border-radius: @radius-xs;
+  p {
+    line-height: @button-height-sm - 2;
+  }
+}
+.button-inverse {
+  background-color: @button-bg-inverse;
+}
+.button-highlight {
+  background-color: @button-bg-highlight;
+}
+.button-inverse-highlight {
+  background-color: @button-bg-inverse;
+  border-color: @button-bg-highlight;
+}
+.button-disabled {
+  background-color: @button-bg-disabled;
+  cursor: auto;
+}
+.button-inverse-disabled {
+  background-color: @button-bg-inverse;
+}
+.button-inverse-border {
+  border-color: @button-bg-disabled;
+}

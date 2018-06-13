@@ -1,0 +1,36 @@
+@import "../component/theme/theme";
+
+.root {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+
+.root-content {
+  //padding-top: 10px;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 100%;
+  flex-grow: 1;
+  //background-color: @brand-primary;
+  //height: calc(100% - 1px);
+  //height: 500px;
+  > a {
+    padding: 5px;
+    color: #ff3333;
+    font-weight: bold;
+    text-decoration: none;
+  }:hover {
+    color:#000000;
+  }
+}
+
+.root-bottom {
+  display: flex;
+  //justify-content: center;
+  width: 100%;
+  height: auto;
+  justify-content: space-around;
+}

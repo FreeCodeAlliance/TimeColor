@@ -1,0 +1,222 @@
+@brand-primary: #32CDFF;
+@brand-highlight: #FFBE45;
+@brand-secondary: #FAFAFA;
+@brand-primary-tap: #1DA1F2;
+@brand-warning: #FF6F7F;
+
+// 色彩
+// ---
+// 文字色
+@color-text-strong: #4b4f57;
+@color-text-base: #676b75;                  // 基本
+@color-text-base-inverse: #fff;          // 基本 - 反色
+@color-text-secondary: @brand-secondary;  // 辅助色
+@color-text-placeholder: #ccc;           // 文本框提示
+@color-text-disabled: #bbb;              // 失效
+@color-text-caption: #888;               // 辅助描述
+@color-text-grey: #CDD0D7;               // 辅助描述
+@color-text-paragraph: #333;             // 段落
+@color-link: @brand-primary;             // 链接
+
+// 阴影色
+@color-shadow: rgba(128, 128, 128, .2);  // 阴影色
+
+// 背景色
+@fill-base: #fff;                           // 组件默认背景
+@fill-body: #fff;                        // 页面背景
+@fill-tap: #ddd;                            // 组件默认背景 - 按下
+@fill-disabled: #ddd;                       // 通用失效背景
+@fill-mask: rgba(0, 0, 0, .5);              // 遮罩背景
+@fill-overlay-inverse: rgba(0, 0, 0, .8);   // 浮层背景 - 反色，用于 toast
+@chart-color: #aed7ff;
+
+// 全局/品牌色
+@brand-success: #49DAB1;
+@brand-error: #f50;
+@brand-hot: #f96268;        // 用于推荐/促销/折扣
+@brand-important: #ff3b30;  // 用于小红点
+@brand-orange: #FF992D;
+
+// 边框色
+@border-color-base: #ddd;
+
+// 页面宽度
+@page-width: 80%;
+@page-width-min: 60%;
+@page-padding: 10%;
+@page-padding-max: 20%;
+
+//tab bar
+@tab-bar-background-color: #3FC3EE;
+@tab-bar-width: 80px;
+@tab-bar-width-full: 100px;
+
+// 侧边栏宽度
+@side-bar-width: 320px;
+@side-bar-width-full: 320px;
+
+// 字体尺寸
+// ---
+@font-size-caption-sm: 12px;
+@font-size-base: 14px;
+@font-size-subhead: 16px;
+@font-size-caption: 14px;
+@font-size-heading: 18px;
+@font-size-lg: 20px;
+@font-size-xl: 22px;
+@font-size-display-sm: 36px;
+@font-size-display-md: 42px;
+@font-size-display-lg: 48px;
+@font-size-display-xl: 60px;
+
+// 字体家族
+// ---
+@font-family-base: -apple-system,"SF UI Text",Roboto,Noto,"Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
+@font-family-code: Consolas,Menlo,Courier,monospace;
+@font-family-impact: Impact, Charcoal, sans-serif;
+
+// 圆角
+// ---
+@radius-xs: 4px;
+@radius-sm: 6px;
+@radius-md: 10px;
+@radius-lg: 14px;
+
+// 边框尺寸
+// ---
+@border-width-sm: 1PX;
+@border-width-md: 2px;
+@border-width-lg: 4px;
+
+// 间距
+// ---
+// 水平间距
+@h-spacing-xs: 8px;
+@h-spacing-sm: 16px;
+@h-spacing-md: 24px;
+@h-spacing-lg: 32px;
+
+// 垂直间距
+@v-spacing-xs: 8px;
+@v-spacing-sm: 16px;
+@v-spacing-md: 24px;
+@v-spacing-lg: 32px;
+@v-spacing-xl: 40px;
+
+// 动画缓动
+// ---
+@ease-in-out-quint: cubic-bezier(0.86, 0, 0.07, 1);
+
+// 组件变量
+// ---
+
+// button
+@button-height: 50px;
+@button-font-size: 18px;
+
+@button-height-sm: 30px;
+@button-font-size-sm: 14px;
+@button-width-sm: 50px;
+
+@button-bg-inverse: #FFFFFF;
+@button-bg-primary: @brand-primary;
+@button-bg-highlight: @brand-highlight;
+@button-bg-disabled: #E1E2E3;
+
+@primary-button-fill: @brand-primary;
+@primary-button-fill-tap: @brand-primary-tap;
+
+// Animation
+@ease-out            : cubic-bezier(0.215, 0.61, 0.355, 1);
+@ease-in             : cubic-bezier(0.55, 0.055, 0.675, 0.19);
+@ease-in-out         : cubic-bezier(0.645, 0.045, 0.355, 1);
+@ease-out-back       : cubic-bezier(0.12, 0.4, 0.29, 1.46);
+@ease-in-back        : cubic-bezier(0.71, -0.46, 0.88, 0.6);
+@ease-in-out-back    : cubic-bezier(0.71, -0.46, 0.15, 1.46);
+@ease-out-circ       : cubic-bezier(0.08, 0.82, 0.17, 1);
+@ease-in-circ        : cubic-bezier(0.6, 0.04, 0.98, 0.34);
+@ease-in-out-circ    : cubic-bezier(0.78, 0.14, 0.15, 0.86);
+@ease-out-quint      : cubic-bezier(0.23, 1, 0.32, 1);
+@ease-in-quint       : cubic-bezier(0.755, 0.05, 0.855, 0.06);
+@ease-in-out-quint   : cubic-bezier(0.86, 0, 0.07, 1);
+
+// test
+@test_nav_bar_height: 55px;
+@test_space_xl: 38px;
+@test_space_large: 32px;
+@test_space_normal: 24px;
+@test_space_small: 16px;
+@test_space_xs: 8px;
+@test_space_border: 30px;
+
+@test_catalogue_background_color: #F6F6F6;
+@test_border_color: #CACACA;
+@test_border_width: 1px;
+@test_brand_primary: @brand-primary;
+@test_background_color: #F1F1F1;
+@test_color_correct: #8BD466;
+@test_color_wrong: #FF6F7F;
+@test_button_color_normal: #FFFFFF;
+@test_button_color_select: #DDF7FF;
+@test_button_border_color_select: @brand-primary;
+@test_button_border_color_normal: #CACACA;
+
+@test_text_color_normal: #5F5F5F;
+@test_text_color_inverse: #FFFFFF;
+
+@test_radius: 8px;
+@test_text_option_height: 60px;
+
+@test_fontSize_sentence: 22px;
+@test_fontSize_normal: 16px;
+@test_fontSize_large: 20px;
+@test_fontSize_small: 10px;
+
+@test_bar_color_normal: #E1E2E3;
+@test_bar_color_correct: #32CDFF;
+@test_bar_color_wrong: #FF6F7F;
+
+@test_bar_height: 60px;
+@test_bar_point_radius: 5px;
+@test_word_item_radius: 5px;
+
+@test_item_normal_color: #E7E7E8;
+@test_item_complete_color: #F6F5F5;
+
+.responsive-width(@rules) {
+  @media only screen and (min-width: 1650px) {
+    @rules();
+  }
+}
+
+.responsive-width-min(@rules) {
+  @media only screen and (min-width: 1280px)  {
+    @rules();
+  }
+}
+
+//@font-face {
+//  font-family: MavenProRegular;
+//  src: url('../../../fonts/test.ttf');
+//}
+
+.font-family-custom {
+  font-family: MavenProRegular, Arial;
+}
+
+.list-item-hover {
+  &:hover {
+    background-color: rgba(63, 195, 238, 0.05);
+  }
+}
+
+.test-option-normal {
+  background-color: @test_button_color_normal;
+  border-color: @test_button_border_color_normal;
+}
+
+.test-option-selected {
+  background-color: @test_button_color_select;
+  border-color: @test_button_border_color_select;
+}
+
