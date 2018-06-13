@@ -1,4 +1,24 @@
 
+html, body, div {
+  box-sizing: border-box;
+  position: relative;
+  -webkit-user-select: none;
+}
+p {
+  margin: 0;
+}
+body {
+  background-color: white;
+  color: #333;
+  font-family:  -apple-system,"SF UI Text",Roboto,Noto,"Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
+}
+html {
+  overflow: hidden;
+}
+html, body, #root, #root > div {
+  height: 100%;
+}
+
 .App {
   text-align: center;
 }

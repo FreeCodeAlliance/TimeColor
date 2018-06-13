@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-
+import { message } from 'antd';
 import FormInput from '../../../component/lib/form-input';
 import Button from '../../../component/lib/button';
 
@@ -25,10 +25,17 @@ class Login extends Component {
         passwordFirst: false,
     };
 
+    componentWillMount() {
+        message.config({
+            top: 10,
+            duration: 3,
+            maxCount: 1
+        });
+    }
+
     handleChange = (name, value) => {
         const state = {};
         state[name] = value;
-        console.log(this.state[`${name}First`]);
         if (!this.state[`${name}First`]) {
             state[`${name}Error`] = validate(name, value);
         } else {
@@ -47,9 +54,12 @@ class Login extends Component {
 
     handleLogin = () => {
         const {router} = this.props;
-        console.log(router);
         //router.push("user");
         router.replace("user");
+        message.loading('登入中...');
+        setTimeout(() =>{message.destroy();},500);
+
+
     }
     render() {
         return (

@@ -36,8 +36,8 @@ export default class Balance extends Component {
   }
 
   render() {
-    let tab = this.state.tab;
-    let floatView = `floatView-${tab}`;
+    //let tab = this.state.tab;
+    //let floatView = `floatView-${tab}`;
     return (
       <div className="balanceRoot">
 
