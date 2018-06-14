@@ -6,6 +6,7 @@ import FormInput from '../../../component/lib/form-input';
 import Button from '../../../component/lib/button';
 
 import {validate} from '../../../component/lib/validate';
+import {fetchRecords} from "../../../actions"
 
 import "./index.less"
 
@@ -56,9 +57,10 @@ class Login extends Component {
         const {router} = this.props;
         //router.push("user");
         router.replace("user");
-        message.loading('登入中...');
-        setTimeout(() =>{message.destroy();},500);
-
+        //message.loading('登入中...');
+        //setTimeout(() =>{message.destroy();},500);
+        //const {dispatch} = this.props;
+        //dispatch( fetchRecords("u_456")); //fixme: test api request
 
     }
     render() {
@@ -100,4 +102,18 @@ class Login extends Component {
     }
 }
 
-export default connect()(Login);
+export default connect((state, ownProps) => {
+    const { consumeRecords} = state;
+    return {
+        consumeRecords
+    };
+})(Login);
+
+/*
+ export default connect((state, ownProps) => {
+ const { consumeRecords} = state;
+ return {
+ consumeRecords
+ };
+ })(ConsumeRecord);
+ */

@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import {Link } from 'react-router'
 import "./index.less"
 //require "../../lib/qrcode.min"
+import {Table} from 'antd'
 var QRCode = require('qrcode.react');
 
 export class Example2 extends Component {
@@ -79,19 +80,68 @@ export class Example extends Component {
 }
 
 export default class UserList extends React.Component {
+
+  renderUserInfo() {
+      return (
+          <div className="user-info">
+              <p1>皇冠国际</p1>
+              <table border="0">
+                  <tr>
+                      <th>会员账号</th>
+                      <th style={{float: "right"}}>dd3i6</th>
+                  </tr>
+                  <tr>
+                      <td>盘类</td>
+                      <p>D盘</p>
+                  </tr>
+                  <tr>
+                      <td>可用额度</td>
+                      <p>100</p>
+                  </tr>
+                  <tr>
+                      <td>下注期数</td>
+                      <p>0613101</p>
+                  </tr>
+              </table>
+          </div>
+      );
+  }
+
+  renderAwardRecods() {
+      const data = [1, 2, 3, 8, 5];
+      return (
+          <div className="award-record">
+              <table border="1">
+                  <tr>
+                      <th>时间</th>
+                      <th>内容</th>
+                      <th>赔率</th>
+                      <th>金额</th>
+                  </tr>
+                  {data.map((v, k)=>{
+                      return (
+                          <tr>
+                              <td>1</td>
+                              <td>2</td>
+                              <td>3</td>
+                              <p>4</p>
+                          </tr>
+                      )
+                  })}
+              </table>
+          </div>
+      );
+  }
+
   render() {
     let data = {id:666 ,name: "shenl", age:23};
     return (
       <div className="user">
         <div className="user-leftPanel">
-          <div className="user-info">
-            useInfo
-          </div>
-            <div className="award-record">
-                award-record
-            </div>
+            {this.renderUserInfo()}
+            {this.renderAwardRecods()}
           <div className="award-results">
-              award-results
+            award-results
           </div>
         </div>
         <div className="user-rightPanel">

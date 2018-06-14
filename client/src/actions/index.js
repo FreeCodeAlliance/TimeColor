@@ -25,7 +25,7 @@ export function fetchRecords(userId) {
         Types.FETCH_RECORDS_SUCCESS,
         Types.FETCH_RECORDS_FAIL
       ],
-      url: 'http://localhost:8000/diamonds',
+      url: 'http://localhost:8000',
       method: 'GET',
       body: userId || 1,
     }
