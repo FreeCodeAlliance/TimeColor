@@ -1,9 +1,11 @@
 #!/usr/bin/env node
-
+require('babel-register');
 /**
  * Module dependencies.
  */
-require('babel-register');
+// 定义全局变量
+global.tc = {};
+require('./config/dbConfig');
 
 var app = require('../app');
 var debug = require('debug')('timecolor:server');
