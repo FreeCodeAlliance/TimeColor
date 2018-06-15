@@ -1,9 +1,14 @@
 import React, { Component } from 'react';
 
+import { Menu, Icon } from 'antd';
+
 import {Link } from 'react-router'
 import "./index.less"
 //require "../../lib/qrcode.min"
-import {Table} from 'antd'
+//import {Table} from 'antd'
+
+const SubMenu = Menu.SubMenu;
+const MenuItemGroup = Menu.ItemGroup;
 var QRCode = require('qrcode.react');
 
 export class Example2 extends Component {
@@ -81,59 +86,102 @@ export class Example extends Component {
 
 export default class UserList extends React.Component {
 
-  renderUserInfo() {
+    state = {
+        current: 'mail',
+    }
+    handleClick = (e) => {
+        console.log('click ', e);
+        this.setState({
+            current: e.key,
+        });
+
+        const {router} = this.props;
+        router.push("/user/Example2");
+    };
+
+
+    renderUserInfo() {
       return (
           <div className="user-info">
-              <p1>皇冠国际</p1>
+              <p>皇冠国际</p>
               <table border="0">
-                  <tr>
-                      <th>会员账号</th>
-                      <th style={{float: "right"}}>dd3i6</th>
-                  </tr>
-                  <tr>
-                      <td>盘类</td>
-                      <p>D盘</p>
-                  </tr>
-                  <tr>
-                      <td>可用额度</td>
-                      <p>100</p>
-                  </tr>
-                  <tr>
-                      <td>下注期数</td>
-                      <p>0613101</p>
-                  </tr>
+                  <tbody>
+                      <tr>
+                          <th>会员账号</th>
+                          <th style={{float: "right"}}>dd3i6</th>
+                      </tr>
+                      <tr>
+                          <td>盘类</td>
+                          <td>D盘</td>
+                      </tr>
+                      <tr>
+                          <td>可用额度</td>
+                          <td>100</td>
+                      </tr>
+                      <tr>
+                          <td>下注期数</td>
+                          <td>0613101</td>
+                      </tr>
+                  </tbody>
               </table>
           </div>
       );
-  }
+    }
 
-  renderAwardRecods() {
+    renderAwardRecods() {
       const data = [1, 2, 3, 8, 5];
       return (
           <div className="award-record">
               <table border="1">
-                  <tr>
-                      <th>时间</th>
-                      <th>内容</th>
-                      <th>赔率</th>
-                      <th>金额</th>
-                  </tr>
-                  {data.map((v, k)=>{
-                      return (
-                          <tr>
-                              <td>1</td>
-                              <td>2</td>
-                              <td>3</td>
-                              <p>4</p>
-                          </tr>
-                      )
-                  })}
+                  <tbody>
+                      <tr>
+                          <th>时间</th>
+                          <th>内容</th>
+                          <th>赔率</th>
+                          <th>金额</th>
+                      </tr>
+                      {data.map((v, k)=>{
+                          return (
+                              <tr key={{k}}>
+                                  <td>1</td>
+                                  <td>2</td>
+                                  <td>3</td>
+                                  <p>4</p>
+                              </tr>
+                          )
+                      })}
+                  </tbody>
               </table>
           </div>
       );
-  }
+    }
 
-  render() {
+    renderHeadNavigation() {
+      return(
+          <Menu
+              style={{display: 'flex', justifyContent: 'space-around'}}
+              onClick={this.handleClick.bind(this)}
+              selectedKeys={[this.state.current]}
+              mode="horizontal"
+          >
+              <SubMenu title={<span><Icon type="setting" />时时彩</span>}>
+                  <Menu.Item key="number1">新疆</Menu.Item>
+                  <Menu.Item key="number2">重庆</Menu.Item>
+              </SubMenu>
+              <Menu.Item key="1" style={{marginLeft: 0}}>
+                  <Icon type="mail" />主盘势
+              </Menu.Item>
+              <Menu.Item key="mail">
+                  <Icon type="mail" />双面盘口
+              </Menu.Item>
+              <Menu.Item key="app" >
+                  <Icon type="appstore" />总和龙虎
+              </Menu.Item>
+          </Menu>
+      );
+    }
+
+    render() {
     let data = {id:666 ,name: "shenl", age:23};
     return (
       <div className="user">
@@ -145,15 +193,20 @@ export default class UserList extends React.Component {
           </div>
         </div>
         <div className="user-rightPanel">
-          <div className="user-navigation">
-              <Link to="/user/Balance">标签页1</Link>
-              <Link to="/user/Example2">标签页2</Link>
-              <Link to="/user/trainRecords">标签页3</Link>
-              <Link to= {"/user/Example/" + data.id}>标签页4</Link>
-          </div>
+            {
+                this.renderHeadNavigation()
+                /*
+                   <div className="user-navigation">
+                      <Link to="/user/Balance">标签页1</Link>
+                      <Link to="/user/Example2">标签页2</Link>
+                      <Link to="/user/trainRecords">标签页3</Link>
+                      <Link to= {"/user/Example/" + data.id}>标签页4</Link>
+                  </div>
+                 */
+            }
           {this.props.children}
         </div>
       </div>
     )
-  }
+    }
 }
