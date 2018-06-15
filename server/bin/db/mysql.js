@@ -8,7 +8,7 @@ var query = function(params) {
 
     function callback(err, rows, log) {
         if (!log) {
-            console.log("sql is null");
+            console.log(log);
         }
         if(func) {
             func(err, rows);

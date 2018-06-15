@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
-var register = require('../bin/logic/register');
-var login = require('../bin/logic/login');
+var register = require('../bin/logic/login/register');
+var login = require('../bin/logic/login/login');
 /* GET users listing. */
 router.get('/', function(req, res, next) {
   res.send('respond with a resource');
