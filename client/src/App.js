@@ -9,18 +9,18 @@ import './App.css';
 import store from './store/configStore' //FIXME: on exsited getState()??
 //import rootReducer from "./reducers";
 //let store = createStore(rootReducer);
-
 export default class App extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-		}
+		};
+        document.title = "皇冠国际";
 	}
 
 	render() {
 		return(
 			<Provider store={store}>
-				 <Router history={hashHistory} routes = {routes}/>
+				 <Router history={hashHistory} routes = {routes} />
 			</Provider>
 		);
 	}
