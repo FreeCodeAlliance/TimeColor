@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import './index.less';
-import IconLink from '../component/IconLink'
+//import IconLink from '../component/IconLink'
 
-import * as Icon from "../icon"
+//import * as Icon from "../icon"
 
 import { getWindowSize } from '../actions';
 

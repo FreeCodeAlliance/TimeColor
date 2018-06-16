@@ -2,14 +2,14 @@ import React, { Component } from 'react';
 
 import { Menu, Icon } from 'antd';
 
-import {Link } from 'react-router'
+//import {Link } from 'react-router'
 import "./index.less"
 //require "../../lib/qrcode.min"
 const SubMenu = Menu.SubMenu;
 //var QRCode = require('qrcode.react');
 //QRCode value="http://www.baidu.com" size={256}
 
-export default class UserList extends React.Component {
+export default class Home extends Component {
     state = {
         current: '',
     };
@@ -23,7 +23,7 @@ export default class UserList extends React.Component {
         });
 
         const {router} = this.props;
-        let routerStr = `/user/${e.key}`
+        let routerStr = `/home/${e.key}`
         router.push(routerStr);
     };
 

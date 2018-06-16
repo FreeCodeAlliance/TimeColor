@@ -6,7 +6,7 @@ import FormInput from '../../../component/lib/form-input';
 import Button from '../../../component/lib/button';
 
 import {validate} from '../../../component/lib/validate';
-import {fetchRecords} from "../../../actions"
+//import {fetchRecords} from "../../../actions"
 
 import "./index.less"
 
@@ -25,7 +25,6 @@ class Login extends Component {
         passwordError: null,
         passwordFirst: false,
     };
-
     componentWillMount() {
         message.config({
             top: 10,
@@ -56,7 +55,7 @@ class Login extends Component {
     handleLogin = () => {
         const {router} = this.props;
         //router.push("user");
-        router.replace("user");
+        router.replace("home");
         //message.loading('登入中...');
         //setTimeout(() =>{message.destroy();},500);
         //const {dispatch} = this.props;
