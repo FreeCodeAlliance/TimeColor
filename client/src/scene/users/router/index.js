@@ -1,17 +1,20 @@
 
-import UserList, {Example2, Example} from '../../users'
+import UserList from '../../users'
 
-import trainRecords from "../trainRecords"
-import Balance from "../Balance"
+import Zhupansi from "../zhupansi"
+import Shuangmian from "../shuangmian"
+import Zonghelonghu from "../zonghelonghu"
+
 export default {
   path: 'user',
   component: UserList,
   //indexRoute: {component: Example1},
-  indexRoute: { onEnter: (nextState, replace) => replace('/user/Balance') },
+  indexRoute: { onEnter: (nextState, replace) => replace('/user/zhupansi') },
   childRoutes: [
-    {path: 'Balance', component: Balance},
-    {path: 'Example2', component: Example2},
-    {path: 'trainRecords', component: trainRecords},
-    {path: 'Example(/:name)', component: Example},
+    {path: 'zhupansi', component: Zhupansi},
+    {path: 'shuangmian', component: Shuangmian},
+    {path: 'zonghelonghu', component: Zonghelonghu},
   ]
 }
+
+//    {path: 'Example(/:name)', component: Example},
