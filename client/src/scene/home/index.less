@@ -15,17 +15,12 @@
   flex-direction: column;
   align-items: center;
   width: 180px;
+  overflow:scroll;
   //justify-content: center;
   //align-items: center;
   //height: calc(100% - 1px);
   //height: 500px;
   //background-color: #0000ed;
-  > a {
-    padding: 3px;
-    color: #333333;
-    font-weight: 300;
-    text-decoration: underline;
-  }
 }
 
 .user-rightPanel {
@@ -64,10 +59,14 @@
 
 .award-results {
   display: flex;
+  flex-direction: column;
   flex-grow: 1;
   height: auto;
   width: 100%;
   background-color: #3FC3EE;
+}
+.award-results-title {
+  text-align: center;
 }
 
 .award-record {

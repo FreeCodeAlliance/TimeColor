@@ -14,9 +14,25 @@
     width: 80%;
     //height: 100%;
     //background: red;
+    align-items: center;
+    //justify-content: center;
+    display: flex;
+    flex-direction: column;
+    >img {
+      padding-bottom: 25px;
+    }
   }
 
-  &-button {
+  &-buttonPanel {
+    width: 100%;
     margin-top: @v-spacing-lg;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+    &-item {
+      width: 210px;
+    }
   }
 }

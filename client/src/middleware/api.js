@@ -1,3 +1,5 @@
+import { API_ROOT } from '../configs';
+
 export const CALL_API = 'Call JQ API';
 
 export default () => next => (action) => {
@@ -13,12 +15,14 @@ export default () => next => (action) => {
     type: requestType
   }));
 
-  let headers={
-    "X-Authenticated-Userid": 1 //fixme: testCode
+  const headers = {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
   };
   const withBody = method.toUpperCase() === 'POST' || method.toUpperCase() === 'PUT';
-  fetch(url, {
+  return fetch(API_ROOT + url, {
       method,
+      //credentials: 'include',
       headers,
       body: withBody ? body: null,
   }).then(res => res.json())
@@ -32,11 +36,11 @@ export default () => next => (action) => {
       console.log(error);
       return next(Object.assign({}, action, {
         type: failureType,
+        response: {},
         code: error.code || 'system.exception',
         error: error.message || 'unknown_error',
       }));
   });
-
 
 
   /*

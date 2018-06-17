@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { message } from 'antd';
 import FormInput from '../../../component/lib/form-input';
-import Button from '../../../component/lib/button';
-
+import LibButton from '../../../component/lib/button';
+import { Button } from 'antd';
 import {validate} from '../../../component/lib/validate';
-//import {fetchRecords} from "../../../actions"
+import {fetchRecords} from "../../../actions"
 
 import "./index.less"
 
@@ -24,6 +24,7 @@ class Login extends Component {
         password: '',
         passwordError: null,
         passwordFirst: false,
+        loading: false
     };
     componentWillMount() {
         message.config({
@@ -53,19 +54,25 @@ class Login extends Component {
     };
 
     handleLogin = () => {
-        const {router} = this.props;
-        //router.push("user");
-        router.replace("home");
-        //message.loading('登入中...');
-        //setTimeout(() =>{message.destroy();},500);
-        //const {dispatch} = this.props;
-        //dispatch( fetchRecords("u_456")); //fixme: test api request
+        this.setState({loading: true})
+        const {dispatch} = this.props;
+        dispatch(fetchRecords("u_456")).then((result) => {
+            if (result.response && result.response.responseState) {
+                message.success('登入成功');
+                const {router} = this.props;
+                router.replace("home");
+            }
+        });
+    };
 
-    }
     render() {
+        let {consumeRecords} = this.props;
+        console.log("consumeRecords========", consumeRecords);
+
         return (
             <div className="authenticate-login">
                 <div className="authenticate-login-content">
+                    <img src={require("../../../icon/logo.png")} />
                     <FormInput
                       key="1"
                       type="tel"
@@ -88,13 +95,17 @@ class Login extends Component {
                       onBlur={() => this.handleBlur('password')}
                       onKeyUp={this.onKeyUp}
                     />
-                    <Button
-                      key="3"
-                      inverse
-                      title="登录"
-                      className="authenticate-login-button"
-                      onClick={this.handleLogin}
-                    />
+                    <div className="authenticate-login-buttonPanel">
+                        <Button style={{height: '48px', fontSize: '20px'}}>注册</Button>
+                        <Button
+                            onClick={this.handleLogin.bind(this)}
+                            loading={this.state.loading}
+                            style={{height: '48px', fontSize: '20px'}}
+                            type="primary"
+                            className="authenticate-login-buttonPanel-item"
+                        >登入</Button>
+                    </div>
+
                 </div>
             </div>
         );

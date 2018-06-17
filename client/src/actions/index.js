@@ -25,9 +25,9 @@ export function fetchRecords(userId) {
         Types.FETCH_RECORDS_SUCCESS,
         Types.FETCH_RECORDS_FAIL
       ],
-      url: 'http://localhost:8000',
+      url: '/test',
       method: 'GET',
-      body: userId || 1,
+      //body: userId || 1,
     }
   }
 }

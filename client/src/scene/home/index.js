@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 
 import { Menu, Icon } from 'antd';
-
 //import {Link } from 'react-router'
 import "./index.less"
 //require "../../lib/qrcode.min"
+//import { Tabs } from 'antd';
+//const TabPane = Tabs.TabPane;
+import { Button } from 'antd';<Button type="primary">Primary</Button>
 const SubMenu = Menu.SubMenu;
 //var QRCode = require('qrcode.react');
 //QRCode value="http://www.baidu.com" size={256}
@@ -84,10 +86,53 @@ export default class Home extends Component {
       );
     }
 
+    handleResultChange(){
+
+    }
+
+    renderResults() {
+        const data = [1, 2, 3, 8, 5];
+        return(
+            <div>
+                <p className="award-results-title">【重庆时时彩】</p>
+                <p className="award-results-title">开奖结果</p>
+                <div style={{display: 'flex', justifyContent: 'space-around', backgroundColor: "#8adaf3"}}>
+                    <button size="small">号码</button>
+                    <button size="small">大小</button>
+                    <button size="small">单双</button>
+                    <button size="small">质合</button>
+                </div>
+                <table border="1">
+                    <tbody>
+                    <tr>
+                        <th>期数</th>
+                        <th>万</th>
+                        <th>千</th>
+                        <th>百</th>
+                        <th>十</th>
+                        <th>个</th>
+                    </tr>
+                    {data.map((v, k)=>{
+                        return (
+                            <tr key={k}>
+                                <td>1</td>
+                                <td>2</td>
+                                <td>3</td>
+                                <td>4</td>
+                                <td>5</td>
+                                <td>6</td>
+                            </tr>
+                        )
+                    })}
+                    </tbody>
+                </table>
+            </div>
+        );
+    }
+    // style={{display: 'flex', justifyContent: 'space-around', backgroundColor: "#8adaf3"}}
     renderHeadNavigation() {
       return(
           <Menu
-              style={{display: 'flex', justifyContent: 'space-around', backgroundColor: "#8adaf3"}}
               onClick={this.handleClick.bind(this)}
               selectedKeys={[this.state.current]}
               mode="horizontal"
@@ -117,7 +162,7 @@ export default class Home extends Component {
             {this.renderUserInfo()}
             {this.renderAwardRecods()}
           <div className="award-results">
-            award-results
+              {this.renderResults()}
           </div>
         </div>
         <div className="user-rightPanel">

@@ -12,63 +12,25 @@
      animation: mymove 1s ease-in;
 */
 
-.floatView
-{
-  position: absolute;
-  width: 80px;
-  height: 5px;
-  bottom: -5px;
-  margin: 0 10px ;
-  background-color: #0074D9;
-
-}
-
-.balanceRoot {
-  //background-color: red;
+.zhupansi-content {
+  background-color: #86ffaa;
   display: flex;
   width: 100%;
+
+  >table {
+    >tbody {
+      >tr {
+        >th {
+          //color: #c42830;
+          padding: 5px;
+          white-space:pre-wrap;
+        }
+      }
+    }
+  }
+
+  //
+  //margin: 8px;
   //height: 100%;
-
-  .balanceHeader {
-    position: relative;
-    //padding-top: 15px;
-    height: auto;
-    display: flex;
-    > p {
-      //margin: 0 20px;
-      color: #333;
-      text-decoration:none;
-      cursor: pointer;
-    }
-
-    .floatView-1{
-      .floatView;
-      transition:left 0.2s ease-in;
-      left: 0px;
-    }
-
-    .floatView-2{
-      .floatView;
-      transition:left 0.2s ease-in;
-      left: 100px;
-    }
-    .floatView-3{
-      .floatView;
-      transition:left 0.2s ease-in;
-      left: 200px;
-    }
-  }
-
-  .balanceContent {
-    display: flex;
-    flex-direction: column;
-    //padding: 10px;
-  }
-
-  .inputPanel {
-    //padding: 5px;
-    font-size: 16px;
-    margin-top: 60px;
-  }
 
 }

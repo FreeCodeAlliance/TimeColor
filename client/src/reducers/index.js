@@ -47,7 +47,7 @@ function consumeRecords (state ={
         loading: true,
       });
     case Types.FETCH_RECORDS_SUCCESS:
-      console.log("state", state, action);
+      console.log("state-------------------------->", state, action);
       return Object.assign({}, state, {
         loading: false,
         records: action.response,

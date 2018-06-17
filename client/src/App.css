@@ -19,6 +19,10 @@ html, body, #root, #root > div {
   height: 100%;
 }
 
+button {
+  border-radius: 2px;
+  padding: 0px;
+}
 .App {
   text-align: center;
 }
