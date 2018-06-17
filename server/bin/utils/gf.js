@@ -17,4 +17,10 @@ gf.md5 = (text) => {
 gf.getCurTimeFormat = () => {
     return sdTime.format(new Date(), 'YYYY-MM-DD HH:mm:ss');
 };
+
+// 将格式装换成时间戳
+gf.toTime = (str) => {
+    return new Date(str).getTime();
+};
+
 tc.gf = gf;
