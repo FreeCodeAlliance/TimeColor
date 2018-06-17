@@ -56,9 +56,6 @@ var register = {
     testExecute:(req, res) => {
         var account = req.body.account;
         var password = req.body.password;
-        var disktype = req.body.disktype;
-        var quota = req.body.quota;
-        var remark = req.body.remark;
 
         mysql.query({
             sql:"SELECT * FROM userinfo WHERE account=?",
@@ -69,8 +66,8 @@ var register = {
                 }  else {
                     if (rows.length == 0)
                     {
-                        var  addSql = 'INSERT INTO userinfo(account,password,disktype,quota,date,remark) VALUES(?,?,?,?,?,?)';
-                        var  addArgs = [account, tc.gf.md5(password), disktype, quota, tc.gf.getCurTimeFormat(), remark];
+                        var  addSql = 'INSERT INTO userinfo(account,password,date) VALUES(?,?,?)';
+                        var  addArgs = [account, tc.gf.md5(password), tc.gf.getCurTimeFormat()];
                         mysql.query({
                             sql:addSql, args:addArgs,
                             func:(err, rows) => {

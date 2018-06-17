@@ -15,8 +15,6 @@ var login = {
                         tc.gf.send(res, 'account null');
                     } else {
                         var row = rows[0];
-                        console.log(tc.gf.md5(password));
-                        console.log(row.password);
                         if (tc.gf.md5(password) === row.password) {
                             tc.gf.send(res, 'login success', row);
                         } else {

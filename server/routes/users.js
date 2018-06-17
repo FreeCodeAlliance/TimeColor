@@ -14,19 +14,12 @@ router.post('/register', (req, res) => {
     register.testExecute(req, res);
 });
 
-// 注册审核
-router.get('/registerCheck', (req, res) => {
-    register.registerCheck(req, res);
-});
-
-// 获取注册审核列表
-router.get('/checkList', (req, res) => {
-    register.getlist(req, res);
-});
-
 // 登录
 router.get('/login', (req, res) => {
     login.execute(req, res);
 });
+
+
+////////////////////开奖相关接口
 
 module.exports = router;
