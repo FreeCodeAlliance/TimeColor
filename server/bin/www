@@ -5,6 +5,7 @@ require('babel-register');
  */
 // 定义全局变量
 global.tc = {};
+require('./config/config');
 require('./config/dbConfig');
 require('./utils/gf');
 

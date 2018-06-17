@@ -1,5 +1,11 @@
 var mysql = require('mysql');
-var pool = mysql.createPool(tc.sqlconfig);
+var pool = mysql.createPool({
+    host:tc.sqlconfig.host,
+    user:tc.sqlconfig.user,
+    password:tc.sqlconfig.password,
+    database:tc.sqlconfig.database,
+    port:tc.sqlconfig.port,
+});
 
 var query = function(params) {
     var sql = params.sql;
