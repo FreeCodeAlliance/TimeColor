@@ -24,8 +24,11 @@ export default () => next => (action) => {
       method,
       //credentials: 'include',
       headers,
-      body: withBody ? body: null,
-  }).then(res => res.json())
+      body: withBody ? JSON.stringify(body): null,
+  }).then(res =>
+    {
+      return res.json()
+    })
     .then( (response)=> {
       console.log("successType", successType);
       return next(Object.assign({}, action, {

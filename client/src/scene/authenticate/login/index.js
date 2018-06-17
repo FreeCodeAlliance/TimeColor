@@ -3,17 +3,16 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { message } from 'antd';
 import FormInput from '../../../component/lib/form-input';
-import LibButton from '../../../component/lib/button';
 import { Button } from 'antd';
 import {validate} from '../../../component/lib/validate';
-import {fetchRecords} from "../../../actions"
+//import {fetchRecords} from "../../../actions"
+import {register, login} from "../../../actions/user"
 
 import "./index.less"
 
 class Login extends Component {
     static propTypes = {
         dispatch: PropTypes.func,
-        loading: PropTypes.bool,
         installationId: PropTypes.string,
     };
 
@@ -24,7 +23,6 @@ class Login extends Component {
         password: '',
         passwordError: null,
         passwordFirst: false,
-        loading: false
     };
     componentWillMount() {
         message.config({
@@ -53,22 +51,36 @@ class Login extends Component {
         this.setState(state);
     };
 
-    handleLogin = () => {
-        this.setState({loading: true})
+    handleRegister = () => {
         const {dispatch} = this.props;
-        dispatch(fetchRecords("u_456")).then((result) => {
-            if (result.response && result.response.responseState) {
-                message.success('登入成功');
-                const {router} = this.props;
-                router.replace("home");
+        dispatch(register(this.state['account'], this.state['password'])).then((result) => {
+            if (result.response.errorCode)
+                message.warn(result.response.errorCode)
+            else {
+                message.success('注册成功');
             }
         });
     };
 
-    render() {
-        let {consumeRecords} = this.props;
-        console.log("consumeRecords========", consumeRecords);
+    handleLogin = () => {
+        const {dispatch} = this.props;
+        dispatch(login(this.state['account'], this.state['password'])).then((result) => {
+            if (result.response ) {
+                if (result.response.errorCode)
+                    message.warn(result.response.errorCode)
+                else {
+                    message.success('登入成功');
+                    const {router} = this.props;
+                    router.replace("home");
+                }
+            }
 
+        });
+    };
+
+    render() {
+        let {user} = this.props;
+        console.log("user========", user);
         return (
             <div className="authenticate-login">
                 <div className="authenticate-login-content">
@@ -96,10 +108,13 @@ class Login extends Component {
                       onKeyUp={this.onKeyUp}
                     />
                     <div className="authenticate-login-buttonPanel">
-                        <Button style={{height: '48px', fontSize: '20px'}}>注册</Button>
+                        <Button
+                            style={{height: '48px', fontSize: '20px'}}
+                            onClick={this.handleRegister.bind(this)}
+                        >注册</Button>
                         <Button
                             onClick={this.handleLogin.bind(this)}
-                            loading={this.state.loading}
+                            loading={user.loading}
                             style={{height: '48px', fontSize: '20px'}}
                             type="primary"
                             className="authenticate-login-buttonPanel-item"
@@ -113,9 +128,9 @@ class Login extends Component {
 }
 
 export default connect((state, ownProps) => {
-    const { consumeRecords} = state;
+    const { user} = state;
     return {
-        consumeRecords
+        user
     };
 })(Login);
 
