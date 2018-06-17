@@ -16,7 +16,7 @@ var login = {
                     } else {
                         var row = rows[0];
                         if (tc.gf.md5(password) === row.password) {
-                            tc.gf.send(res, 'login success', row);
+                            tc.gf.send(res, null, row);
                         } else {
                             tc.gf.send(res, 'password error');
                         }

@@ -2,12 +2,9 @@
 var mysql = require('../../db/mysql');
 
 var register = {
-    execute:(req, res) => {
+    userExecute:(req, res) => {
         var account = req.body.account;
         var password = req.body.password;
-        var disktype = req.body.disktype;
-        var quota = req.body.quota;
-        var remark = req.body.remark;
 
         mysql.query({
             sql:'SELECT * FROM register WHERE account=?',
@@ -27,15 +24,15 @@ var register = {
                                 }  else {
                                     if (rows.length == 0)
                                     {
-                                        var  addSql = 'INSERT INTO register(account,password,disktype,quota,date,remark) VALUES(?,?,?,?,?,?)';
-                                        var  addArgs = [account, tc.gf.md5(password),disktype, quota, tc.gf.getCurTimeFormat(), remark];
+                                        var  addSql = 'INSERT INTO register(account,password,date,remark) VALUES(?,?,?,?)';
+                                        var  addArgs = [account, tc.gf.md5(password),tc.gf.getCurTimeFormat(), remark];
                                         mysql.query({
                                                 sql:addSql, args:addArgs,
                                                 func:(err, rows) => {
                                                     if(err){
                                                         tc.gf.send(res, tc.errorCode.query_fail);
                                                     } else {
-                                                        tc.gf.send(res, 'register success');
+                                                        tc.gf.send(res);
                                                     }
                                                 },
                                             });
@@ -56,7 +53,6 @@ var register = {
     testExecute:(req, res) => {
         var account = req.body.account;
         var password = req.body.password;
-
         mysql.query({
             sql:"SELECT * FROM userinfo WHERE account=?",
             args:[account],
@@ -74,7 +70,7 @@ var register = {
                                 if(err){
                                     tc.gf.send(res, tc.errorCode.query_fail);
                                 } else {
-                                    tc.gf.send(res, 'register success', {uid:rows.insertId});
+                                    tc.gf.send(res, null, {uid:rows.insertId});
                                 }
                             },
                         });
@@ -95,15 +91,15 @@ var register = {
             func:(err, rows) => {
                 if(err == null && rows.length > 0) {
                     var row = rows[0];
-                    var addSql = 'INSERT INTO userinfo(account,password,disktype,quota,date,remark) VALUES(?,?,?,?,?,?)';
-                    var addArgs = [row.account, row.password,row.disktype, row.quota, tc.gf.getCurTimeFormat(), row.remark];
+                    var addSql = 'INSERT INTO userinfo(account,password,disktype,date,remark) VALUES(?,?,?,?,?)';
+                    var addArgs = [row.account, row.password,row.disktype,tc.gf.getCurTimeFormat(), row.remark];
                     mysql.query({
                         sql:addSql, args:addArgs,
                         func:(err, rows) => {
                             if(err){
                                 tc.gf.send(res, tc.errorCode.query_fail);
                             } else {
-                                tc.gf.send(res, 'check success');
+                                tc.gf.send(res);
                             }
                         },
                     });
@@ -124,7 +120,7 @@ var register = {
             func:(err, rows) => {
                 if(err == null && rows.affectedRows > 0)
                 {
-                    tc.gf.send(res, 'check fail');
+                    tc.gf.send(res);
                 } else {
                     tc.gf.send(res, tc.errorCode.query_fail);
                 }
@@ -140,7 +136,7 @@ var register = {
                 {
                     tc.gf.send(res, tc.errorCode.query_fail);
                 } else {
-                    tc.gf.send(res, 'registerList success', rows);
+                    tc.gf.send(res, null, rows);
                 }
             },
         });

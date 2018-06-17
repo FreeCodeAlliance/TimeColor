@@ -5,7 +5,7 @@ var gf = {};
 
 // 发送数据
 gf.send = (res, code, data) => {
-    res.send({errorCode:code?code:"", data:data?data:{}});
+    res.send({errorCode:code?code:null, data:data?data:{}});
 };
 
 // md5
