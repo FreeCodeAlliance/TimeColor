@@ -2,6 +2,7 @@ import { combineReducers } from 'redux';
 import { routerReducer } from 'react-router-redux';
 
 import * as Types from '../actions/types';
+import * as userReducer from './user';
 
 function keyboard(state = {
   isShow: false,
@@ -47,7 +48,6 @@ function consumeRecords (state ={
         loading: true,
       });
     case Types.FETCH_RECORDS_SUCCESS:
-      console.log("state-------------------------->", state, action);
       return Object.assign({}, state, {
         loading: false,
         records: action.response,
@@ -63,6 +63,8 @@ const rootReducer = combineReducers({
   keyboard,
   windowSize,
   consumeRecords,
+
+    ...userReducer
 });
 
 export default rootReducer;
