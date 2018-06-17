@@ -6,6 +6,7 @@ require('babel-register');
 // 定义全局变量
 global.tc = {};
 require('./config/dbConfig');
+require('./utils/gf');
 
 var app = require('../app');
 var debug = require('debug')('timecolor:server');
