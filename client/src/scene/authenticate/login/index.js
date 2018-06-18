@@ -109,7 +109,7 @@ class Login extends Component {
                     />
                     <div className="authenticate-login-buttonPanel">
                         <Button
-                            style={{height: '48px', fontSize: '20px'}}
+                            style={{height: '48px', fontSize: '20px', width: '26%'}}
                             onClick={this.handleRegister.bind(this)}
                         >注册</Button>
                         <Button
