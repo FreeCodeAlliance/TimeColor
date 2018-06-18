@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 import "./index.less"
 
+import FormInput from '../../../component/lib/form-input';
+import Button from '../../../component/lib/button';
+
 export default class Zhupansi extends Component {
   constructor(props) {
     super(props);
-    this.state = {tab: 1};
+    this.state = {tab: 1, value: 0};
   }
 
   renderTitle() {
@@ -41,42 +44,112 @@ export default class Zhupansi extends Component {
   }
 
   renderHaoPeilvXuanlv() {
-      const data = [3.45, 3.45, 3.45,
-                    3.45, 3.45, 3.45,
-                    3.45, 3.45, 3.45,];
+      const data = [3.45, 3.45, 3.45, 3.45, 3.43];
       return (
           <table border="1" style={{width: "100%"}}>
               <tbody>
-              <tr>
-                  <th colSpan="6">主盘势</th>
-              </tr>
-              <tr>
-                  <th>号码</th>
-                  <th>赔率</th>
-                  <th>选取</th>
-                  <th>号码</th>
-                  <th>赔率</th>
-                  <th>选取</th>
-              </tr>
-              <tr>
-                  <th>0</th>
-                  <th>赔率</th>
-                  <th>选取</th>
-                  <th>号码</th>
-                  <th>赔率</th>
-                  <th>选取</th>
-              </tr>
-              <tr>
-                  <th>号码</th>
-                  <th>赔率</th>
-                  <th>选取</th>
-                  <th>号码</th>
-                  <th>赔率</th>
-                  <th>选取</th>
-              </tr>
+                  <tr>
+                      <th colSpan="6" style={{backgroundColor: "#d3adf7"}}>主盘势</th>
+                  </tr>
+                  <tr style={{backgroundColor: "#c5c5c5"}}>
+                      <th>号码</th>
+                      <th>赔率</th>
+                      <th>选取</th>
+                      <th>号码</th>
+                      <th>赔率</th>
+                      <th>选取</th>
+                  </tr>
+                  {
+                      data.map((value, key)=>{
+                          return (
+                              <tr>
+                                  <th>{key*2}</th>
+                                  <th>{value}</th>
+                                  <th>  </th>
+                                  <th>{key*2+1}</th>
+                                  <th>{value}</th>
+                                  <th>  </th>
+                              </tr>
+                          )
+                      })
+                  }
               </tbody>
           </table>
       );
+  }
+
+  renderDaxiaoDansuan() {
+      return(
+          <table border="1" style={{width: "100%"}}>
+              <tbody>
+                  <tr style={{backgroundColor: "#c5c5c5"}}>
+                      <th colSpan="1">  </th>
+                      <th colSpan="1">大</th>
+                      <th colSpan="1">小</th>
+                      <th colSpan="1">单</th>
+                      <th colSpan="1">双</th>
+                      <th colSpan="1">合</th>
+                      <th colSpan="1">质</th>
+                  </tr>
+                  <tr>
+                      <th colSpan="1">万OXXXX</th>
+                      <th colSpan="1">1.98</th>
+                      <th colSpan="1">1.98</th>
+                      <th colSpan="1">1.98</th>
+                      <th colSpan="1">1.98</th>
+                      <th colSpan="1">1.98</th>
+                      <th colSpan="1">1.98</th>
+                  </tr>
+                  <tr>
+                      <th colSpan="1">千XOXXX</th>
+                      <th colSpan="1">1.98</th>
+                      <th colSpan="1">1.98</th>
+                      <th colSpan="1">1.98</th>
+                      <th colSpan="1">1.98</th>
+                      <th colSpan="1">1.98</th>
+                      <th colSpan="1">1.98</th>
+                  </tr>
+                  <tr>
+                      <th colSpan="1">百XXOXX</th>
+                      <th colSpan="1">1.98</th>
+                      <th colSpan="1">1.98</th>
+                      <th colSpan="1">1.98</th>
+                      <th colSpan="1">1.98</th>
+                      <th colSpan="1">1.98</th>
+                      <th colSpan="1">1.98</th>
+                  </tr>
+                  <tr>
+                      <th colSpan="1">十XXXOX</th>
+                      <th colSpan="1">1.98</th>
+                      <th colSpan="1">1.98</th>
+                      <th colSpan="1">1.98</th>
+                      <th colSpan="1">1.98</th>
+                      <th colSpan="1">1.98</th>
+                      <th colSpan="1">1.98</th>
+                  </tr>
+                  <tr>
+                      <th colSpan="1">个XXXXO</th>
+                      <th colSpan="1">1.98</th>
+                      <th colSpan="1">1.98</th>
+                      <th colSpan="1">1.98</th>
+                      <th colSpan="1">1.98</th>
+                      <th colSpan="1">1.98</th>
+                      <th colSpan="1">1.98</th>
+                  </tr>
+              </tbody>
+          </table>
+      );
+
+  }
+  renderTouzhuPanel() {
+      return (
+          <div className="touzhuPanel">
+              <p>金额</p>
+              <input type="number" name="points" min="1" max="100" />
+              <button>确定</button>
+              <button>取消</button>
+          </div>
+      )
   }
   render() {
     //let tab = this.state.tab;
@@ -85,6 +158,8 @@ export default class Zhupansi extends Component {
       <div className="zhupansi-content">
           {this.renderTitle()}
           {this.renderHaoPeilvXuanlv()}
+          {this.renderDaxiaoDansuan()}
+          {this.renderTouzhuPanel()}
       </div>
     );
   }
