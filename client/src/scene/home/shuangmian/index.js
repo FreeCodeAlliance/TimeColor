@@ -43,8 +43,13 @@ export default class Shuangmian extends Component {
     }
     return (
       <div className="trainRoot">
+        {
+          /*
         {this.state.isShowDialog && this.renderDialog()}
         {data.map( (v, k) => this.renderItem(v))}
+           */
+        }
+        双面盘口界面（还未实现）
       </div>
     );
   }

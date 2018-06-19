@@ -12,7 +12,7 @@ export default class Zonghelonghu extends Component {
         //let floatView = `floatView-${tab}`;
         return (
             <div className="balanceRoot">
-                Zonghelonghu
+                总和龙虎界面（还未实现）
             </div>
         );
     }

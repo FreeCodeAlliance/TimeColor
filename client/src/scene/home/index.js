@@ -89,7 +89,7 @@ export default class Home extends Component {
     renderResults() {
         const data = [1, 2, 3, 8, 5];
         return(
-            <div >
+            <div className="award-results">
                 <p className="award-results-title">【重庆时时彩】</p>
                 <p className="award-results-title">开奖结果</p>
                 <div style={{display: 'flex', justifyContent: 'space-around', margin: '8px 0'}}>
@@ -158,9 +158,7 @@ export default class Home extends Component {
         <div className="user-leftPanel">
             {this.renderUserInfo()}
             {this.renderAwardRecods()}
-          <div className="award-results">
-              {this.renderResults()}
-          </div>
+            {this.renderResults()}
         </div>
         <div className="user-rightPanel">
             <div >
