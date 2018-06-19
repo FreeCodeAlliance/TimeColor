@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { message } from 'antd';
 import FormInput from '../../../component/lib/form-input';
-import { Button } from 'antd';
+import { message, Button } from 'antd';
 import {validate} from '../../../component/lib/validate';
 //import {fetchRecords} from "../../../actions"
 import {register, login} from "../../../actions/user"

@@ -3,7 +3,7 @@ import { Router, hashHistory } from 'react-router'
 import { routes } from './routers'
 import { Provider } from 'react-redux';
 
-import 'antd/dist/antd.less';
+//import 'antd/dist/antd.less';
 import './App.css';
 
 import store from './store/configStore' //FIXME: on exsited getState()??
