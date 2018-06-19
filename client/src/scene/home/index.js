@@ -35,21 +35,21 @@ export default class Home extends Component {
               <p>皇冠国际</p>
               <table border="0">
                   <tbody>
-                      <tr>
+                      <tr style={{backgroundColor: "#3FC3EE", borderRadius: "5px"}}>
                           <th>会员账号</th>
                           <th style={{float: "right"}}>dd3i6</th>
                       </tr>
                       <tr>
                           <td>盘类</td>
-                          <td>D盘</td>
+                          <td style={{float: "right"}} >D盘</td>
                       </tr>
-                      <tr>
+                      <tr style={{backgroundColor: "#eeb938"}}>
                           <td>可用额度</td>
-                          <td>100</td>
+                          <td style={{float: "right"}}>100</td>
                       </tr>
                       <tr>
                           <td>下注期数</td>
-                          <td>0613101</td>
+                          <td style={{float: "right"}}>0613101</td>
                       </tr>
                   </tbody>
               </table>
@@ -61,10 +61,10 @@ export default class Home extends Component {
       const data = [1, 2, 3, 8, 5];
       return (
           <div className="award-record">
-              <p>最新下注12比记录</p>
+              <p>最新下注记录</p>
               <table border="1">
                   <tbody>
-                      <tr>
+                      <tr style={{backgroundColor: "#3FC3EE"}}>
                           <th>时间</th>
                           <th>内容</th>
                           <th>赔率</th>
@@ -86,25 +86,21 @@ export default class Home extends Component {
       );
     }
 
-    handleResultChange(){
-
-    }
-
     renderResults() {
         const data = [1, 2, 3, 8, 5];
         return(
-            <div>
+            <div className="award-results">
                 <p className="award-results-title">【重庆时时彩】</p>
                 <p className="award-results-title">开奖结果</p>
-                <div style={{display: 'flex', justifyContent: 'space-around', backgroundColor: "#8adaf3"}}>
+                <div style={{display: 'flex', justifyContent: 'space-around', margin: '8px 0'}}>
                     <button size="small">号码</button>
                     <button size="small">大小</button>
                     <button size="small">单双</button>
                     <button size="small">质合</button>
                 </div>
-                <table border="1">
+                <table border="1" style={{width: '100%'}}>
                     <tbody>
-                    <tr>
+                    <tr style={{backgroundColor: "#3FC3EE"}}>
                         <th>期数</th>
                         <th>万</th>
                         <th>千</th>
@@ -133,6 +129,7 @@ export default class Home extends Component {
     renderHeadNavigation() {
       return(
           <Menu
+              style={{backgroundColor: "#6fe6ee"}}
               onClick={this.handleClick.bind(this)}
               selectedKeys={[this.state.current]}
               mode="horizontal"
@@ -142,13 +139,13 @@ export default class Home extends Component {
                   <Menu.Item key="mode_cq">重庆</Menu.Item>
               </SubMenu>
               <Menu.Item key="zhupansi" style={{marginLeft: 0}}>
-                  <Icon type="select" />主盘势
+                  主盘势<Icon type="select" />
               </Menu.Item>
               <Menu.Item key="shuangmian">
-                  <Icon type="select" />双面盘口
+                  双面盘口
               </Menu.Item>
               <Menu.Item key="zonghelonghu" >
-                  <Icon type="select" />总和龙虎
+                  总和龙虎
               </Menu.Item>
           </Menu>
       );
@@ -161,9 +158,7 @@ export default class Home extends Component {
         <div className="user-leftPanel">
             {this.renderUserInfo()}
             {this.renderAwardRecods()}
-          <div className="award-results">
-              {this.renderResults()}
-          </div>
+            {this.renderResults()}
         </div>
         <div className="user-rightPanel">
             <div >

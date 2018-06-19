@@ -12,13 +12,13 @@ var login = {
                     tc.gf.send(res, tc.errorCode.query_fail);
                 } else {
                     if(rows.length == 0) {
-                        tc.gf.send(res, 'account null');
+                        tc.gf.send(res, tc.errorCode.account_null);
                     } else {
                         var row = rows[0];
                         if (tc.gf.md5(password) === row.password) {
                             tc.gf.send(res, null, row);
                         } else {
-                            tc.gf.send(res, 'password error');
+                            tc.gf.send(res, tc.errorCode.password_error);
                         }
                     }
                 }

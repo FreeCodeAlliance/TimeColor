@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { message } from 'antd';
 import FormInput from '../../../component/lib/form-input';
-import { Button } from 'antd';
+import { message, Button } from 'antd';
 import {validate} from '../../../component/lib/validate';
 //import {fetchRecords} from "../../../actions"
 import {register, login} from "../../../actions/user"
@@ -43,6 +42,18 @@ class Login extends Component {
         this.setState(state);
     };
 
+    isErrorcheckInput() {
+        if (validate("account", this.state.account)) {
+            message.warn("账号格式不对")
+            return true
+        }
+        if (validate("password", this.state.password )) {
+            message.warn("密码格式不对")
+            return true
+        }
+        return null
+    }
+
     handleBlur = (name) => {
         if (this.state[name].length === 0) return;
         const state = {};
@@ -52,6 +63,9 @@ class Login extends Component {
     };
 
     handleRegister = () => {
+        if ( this.isErrorcheckInput()) {
+            return
+        }
         const {dispatch} = this.props;
         dispatch(register(this.state['account'], this.state['password'])).then((result) => {
             if (result.response.errorCode)
@@ -63,6 +77,9 @@ class Login extends Component {
     };
 
     handleLogin = () => {
+        if ( this.isErrorcheckInput()) {
+            return
+        }
         const {dispatch} = this.props;
         dispatch(login(this.state['account'], this.state['password'])).then((result) => {
             if (result.response ) {
@@ -74,7 +91,6 @@ class Login extends Component {
                     router.replace("home");
                 }
             }
-
         });
     };
 
@@ -87,7 +103,7 @@ class Login extends Component {
                     <img src={require("../../../icon/logo.png")} />
                     <FormInput
                       key="1"
-                      type="tel"
+                      type="text"
                       name="mobile"
                       maxLength="11"
                       placeholder="请输入账号"
@@ -109,7 +125,7 @@ class Login extends Component {
                     />
                     <div className="authenticate-login-buttonPanel">
                         <Button
-                            style={{height: '48px', fontSize: '20px'}}
+                            style={{height: '48px', fontSize: '20px', width: '26%'}}
                             onClick={this.handleRegister.bind(this)}
                         >注册</Button>
                         <Button

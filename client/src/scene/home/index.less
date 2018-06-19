@@ -11,11 +11,12 @@
 
 .user-leftPanel {
   //margin-top: 10px;
+  //padding: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 180px;
-  overflow:scroll;
+  //overflow:scroll;
   //justify-content: center;
   //align-items: center;
   //height: calc(100% - 1px);
@@ -36,10 +37,13 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  //width: 100%;
   height: auto;
-  //padding: 5px;
-  background-color: #8BD466;
+  >p {
+      align-self: center;
+      font-size: 20px;
+      color: #faad14;
+      margin: 10px 0;
+    }
   > table {
     width: 100%;
     >tr {
@@ -63,7 +67,20 @@
   flex-grow: 1;
   height: auto;
   width: 100%;
-  background-color: #3FC3EE;
+  //background-color: red;
+  > div {
+      padding-top: 8px;
+    >p {
+      background-color: #c5c5c5;
+      font-size: 16px;
+    }
+    >button:active {
+      background-color: gray;
+      //box-shadow: 0 5px #666;
+      //transform: translateY(4px);
+    }
+  }
+
 }
 .award-results-title {
   text-align: center;
@@ -73,6 +90,14 @@
   display: flex;
   flex-direction: column;
   width: 100%;
+  >p {
+    text-align: center;
+    font-weight: bolder;
+    font-size: 16px;
+    margin: 8px 0;
+    background-color: #c5c5c5;
+
+  }
   //background-color: #115749;
 }
 
