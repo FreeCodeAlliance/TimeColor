@@ -6,7 +6,7 @@ var login = {
         var password = req.query.password;
 
         mysql.query({
-            sql:'SELECT * FROM userinfo WHERE account=' + account,
+            sql:`SELECT * FROM userinfo WHERE account="${account}"`,
             func:(err, rows) => {
                 if (err) {
                     tc.gf.send(res, tc.errorCode.query_fail);
