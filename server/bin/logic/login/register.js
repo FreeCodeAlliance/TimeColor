@@ -87,7 +87,7 @@ var register = {
         var account = req.query.account;
 
         mysql.query({
-            sql:'SELECT * FROM register WHERE account =' + account,
+            sql:`SELECT * FROM register WHERE account ="${account}"`,
             func:(err, rows) => {
                 if(err == null && rows.length > 0) {
                     var row = rows[0];
@@ -114,9 +114,8 @@ var register = {
 
     fail:(req, res) => {
         var account = req.query.account;
-        var delSql = 'DELETE FROM register WHERE account=' + account;
         mysql.query({
-            sql:delSql,
+            sql:`DELETE FROM register WHERE account="${account}"`,
             func:(err, rows) => {
                 if(err == null && rows.affectedRows > 0)
                 {
