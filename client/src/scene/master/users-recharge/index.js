@@ -13,7 +13,7 @@ export default class Home extends Component {
         this.state = {tab: 1};
 
         this.data = [];
-        for (let k=1; k<=100; k++){
+        for (let k=1; k<=15; k++){
             let info = {
                 key: `${k}`,
                 account: '用户名称',
@@ -52,7 +52,7 @@ export default class Home extends Component {
         return(
             <div className="users-recharge-root">
                 <h4 style={{textAlign:'center', backgroundColor:"#32CDFF", margin: 0, padding: "10px 0"}}>用户数据</h4>
-                <Table columns={columns} dataSource={this.data} size="small" />
+                <Table columns={columns} dataSource={this.data} size="small"  loading={false} />
             </div>
         )
     }
