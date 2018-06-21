@@ -8,5 +8,13 @@ export default {
                 }, 'master')
             },
         },
+        {
+            path: 'setting',
+            getComponent(location, cb) {
+                require.ensure([], require => {
+                    cb(null, require('../master-setting').default)
+                }, 'master')
+            },
+        },
     ]
 }
