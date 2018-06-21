@@ -39,7 +39,7 @@ export default () => next => (action) => {
       console.log(error);
       return next(Object.assign({}, action, {
         type: failureType,
-        response: {},
+        response: null,
         code: error.code || 'system.exception',
         error: error.message || 'unknown_error',
       }));
