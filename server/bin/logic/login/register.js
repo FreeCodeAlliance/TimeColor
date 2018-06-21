@@ -2,67 +2,66 @@
 var mysql = require('../../db/mysql');
 
 var register = {
-    userExecute:(req, res) => {
+    // execute:(req, res) => {
+    //     var account = req.body.account;
+    //     var password = req.body.password;
+    //
+    //     mysql.query({
+    //         sql:'SELECT * FROM register WHERE account=?',
+    //         args:[account],
+    //         func:(err, rows) => {
+    //             if (err) {
+    //                 tc.gf.send(res, tc.errorCode.query_fail);
+    //             }  else {
+    //                 if (rows.length == 0)
+    //                 {
+    //                     mysql.query({
+    //                         sql:"SELECT * FROM userinfo WHERE account=?",
+    //                         args:[account],
+    //                         func:(err, rows) => {
+    //                             if (err) {
+    //                                 tc.gf.send(res, tc.errorCode.query_fail);
+    //                             }  else {
+    //                                 if (rows.length == 0)
+    //                                 {
+    //                                     var  addSql = 'INSERT INTO register(account,password,date,remark) VALUES(?,?,?,?)';
+    //                                     var  addArgs = [account, tc.gf.md5(password),tc.gf.getCurTimeFormat(), remark];
+    //                                     mysql.query({
+    //                                             sql:addSql, args:addArgs,
+    //                                             func:(err, rows) => {
+    //                                                 if(err){
+    //                                                     tc.gf.send(res, tc.errorCode.query_fail);
+    //                                                 } else {
+    //                                                     tc.gf.send(res);
+    //                                                 }
+    //                                             },
+    //                                         });
+    //                                     } else {
+    //                                         tc.gf.send(res, tc.errorCode.account_used);
+    //                                     }
+    //                                 }
+    //                             }
+    //                     });
+    //                 } else {
+    //                     tc.gf.send(res, tc.errorCode.account_used);
+    //                 }
+    //             }
+    //         },
+    //     });
+    // },
+
+    execute:(req, res, tableName) => {
         var account = req.body.account;
         var password = req.body.password;
-
         mysql.query({
-            sql:'SELECT * FROM register WHERE account=?',
-            args:[account],
+            sql:`SELECT * FROM ${tableName} WHERE account="${account}"`,
             func:(err, rows) => {
                 if (err) {
                     tc.gf.send(res, tc.errorCode.query_fail);
                 }  else {
                     if (rows.length == 0)
                     {
-                        mysql.query({
-                            sql:"SELECT * FROM userinfo WHERE account=?",
-                            args:[account],
-                            func:(err, rows) => {
-                                if (err) {
-                                    tc.gf.send(res, tc.errorCode.query_fail);
-                                }  else {
-                                    if (rows.length == 0)
-                                    {
-                                        var  addSql = 'INSERT INTO register(account,password,date,remark) VALUES(?,?,?,?)';
-                                        var  addArgs = [account, tc.gf.md5(password),tc.gf.getCurTimeFormat(), remark];
-                                        mysql.query({
-                                                sql:addSql, args:addArgs,
-                                                func:(err, rows) => {
-                                                    if(err){
-                                                        tc.gf.send(res, tc.errorCode.query_fail);
-                                                    } else {
-                                                        tc.gf.send(res);
-                                                    }
-                                                },
-                                            });
-                                        } else {
-                                            tc.gf.send(res, tc.errorCode.account_used);
-                                        }
-                                    }
-                                }
-                        });
-                    } else {
-                        tc.gf.send(res, tc.errorCode.account_used);
-                    }
-                }
-            },
-        });
-    },
-
-    testExecute:(req, res) => {
-        var account = req.body.account;
-        var password = req.body.password;
-        mysql.query({
-            sql:"SELECT * FROM userinfo WHERE account=?",
-            args:[account],
-            func:(err, rows) => {
-                if (err) {
-                    tc.gf.send(res, tc.errorCode.query_fail);
-                }  else {
-                    if (rows.length == 0)
-                    {
-                        var  addSql = 'INSERT INTO userinfo(account,password,date) VALUES(?,?,?)';
+                        var  addSql = `INSERT INTO ${tableName}(account,password,date) VALUES(?,?,?)`;
                         var  addArgs = [account, tc.gf.md5(password), tc.gf.getCurTimeFormat()];
                         mysql.query({
                             sql:addSql, args:addArgs,
@@ -80,6 +79,14 @@ var register = {
                 }
             }
         });
+    },
+
+    user:(req, res) => {
+        register.execute(req, res, 'userinfo');
+    },
+
+    master:(req, res) => {
+        register.execute(req, res, 'masterinfo');
     },
 
     // 审查注册成功

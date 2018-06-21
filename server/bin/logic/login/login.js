@@ -1,12 +1,12 @@
 // 登入处理
 var mysql = require('../../db/mysql');
 var login = {
-    execute:(req, res) => {
+    execute:(req, res, tableName) => {
         var account = req.query.account;
         var password = req.query.password;
 
         mysql.query({
-            sql:`SELECT * FROM userinfo WHERE account="${account}"`,
+            sql:`SELECT * FROM ${tableName} WHERE account="${account}"`,
             func:(err, rows) => {
                 if (err) {
                     tc.gf.send(res, tc.errorCode.query_fail);
@@ -24,6 +24,14 @@ var login = {
                 }
             }
         });
+    },
+
+    user:(req, res) => {
+        login.execute(req, res, "userinfo");
+    },
+
+    master:(req, res) => {
+        login.execute(req, res, "masterinfo");
     },
 };
 
