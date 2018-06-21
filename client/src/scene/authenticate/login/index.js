@@ -68,10 +68,15 @@ class Login extends Component {
         }
         const {dispatch} = this.props;
         dispatch(register(this.state['account'], this.state['password'])).then((result) => {
-            if (result.response.errorCode)
-                message.warn(result.response.errorCode)
+            if (result.response) {
+                if (result.response.errorCode)
+                    message.warn(result.response.errorCode)
+                else {
+                    message.success('注册成功');
+                }
+            }
             else {
-                message.success('注册成功');
+                message.error('网络不佳');
             }
         });
     };
@@ -88,8 +93,15 @@ class Login extends Component {
                 else {
                     message.success('登入成功');
                     const {router} = this.props;
-                    router.replace("home");
+                    if ("15080312967" === this.state.account) {
+                        router.replace("master");
+                    } else {
+                        router.replace("home");
+                    }
+
                 }
+            } else {
+                message.error('网络不佳');
             }
         });
     };
