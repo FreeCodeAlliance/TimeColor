@@ -13,7 +13,7 @@ export default class Home extends Component {
         this.state = {tab: 1};
 
         this.data = [];
-        for (let k=1; k<=15; k++){
+        for (let k=1; k<=2; k++){
             let info = {
                 key: `${k}`,
                 account: '用户名称',

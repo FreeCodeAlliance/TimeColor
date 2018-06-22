@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import {Menu,Icon } from 'antd';
+//import {Menu,Icon } from 'antd';
 //const SubMenu = Menu.SubMenu;
 //import "./index.less"
 export default class MasterHome extends Component {
@@ -23,7 +23,7 @@ export default class MasterHome extends Component {
         let routerStr = `/master/${e.key}`
         router.push(routerStr);
     };
-
+/*
     renderMaserHeadNavigation() {
         return(
             <Menu
@@ -44,11 +44,11 @@ export default class MasterHome extends Component {
             </Menu>
         );
     }
-
+*/
     render() {
         return(
             <div className="master-home-root">
-                {this.renderMaserHeadNavigation()}
+                {/*this.renderMaserHeadNavigation()*/}
                 {this.props.children}
             </div>
         )
