@@ -42,7 +42,7 @@ export const routes = {
           },'home')
       },
       //indexRoute: {component: Example1},
-      indexRoute: { onEnter: (nextState, replace) => replace('/master/recharge') },
+      indexRoute: { onEnter: (nextState, replace) => replace('/master/setting') },
       childRoutes: [
           require("../scene/master/router").default,
       ]
