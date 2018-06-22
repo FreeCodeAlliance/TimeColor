@@ -43,6 +43,12 @@ Recharge.prototype.execute = (req, res) => {
                     func:(err, ret) => {
                         if (err == null && ret.affectedRows == 1) {
                             tc.gf.send(res, null, {value:quota});
+
+                            // 记录充值记录
+                            mysql.query({
+                                sql:'INSERT INTO recharge(uid,value,date) VALUES(?,?,?)',
+                                args:[uid, value, tc.gf.getCurTimeFormat()]
+                            });
                         } else {
                             tc.gf.send(res, tc.errorCode.query_fail);
                         }
