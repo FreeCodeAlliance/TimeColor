@@ -111,7 +111,7 @@ var register = {
                         },
                     });
 
-                    mysql.query({sql:'DELETE FROM register WHERE account=' + account});
+                    mysql.query({sql:`DELETE FROM register WHERE account="${account}"`});
                 } else {
                     tc.gf.send(res, tc.errorCode.query_fail);
                 }
