@@ -3,7 +3,7 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', (req, res, next) => {
-  tc.gf.send(res, true, "success", {text:"hello"});
+  tc.gf.send(res, "success", {text:"hello"});
 });
 
 module.exports = router;

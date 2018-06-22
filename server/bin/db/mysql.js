@@ -28,7 +28,7 @@ var query = function(params) {
 
     pool.getConnection((err, conn) => {
         if(err){
-            callback(err, '连接池获取获取连接失败')
+            callback(err, '连接池获取连接失败')
         } else {
             if (args) {
                 conn.query(sql, args, (err, rows) => {

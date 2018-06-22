@@ -10,13 +10,12 @@ router.get('/', function(req, res, next) {
 
 // 注册
 router.post('/register', (req, res) => {
-    //register.execute(req, res);
-    register.testExecute(req, res);
+    register.user(req, res);
 });
 
 // 登录
 router.get('/login', (req, res) => {
-    login.execute(req, res);
+    login.user(req, res);
 });
 
 
