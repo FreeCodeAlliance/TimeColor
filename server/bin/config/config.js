@@ -2,10 +2,11 @@
 //tc.md5key = 'jdlsjf!@#511863';
 
 tc.errorCode = {
-    query_fail:"数据库查询失败",
+    query_fail:'数据库查询失败',
     account_used: '账号已存在',
     account_null:'账号未注册',
     password_error:'密码错误',
+    token_fail:'token验证失败',
 };
 
 // 定时任务的id

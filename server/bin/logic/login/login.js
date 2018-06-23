@@ -1,5 +1,6 @@
 // 登入处理
 var mysql = require('../../db/mysql');
+var token = require('../../utils/token');
 var login = {
     execute:(req, res, tableName) => {
         var account = req.query.account;
@@ -16,6 +17,7 @@ var login = {
                     } else {
                         var row = rows[0];
                         if (tc.gf.md5(password) === row.password) {
+                            row.token = token.getToken(row.uid);
                             tc.gf.send(res, null, row);
                         } else {
                             tc.gf.send(res, tc.errorCode.password_error);

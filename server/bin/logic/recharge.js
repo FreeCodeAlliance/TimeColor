@@ -24,11 +24,11 @@ Recharge.prototype.getUsers = (req, res) => {
 
 // 充值
 Recharge.prototype.execute = (req, res) => {
-    var uid = req.body.uid;
+    var sid = req.body.sid;
     var value = req.body.value;
-
+    var uid = req.body.uid;
     mysql.query({
-        sql:`SELECT * FROM userinfo WHERE uid="${uid}"`,
+        sql:`SELECT * FROM userinfo WHERE uid="${sid}"`,
         func:(err, rows) => {
             if (err) {
                 tc.gf.send(res, tc.errorCode.query_fail);
@@ -39,15 +39,15 @@ Recharge.prototype.execute = (req, res) => {
                 quota = quota + parseInt(value);
                 mysql.query({
                     sql:'UPDATE userinfo SET quota = ? WHERE uid = ?',
-                    args:[quota, uid],
+                    args:[quota, sid],
                     func:(err, ret) => {
                         if (err == null && ret.affectedRows == 1) {
                             tc.gf.send(res, null, {value:quota});
 
                             // 记录充值记录
                             mysql.query({
-                                sql:'INSERT INTO recharge(uid,value,date) VALUES(?,?,?)',
-                                args:[uid, value, tc.gf.getCurTimeFormat()]
+                                sql:'INSERT INTO recharge(userid,value,date,masterid) VALUES(?,?,?,?)',
+                                args:[sid, value, tc.gf.getCurTimeFormat(), uid]
                             });
                         } else {
                             tc.gf.send(res, tc.errorCode.query_fail);

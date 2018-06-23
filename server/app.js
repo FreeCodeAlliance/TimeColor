@@ -3,6 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var token = require('./bin/utils/token');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -33,6 +34,16 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/:id', (req, res, next)=> {
     res.header("Content-Type", "application/json;charset=utf-8");
     next();
+});
+
+// 验证token
+app.use('/:router/:operate', (req, res, next)=> {
+    var operate = req.params.operate;
+    if (operate != 'login' && operate != 'register') {
+        token.verifyToken(req, res, next);
+    } else {
+        next();
+    }
 });
 
 app.use('/test', indexRouter);
