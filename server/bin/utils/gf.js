@@ -40,7 +40,12 @@ gf.filterRow = (row) => {
     var filter= ['password','date','remark'];
     for(var attr in row) {
         if(filter.indexOf(attr) < 0) {
-            dest[attr] = row[attr];
+            if(attr == 'quota') {
+                dest[attr] = parseInt(row[attr]);
+            } else {
+                dest[attr] = row[attr];
+            }
+
         }
     }
     return dest;
