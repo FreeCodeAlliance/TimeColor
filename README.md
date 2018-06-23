@@ -14,3 +14,4 @@ post:
 
 注意：
 	除了注册和登录的请求之外，其他请求必须发送token和uid，token和uid是登录请求服务器发给客户端的。
+	token和uid也可以放在头部中，x-access-token 和 x-access-uid
