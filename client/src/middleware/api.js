@@ -1,4 +1,5 @@
 import { API_ROOT } from '../configs';
+import store from "store"
 
 export const CALL_API = 'Call JQ API';
 
@@ -15,22 +16,28 @@ export default () => next => (action) => {
     type: requestType
   }));
 
-  const headers = {
+  let headers = {
       Accept: 'application/json',
       'Content-Type': 'application/json',
   };
+
+  let { isRequireAuth } = action[CALL_API];
+  if (isRequireAuth) {
+       Object.assign(headers, {
+          'x-access-token' : store.get('token')
+      });
+    console.log(headers, "headers");
+
+  }
+
   const withBody = method.toUpperCase() === 'POST' || method.toUpperCase() === 'PUT';
   return fetch(API_ROOT + url, {
       method,
       //credentials: 'include',
       headers,
       body: withBody ? JSON.stringify(body): null,
-  }).then(res =>
-    {
-      return res.json()
-    })
+  }).then(res => res.json())
     .then( (response)=> {
-      console.log("successType", successType);
       return next(Object.assign({}, action, {
         response,
         type: successType

@@ -6,12 +6,16 @@ import "./index.less"
 //require "../../lib/qrcode.min"
 //import { Tabs } from 'antd';
 //const TabPane = Tabs.TabPane;
-import { Button } from 'antd';<Button type="primary">Primary</Button>
+//import { Button } from 'antd';
+import {connect} from "react-redux";
+import store from "store"
+import {fetchMe} from "../../actions/user";
+
 const SubMenu = Menu.SubMenu;
 //var QRCode = require('qrcode.react');
 //QRCode value="http://www.baidu.com" size={256}
 
-export default class Home extends Component {
+class Home extends Component {
     state = {
         current: '',
     };
@@ -29,7 +33,20 @@ export default class Home extends Component {
         router.push(routerStr);
     };
 
+    componentWillMount() {
+      console.log("componentWillMount:", store.get('token'))
+      window.addEventListener('resize', ()=>{});//Tood: reszie windows
+      const { dispatch } = this.props;
+      dispatch(fetchMe())
+    }
+
+    componentWillUnmount(){
+      window.removeEventListener('resize', ()=>{});
+    }
+
     renderUserInfo() {
+      const {userInfo} = this.props;
+      console.log(userInfo);
       return (
           <div className="user-info">
               <p>皇冠国际</p>
@@ -37,15 +54,15 @@ export default class Home extends Component {
                   <tbody>
                       <tr style={{backgroundColor: "#3FC3EE", borderRadius: "5px"}}>
                           <th>会员账号</th>
-                          <th style={{float: "right"}}>dd3i6</th>
+                          <th style={{float: "right"}}>{userInfo.account}</th>
                       </tr>
                       <tr>
                           <td>盘类</td>
-                          <td style={{float: "right"}} >D盘</td>
+                          <td style={{float: "right"}} >{`${userInfo.disktype}盘`}</td>
                       </tr>
                       <tr style={{backgroundColor: "#eeb938"}}>
                           <td>可用额度</td>
-                          <td style={{float: "right"}}>100</td>
+                          <td style={{float: "right"}}>{userInfo.quota}</td>
                       </tr>
                       <tr>
                           <td>下注期数</td>
@@ -170,3 +187,10 @@ export default class Home extends Component {
     )
     }
 }
+
+export default connect((state, ownProps) => {
+    const { user} = state;
+    return {
+        userInfo: user.userInfo
+    };
+})(Home);

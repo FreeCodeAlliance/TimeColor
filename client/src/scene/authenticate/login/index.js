@@ -108,7 +108,6 @@ class Login extends Component {
 
     render() {
         let {user} = this.props;
-        console.log("user========", user);
         return (
             <div className="authenticate-login">
                 <div className="authenticate-login-content">
