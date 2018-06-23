@@ -14,6 +14,6 @@ post:
 充值：				/masters/recharge   body: sid value  其中sid是要充值的id
 
 注意：
-	1、除了注册和登录的请求之外，其他请求必须发送token和uid，token和uid是登录请求服务器发给客户端的。
-		token和uid也可以放在头部中，x-access-token 和 x-access-uid
-	2、返回值：uid和quota的字段是int类型，其他都是string类型
+	1、除了注册和登录的请求之外，其他请求必须发送token，token是登录请求服务器发给客户端的。
+		token也可以放在头部中，x-access-token 
+	2、返回值：quota的字段是int类型，其他都是string类型
