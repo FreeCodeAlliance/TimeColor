@@ -21,7 +21,7 @@ var login = {
                         var row = rows[0];
                         if (tc.gf.md5(password) === row.password) {
                             row.token = token.getToken(row.uid,type);
-                            tc.gf.send(res, null, row);
+                            tc.gf.send(res, null, tc.gf.filterRow(row));
                         } else {
                             tc.gf.send(res, tc.errorCode.password_error);
                         }

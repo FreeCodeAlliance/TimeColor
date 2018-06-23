@@ -138,11 +138,10 @@ var register = {
         mysql.query({
             sql:'SELECT * FROM register',
             func:(err, rows) => {
-                if(err)
-                {
+                if(err) {
                     tc.gf.send(res, tc.errorCode.query_fail);
                 } else {
-                    tc.gf.send(res, null, rows);
+                    tc.gf.send(res, null, tc.gf.filterRows(rows));
                 }
             },
         });

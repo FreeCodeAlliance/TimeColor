@@ -24,7 +24,7 @@ tokenMgr.verifyToken = (req, res, next, type) => {
             var uid = tc.gf.getUid(req);
             var payload = jwt.decode(token, secretKey);
 
-            if (payload.userid === parseInt(uid) && type == payload.type) {
+            if (payload.userid === uid && type === payload.type) {
                 next();
             } else {
                 tc.gf.send(res, tc.errorCode.token_fail);

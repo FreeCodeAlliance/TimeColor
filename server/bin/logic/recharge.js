@@ -16,7 +16,7 @@ Recharge.prototype.getUsers = (req, res) => {
             if (err || rows.length == 0) {
                 tc.gf.send(res, null, {});
             } else {
-                tc.gf.send(res, null, rows);
+                tc.gf.send(res, null, tc.gf.filterRows(rows));
             }
         },
     });

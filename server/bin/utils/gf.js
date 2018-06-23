@@ -28,7 +28,29 @@ gf.toTime = (str) => {
 
 // 获取发送的uid
 gf.getUid = (req) => {
-    return (req.body && req.body.uid) || (req.query && req.query.uid) || req.headers['x-access-uid'];
-}
+    var uid = (req.body && req.body.uid) || (req.query && req.query.uid) || req.headers['x-access-uid'];
+    if(typeof(uid) == 'string')
+        uid = parseInt(uid);
+    return uid;
+};
+
+// 过滤表格中的数据
+gf.filterRow = (row) => {
+    var dest = {};
+    var filter= ['password','date','remark'];
+    for(var attr in row) {
+        if(filter.indexOf(attr) < 0) {
+            dest[attr] = row[attr];
+        }
+    }
+    return dest;
+};
+
+gf.filterRows = (rows) => {
+    for(var attr in rows) {
+        rows[attr] = gf.filterRow(rows[attr]);
+    }
+    return rows;
+};
 
 tc.gf = gf;
