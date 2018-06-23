@@ -30,7 +30,7 @@ router.get('/login', (req, res) => {
 });
 
 // 获取用户列表
-router.get('/getUsers', (req, res) => {
+router.get('/getUsers', (req, res, next) => {
     recharge.getUsers(req, res);
 });
 

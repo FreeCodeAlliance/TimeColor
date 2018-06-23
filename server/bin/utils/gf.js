@@ -37,7 +37,7 @@ gf.getUid = (req) => {
 // 过滤表格中的数据
 gf.filterRow = (row) => {
     var dest = {};
-    var filter= ['password','date','remark'];
+    var filter= ['password','date','remark', 'uid'];
     for(var attr in row) {
         if(filter.indexOf(attr) < 0) {
             if(attr == 'quota') {
@@ -45,7 +45,6 @@ gf.filterRow = (row) => {
             } else {
                 dest[attr] = row[attr];
             }
-
         }
     }
     return dest;

@@ -24,22 +24,23 @@ Recharge.prototype.getUsers = (req, res) => {
 
 // 充值
 Recharge.prototype.execute = (req, res) => {
-    var sid = req.body.sid;
+    var account = req.body.account;
     var value = req.body.value;
-    var uid = tc.gf.getUid(req);
+    var masterid = req.payload.userid;
     mysql.query({
-        sql:`SELECT * FROM userinfo WHERE uid="${sid}"`,
+        sql:`SELECT * FROM userinfo WHERE account="${account}"`,
         func:(err, rows) => {
             if (err) {
                 tc.gf.send(res, tc.errorCode.query_fail);
             } else if (rows.length == 0) {
                 tc.gf.send(res, tc.errorCode.account_null);
             } else {
-                var quota = parseInt(rows[0].quota);
+                var row = rows[0];
+                var quota = parseInt(row.quota);
                 quota = quota + parseInt(value);
                 mysql.query({
-                    sql:'UPDATE userinfo SET quota = ? WHERE uid = ?',
-                    args:[quota, sid],
+                    sql:'UPDATE userinfo SET quota = ? WHERE account = ?',
+                    args:[quota, account],
                     func:(err, ret) => {
                         if (err == null && ret.affectedRows == 1) {
                             tc.gf.send(res, null, {value:quota});
@@ -47,7 +48,7 @@ Recharge.prototype.execute = (req, res) => {
                             // 记录充值记录
                             mysql.query({
                                 sql:'INSERT INTO recharge(userid,value,date,masterid) VALUES(?,?,?,?)',
-                                args:[sid, value, tc.gf.getCurTimeFormat(), uid]
+                                args:[row.uid, value, tc.gf.getCurTimeFormat(), masterid]
                             });
                         } else {
                             tc.gf.send(res, tc.errorCode.query_fail);

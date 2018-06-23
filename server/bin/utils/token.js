@@ -12,6 +12,7 @@ tokenMgr.getToken = (uid, type) => {
     return jwt.encode({
         userid:uid,
         type:type,
+        sign:uuid.v1(),
         exp: expires
     }, secretKey);
 };
@@ -21,10 +22,9 @@ tokenMgr.verifyToken = (req, res, next, type) => {
     var token = (req.body && req.body.token) || (req.query && req.query.token) || req.headers['x-access-token'];
     if (token) {
         try {
-            var uid = tc.gf.getUid(req);
             var payload = jwt.decode(token, secretKey);
-
-            if (payload.userid === uid && type === payload.type) {
+            if (type === payload.type || type == "user") {
+                req.payload = payload;
                 next();
             } else {
                 tc.gf.send(res, tc.errorCode.token_fail);

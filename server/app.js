@@ -46,7 +46,7 @@ app.use('/:router/:operate', (req, res, next)=> {
     }
 });
 
-app.use('/test', indexRouter);
+app.use('/user', indexRouter);
 app.use('/users', usersRouter);
 app.use('/masters', mastersRouter);
 
