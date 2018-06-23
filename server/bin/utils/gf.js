@@ -26,14 +26,6 @@ gf.toTime = (str) => {
     return new Date(str).getTime();
 };
 
-// 获取发送的uid
-gf.getUid = (req) => {
-    var uid = (req.body && req.body.uid) || (req.query && req.query.uid) || req.headers['x-access-uid'];
-    if(typeof(uid) == 'string')
-        uid = parseInt(uid);
-    return uid;
-};
-
 // 过滤表格中的数据
 gf.filterRow = (row) => {
     var dest = {};
