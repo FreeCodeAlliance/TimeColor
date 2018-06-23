@@ -5,6 +5,9 @@ var login = {
     execute:(req, res, tableName) => {
         var account = req.query.account;
         var password = req.query.password;
+        var type = 'users';
+        if(tableName == 'masterinfo')
+            type = 'masters';
 
         mysql.query({
             sql:`SELECT * FROM ${tableName} WHERE account="${account}"`,
@@ -17,7 +20,7 @@ var login = {
                     } else {
                         var row = rows[0];
                         if (tc.gf.md5(password) === row.password) {
-                            row.token = token.getToken(row.uid);
+                            row.token = token.getToken(row.uid,type);
                             tc.gf.send(res, null, row);
                         } else {
                             tc.gf.send(res, tc.errorCode.password_error);

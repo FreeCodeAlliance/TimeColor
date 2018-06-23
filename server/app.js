@@ -40,7 +40,7 @@ app.use('/:id', (req, res, next)=> {
 app.use('/:router/:operate', (req, res, next)=> {
     var operate = req.params.operate;
     if (operate != 'login' && operate != 'register') {
-        token.verifyToken(req, res, next);
+        token.verifyToken(req, res, next, req.params.router);
     } else {
         next();
     }

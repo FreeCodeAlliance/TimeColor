@@ -26,7 +26,7 @@ Recharge.prototype.getUsers = (req, res) => {
 Recharge.prototype.execute = (req, res) => {
     var sid = req.body.sid;
     var value = req.body.value;
-    var uid = req.body.uid;
+    var uid = tc.gf.getUid(req);
     mysql.query({
         sql:`SELECT * FROM userinfo WHERE uid="${sid}"`,
         func:(err, rows) => {

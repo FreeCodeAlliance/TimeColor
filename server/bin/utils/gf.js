@@ -26,4 +26,9 @@ gf.toTime = (str) => {
     return new Date(str).getTime();
 };
 
+// 获取发送的uid
+gf.getUid = (req) => {
+    return (req.body && req.body.uid) || (req.query && req.query.uid) || req.headers['x-access-uid'];
+}
+
 tc.gf = gf;
