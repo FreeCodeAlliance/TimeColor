@@ -46,7 +46,6 @@ class Home extends Component {
 
     renderUserInfo() {
       const {userInfo} = this.props;
-      console.log(userInfo);
       return (
           <div className="user-info">
               <p>皇冠国际</p>

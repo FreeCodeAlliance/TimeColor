@@ -8,7 +8,6 @@ export default () => next => (action) => {
   if (typeof API === 'undefined') {
     return next(action);
   }
-  //console.log(action[CALL_API]);
   const { types, url, method, body } = action[CALL_API];
   const [requestType, successType, failureType] = types;
 
@@ -26,10 +25,7 @@ export default () => next => (action) => {
        Object.assign(headers, {
           'x-access-token' : store.get('token')
       });
-    console.log(headers, "headers");
-
   }
-
   const withBody = method.toUpperCase() === 'POST' || method.toUpperCase() === 'PUT';
   return fetch(API_ROOT + url, {
       method,

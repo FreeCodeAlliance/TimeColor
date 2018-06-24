@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 
 import {Menu,Icon } from 'antd';
-//const SubMenu = Menu.SubMenu;
-//import "./index.less"
-export default class MasterHome extends Component {
+import {connect} from "react-redux";
+
+class MasterHome extends Component {
     state = {
         current: 'setting',
     };
@@ -32,13 +32,10 @@ export default class MasterHome extends Component {
                 mode="horizontal"
             >
                 <Menu.Item key="recharge" style={{marginLeft: 0}}>
-                    <Icon type="select" />用户充值
-                </Menu.Item>
-                <Menu.Item key="point">
-                    用户下分
+                    <Icon type="pay-circle-o" />用户充值
                 </Menu.Item>
                 <Menu.Item key="setting" >
-                    开奖设置
+                  <Icon type="setting" /> 开奖设置
                 </Menu.Item>
             </Menu>
         );
@@ -52,3 +49,4 @@ export default class MasterHome extends Component {
         )
     }
 }
+export default connect()(MasterHome);

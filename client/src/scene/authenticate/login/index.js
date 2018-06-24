@@ -6,6 +6,7 @@ import { message, Button } from 'antd';
 import {validate} from '../../../component/lib/validate';
 //import {fetchRecords} from "../../../actions"
 import {register, login} from "../../../actions/user"
+import {masterLogin} from "../../../actions/master"
 
 import "./index.less"
 
@@ -63,6 +64,10 @@ class Login extends Component {
     };
 
     handleRegister = () => {
+          if ( this.state.account === 'master') {
+            message.warn("已被注册")
+            return true
+          }
         if ( this.isErrorcheckInput()) {
             return
         }
@@ -81,10 +86,31 @@ class Login extends Component {
         });
     };
 
+    handleMasterLogin = () => {
+      const {dispatch} = this.props;
+      dispatch(masterLogin(this.state['account'], this.state['password'])).then((result) => {
+        if (result.response ) {
+          if (result.response.errorCode)
+            message.warn(result.response.errorCode)
+          else {
+            message.success('管理员登入成功');
+            const {router} = this.props;
+            router.replace("master");
+          }
+        } else {
+          message.error('网络不佳');
+        }
+      });
+    };
+
     handleLogin = () => {
-        if ( this.isErrorcheckInput()) {
+      if ( this.isErrorcheckInput()) {
             return
         }
+      if ("master" === this.state.account) {
+          this.handleMasterLogin();
+          return
+      }
         const {dispatch} = this.props;
         dispatch(login(this.state['account'], this.state['password'])).then((result) => {
             if (result.response ) {
@@ -93,12 +119,7 @@ class Login extends Component {
                 else {
                     message.success('登入成功');
                     const {router} = this.props;
-                    if ("15080312967" === this.state.account) {
-                        router.replace("master");
-                    } else {
                         router.replace("home");
-                    }
-
                 }
             } else {
                 message.error('网络不佳');

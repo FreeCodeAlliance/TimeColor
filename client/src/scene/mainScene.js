@@ -42,5 +42,4 @@ export default connect((state, ownProps) => {
   return {
     windowWidth: windowSize.width,
   };
-
 })(App);

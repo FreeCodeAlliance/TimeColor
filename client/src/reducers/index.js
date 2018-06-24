@@ -3,6 +3,7 @@ import { routerReducer } from 'react-router-redux';
 
 import * as Types from '../actions/types';
 import * as userReducer from './user';
+import * as masterReducer from './master';
 
 function keyboard(state = {
   isShow: false,
@@ -64,7 +65,8 @@ const rootReducer = combineReducers({
   windowSize,
   consumeRecords,
 
-    ...userReducer
+  ...userReducer,
+  ...masterReducer
 });
 
 export default rootReducer;
