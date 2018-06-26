@@ -9,8 +9,13 @@ tc.errorCode = {
     token_fail:'token验证失败',
 };
 
-// 定时任务的id
-tc.jobid = {
-    log_clear:0x1,                  // 定期清除日志
-    lottery:0x2,                    // 定期开奖
+// 开奖间隔时间 单位分钟
+tc.lotteryInterval = 10;
+// 开奖的区间时间 单位小时
+tc.lotteryTimes = [[9, 11], [13, 21]];
+// 开奖状态
+tc.lotteryState = {
+    bet:1,                      // 下注
+    lock:2,                     // 锁盘
+    stop:3,                     // 停止
 };

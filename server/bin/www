@@ -9,6 +9,10 @@ require('./config/config');
 require('./config/dbConfig');
 require('./utils/gf');
 
+// 启动定时器
+var scheduleMgr = require('./logic/schedule');
+scheduleMgr.start();
+
 var app = require('../app');
 var debug = require('debug')('timecolor:server');
 var http = require('http');
