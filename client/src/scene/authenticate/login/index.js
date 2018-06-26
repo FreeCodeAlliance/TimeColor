@@ -95,7 +95,7 @@ class Login extends Component {
           else {
             message.success('管理员登入成功');
             const {router} = this.props;
-            router.replace("master");
+             router.replace("master");
           }
         } else {
           message.error('网络不佳');
@@ -128,7 +128,8 @@ class Login extends Component {
     };
 
     render() {
-        let {user} = this.props;
+        let {user, master} = this.props;
+        const loading = user.loading || master.loading;
         return (
             <div className="authenticate-login">
                 <div className="authenticate-login-content">
@@ -162,23 +163,24 @@ class Login extends Component {
                         >注册</Button>
                         <Button
                             onClick={this.handleLogin.bind(this)}
-                            loading={user.loading}
+                            loading={loading}
                             style={{height: '48px', fontSize: '20px'}}
                             type="primary"
                             className="authenticate-login-buttonPanel-item"
                         >登入</Button>
                     </div>
                 </div>
-                <Spin animating={user.loading} type="system" isShade isTop whiteSpin />
+                <Spin animating={loading} type="system" isShade isTop whiteSpin />
             </div>
         );
     }
 }
 
 export default connect((state, ownProps) => {
-    const { user} = state;
+    const { user, master} = state;
     return {
-        user
+        user,
+        master
     };
 })(Login);
 

@@ -6,6 +6,7 @@ export function master(state = {
   loading: false,
   userList: [],
 }, action = {}) {
+  console.log("master reduces", action.type)
   switch (action.type) {
     case MasterTypes.REQUEST_GET_USER_LIST:
     case MasterTypes.REQUEST_MASTER_LOGIN:
@@ -16,7 +17,7 @@ export function master(state = {
     case MasterTypes.RECEIVE_MASTER_LOGIN_SUCCESS:
       store.set('token', action.response.data.token);
       return Object.assign({}, state, {
-        loading: false,
+        //loading: false,
         isPop: false,
         userInfo: action.response.data
       });

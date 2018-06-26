@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 
-import {Table, Button , Popconfirm} from 'antd';
+import {Table , Popconfirm} from 'antd';
 import "./index.less"
 import {connect} from "react-redux";
-import store from "store";
 import {getUserList, userRecharge} from "../../../actions/master";
 import {message} from "antd/lib/index";
 
