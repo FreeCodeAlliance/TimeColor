@@ -7,7 +7,7 @@ import {validate} from '../../../component/lib/validate';
 //import {fetchRecords} from "../../../actions"
 import {register, login} from "../../../actions/user"
 import {masterLogin} from "../../../actions/master"
-
+import Spin from '../../../component/lib/spin';
 import "./index.less"
 
 class Login extends Component {
@@ -168,8 +168,8 @@ class Login extends Component {
                             className="authenticate-login-buttonPanel-item"
                         >登入</Button>
                     </div>
-
                 </div>
+                <Spin animating={user.loading} type="system" isShade isTop whiteSpin />
             </div>
         );
     }
