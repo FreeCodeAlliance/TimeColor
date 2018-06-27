@@ -3,6 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var compression = require('compression');
 var token = require('./bin/utils/token');
 
 var indexRouter = require('./routes/index');
@@ -25,6 +26,8 @@ app.all('*', function(req, res, next) {
       next();
 });
 
+// 启用gzip
+app.use(compression());
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
