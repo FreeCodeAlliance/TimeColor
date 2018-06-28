@@ -6,7 +6,7 @@ import "./index.less"
 //require "../../lib/qrcode.min"
 //import { Tabs } from 'antd';
 //const TabPane = Tabs.TabPane;
-//import { Button } from 'antd';
+import {Modal} from 'antd';
 import {connect} from "react-redux";
 import store from "store"
 import {fetchMe} from "../../actions/user";
@@ -18,21 +18,8 @@ const SubMenu = Menu.SubMenu;
 class Home extends Component {
     state = {
         current: '',
+        visibleModal: false,
     };
-    handleClick = (e) => {
-        console.log('click ', e);
-        if (e.key.indexOf('mode') >= 0){
-            return
-        }
-        this.setState({
-            current: e.key,
-        });
-
-        const {router} = this.props;
-        let routerStr = `/home/${e.key}`
-        router.push(routerStr);
-    };
-
     componentWillMount() {
       console.log("componentWillMount:", store.get('token'))
       window.addEventListener('resize', ()=>{});//Tood: reszie windows
@@ -44,7 +31,49 @@ class Home extends Component {
       window.removeEventListener('resize', ()=>{});
     }
 
-    renderUserInfo() {
+  handleClick = (e) => {
+    console.log('click ', e);
+    if (e.key.indexOf('mode') >= 0){
+      return
+    }
+    this.setState({
+      current: e.key,
+    });
+
+    const {router} = this.props;
+    let routerStr = `/home/${e.key}`
+    router.push(routerStr);
+  };
+
+  handleOk = (e) => {
+    console.log(e);
+    this.setState({
+      visibleModal: false,
+    });
+  }
+
+  handleCancel = (e) => {
+    console.log(e);
+    this.setState({
+      visibleModal: false,
+    });
+  }
+  renderModal() {
+    return(
+      <Modal
+        title="开奖记录"
+        visible={this.state.visibleModal}
+        onOk={this.handleOk}
+        onCancel={this.handleCancel}
+      >
+        <p>详细记录1...</p>
+        <p>详细记录2...</p>
+        <p>详细记录3...</p>
+      </Modal>
+    );
+  }
+
+  renderUserInfo() {
       const {userInfo} = this.props;
       return (
           <div className="user-info">
@@ -109,7 +138,11 @@ class Home extends Component {
                 <p className="award-results-title">【重庆时时彩】</p>
                 <p className="award-results-title">开奖结果</p>
                 <div style={{display: 'flex', justifyContent: 'space-around', margin: '8px 0'}}>
-                    <button size="small">号码</button>
+                    <button size="small" onClick={()=>{
+                      this.setState({
+                        visibleModal: true,
+                      });
+                    }}>号码</button>
                     <button size="small">大小</button>
                     <button size="small">单双</button>
                     <button size="small">质合</button>
@@ -141,7 +174,7 @@ class Home extends Component {
             </div>
         );
     }
-    // style={{display: 'flex', justifyContent: 'space-around', backgroundColor: "#8adaf3"}}
+
     renderHeadNavigation() {
       return(
           <Menu
@@ -167,6 +200,8 @@ class Home extends Component {
       );
     }
 
+
+
     render() {
     //let data = {id:666 ,name: "shenl", age:23};
     return (
@@ -182,6 +217,7 @@ class Home extends Component {
             </div>
           {this.props.children}
         </div>
+        {this.renderModal()}
       </div>
     )
     }

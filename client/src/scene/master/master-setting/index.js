@@ -15,7 +15,11 @@ export default class MasterSetting extends Component {
     let data = this.state.value;
     data[key] = value
     this.setState({ value: data });
-    }
+    };
+
+  handleSetting() {
+    console.log("fetch setting");
+  }
 
     renderLineSelector(key, text) {
        const placeholder = `设置开奖号码 (${text})`
@@ -51,14 +55,17 @@ export default class MasterSetting extends Component {
         //let floatView = `floatView-${tab}`;
         return (
             <div className="masterSetting">
-              <h4>开奖设置</h4>
+              <h4>
+                下次开奖设置: 9 7 5 6 0
+                <p>剩余开奖时间: 00:06</p>
+              </h4>
               {this.renderLineSelector(0, "万")}
               {this.renderLineSelector(1, "千")}
               {this.renderLineSelector(2, "百")}
               {this.renderLineSelector(3, "十")}
               {this.renderLineSelector(4, "个")}
               <div class="buttonPanel">
-                <Button type="danger" size="large">确定开奖</Button>
+                <Button type="danger" size="large" onClick={this.handleSetting.bind(this)}>确定开奖</Button>
               </div>
             </div>
         );

@@ -17,7 +17,7 @@ export function master(state = {
     case MasterTypes.RECEIVE_MASTER_LOGIN_SUCCESS:
       store.set('token', action.response.data.token);
       return Object.assign({}, state, {
-        //loading: false,
+        loading: false,
         isPop: false,
         userInfo: action.response.data
       });
