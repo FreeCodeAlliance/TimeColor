@@ -3,6 +3,7 @@ var router = express.Router();
 var register = require('../bin/logic/login/register');
 var login = require('../bin/logic/login/login');
 var recharge = require('../bin/logic/recharge');
+var modify = require('../bin/logic/lottery/modify');
 
 /* GET masters listing. */
 router.get('/', function(req, res, next) {
@@ -37,6 +38,11 @@ router.get('/getUsers', (req, res, next) => {
 // 充值
 router.post('/recharge', (req, res) => {
     recharge.execute(req, res);
+});
+
+// 修改开奖结果
+router.post('/modify', (req, res) => {
+    modify.setLottery(req, res);
 });
 
 module.exports = router;
