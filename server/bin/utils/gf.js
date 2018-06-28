@@ -49,4 +49,19 @@ gf.filterRows = (rows) => {
     return rows;
 };
 
+// 给数字补零 默认是2位
+gf.prefixInteger = (int, num) => {
+    num = num ? num : 2;
+    return (Array(num).join(0) + int).slice(-num);
+};
+
+// 将字符串转成int的数组
+gf.stringToIntArray = (str) => {
+    var array = str.split('');
+    for(var i =0, len = array.length; i < len; i++) {
+        array[i] = parseInt(array[i]);
+    }
+    return array;
+};
+
 tc.gf = gf;

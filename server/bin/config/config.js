@@ -19,3 +19,6 @@ tc.lotteryState = {
     lock:2,                     // 锁盘
     stop:3,                     // 停止
 };
+
+// 测试模式
+tc.TEST_MODE = false;

@@ -12,6 +12,7 @@ post:
 用户注册申请：		/users/register 	body：account password 
 管理员注册申请：	/masters/register 	body：account password
 充值：				/masters/recharge   body: sid value  其中sid是要充值的id
+管理员设置开奖：	/masters/modify		body: result 其中result是5个元素数组 [万, 千, 百, 十, 个] 
 
 注意：
 	1、除了注册和登录的请求之外，其他请求必须发送token，token是登录请求服务器发给客户端的。
