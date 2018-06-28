@@ -43,7 +43,18 @@ scheduleMgr.lottery = ()=> {
     });
 };
 
+// 刷新开奖期号
+scheduleMgr.refreshLotteryNo = ()=> {
+    var rule = new schedule.RecurrenceRule();
+    rule.hour = [0];
+    schedule.scheduleJob(rule, ()=>{
+        lottery.count = 0;
+        lottery.refreshLotteryNo();
+    });
+};
+
 // 启动定时器
 scheduleMgr.start = ()=> {
+    scheduleMgr.refreshLotteryNo();
     scheduleMgr.lottery();
 };

@@ -1,5 +1,8 @@
 var util = require('util');
 
+// 开奖个数
+var LOTTERY_COUNT = 5;
+
 // 开奖
 function Lottery() {
     // 开奖状态
@@ -23,7 +26,7 @@ Lottery.prototype.refreshLotteryNo = function(){
     var year = date.getFullYear();
     var month = date.getMonth() + 1;
     var day = date.getDate();
-    this.noStr = util.format("%d%02d%02d", year, month, day);
+    this.noStr = util.format("%d%s%s", year, tc.gf.prefixInteger(month), tc.gf.prefixInteger(day));
 
     var curHour = date.getHours();
     var hours = 0;
@@ -56,8 +59,10 @@ Lottery.prototype.schedule = function (minute) {
         // 随机开奖结果
         var res = this.randomRes();
         // 暂时保存开奖记录
-        this.lotteryRes[util.format("%s%03d", this.noStr, this.count)] = res;
-        this.lotteryRes[util.format("%s%03d", this.noStr, this.count - 3)] = null;
+        var lotteryNoStr = util.format("%s%s", this.noStr, tc.gf.prefixInteger(this.count, 3));
+        console.log(lotteryNoStr)
+        this.lotteryRes[lotteryNoStr] = res;
+        this.lotteryRes[util.format("%s%s", this.noStr, tc.gf.prefixInteger(this.count - 3, 3))] = null;
     } else {
         this.lotteryState = tc.lotteryState.lock;
     }
@@ -69,14 +74,17 @@ Lottery.prototype.randomRes = function () {
         return Math.floor(Math.random() * 10);
     };
 
-    // 个 // 十 // 百 // 千 // 万
-    return {
-        i:random(),
-        t:random(),
-        h:random(),
-        th:random(),
-        tth:random(),
+    // 万 // 千 // 百 // 十 // 个
+    var res = [];
+    for(var i=0; i < LOTTERY_COUNT; ++i) {
+        res.push(random());
     }
+    return res
+};
+
+// 获取当前的开奖期号
+Lottery.prototype.getNO = function() {
+    return util.format("%s%s", this.noStr, tc.gf.prefixInteger(this.count, 3));
 };
 
 module.exports = new Lottery();
