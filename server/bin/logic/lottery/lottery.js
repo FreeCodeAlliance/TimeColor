@@ -101,6 +101,10 @@ Lottery.prototype.lock = function() {
     this.state = tc.lotteryState.lock;
 };
 
+Lottery.prototype.stop = function() {
+    this.state = tc.lotteryState.stop;
+};
+
 // 获取当前的开奖期号
 Lottery.prototype.getNO = function() {
     return util.format("%s%s", this.noStr, tc.gf.prefixInteger(this.count, 3));

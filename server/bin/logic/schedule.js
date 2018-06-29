@@ -38,6 +38,15 @@ scheduleMgr.lottery = ()=> {
     schedule.scheduleJob(lockrule, ()=>{
         lottery.lock();
     });
+
+    if (60 % tc.lotteryInterval != 0) {
+        var stoprule = new schedule.RecurrenceRule();
+        stoprule.hour = hours;
+        stoprule.minute = [60 - 60 % tc.lotteryInterval];
+        schedule.scheduleJob(lockrule, ()=>{
+            lottery.stop();
+        });
+    }
 };
 
 // 刷新开奖期号
@@ -60,7 +69,7 @@ scheduleMgr.stopLottery = () => {
     var rule = new schedule.RecurrenceRule();
     rule.hour = hours;
     schedule.scheduleJob(rule, () => {
-        lottery.state = tc.lotteryState.stop
+        lottery.stop();
     });
 };
 
