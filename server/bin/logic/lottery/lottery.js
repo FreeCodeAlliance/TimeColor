@@ -6,29 +6,28 @@ var LOTTERY_COUNT = 5;
 // 开奖
 function Lottery() {
     // 开奖状态
-    this.lotteryState = tc.lotteryState.stop;
+    this.state = tc.lotteryState.stop;
 
     // 开奖结果 一般保留三组数据
     this.lotteryRes = {};
-
-    this.interval = tc.lotteryInterval * 0.5;
 
     // 当天开奖次数
     this.count = 0;
     this.noStr = "";
     this.ctor();
+    console.log(this.count);
 };
 
 // 初始化
 Lottery.prototype.ctor = function() {
-    var leftTime = this.refreshLotteryNo();
-    if (leftTime == null) {
-        this.lotteryState = tc.lotteryState.stop;
+    var rTime = this.refreshLotteryNo();
+    if (rTime == null) {
+        this.state = tc.lotteryState.stop;
     } else {
-        if (leftTime <= this.interval) {
-            this.lotteryState = tc.lotteryState.bet;
+        if (rTime <= tc.lotteryInterval - tc.lotteryLock) {
+            this.state = tc.lotteryState.bet;
         } else {
-            this.lotteryState = tc.lotteryState.lock;
+            this.state = tc.lotteryState.lock;
         }
     }
 };
@@ -57,31 +56,30 @@ Lottery.prototype.refreshLotteryNo = function(){
     });
     var oneHour = Math.floor(60 / tc.lotteryInterval);
     this.count = hours * oneHour;
-    if (!isInterval) {
+    if (isInterval) {
         var curMin = date.getMinutes();
-        this.count -= hours;
-        this.count += Math.ceil(curMin / tc.lotteryInterval);
-        return curMin % tc.lotteryInterval;
+        this.count -= oneHour;
+        this.count += Math.floor(curMin / tc.lotteryInterval);
+        if(curMin >= 60 - 60 % tc.lotteryInterval) {
+            return null;
+        } else {
+            this.count += 1;
+            return curMin % tc.lotteryInterval;
+        }
     }
     return null;
 };
 
-// 定时器响应
-Lottery.prototype.schedule = function (minute) {
-    var state = Math.floor(minute / this.interval) % 2;
-    if (state === 0) {
-        this.lotteryState = tc.lotteryState.bet;
-        this.count += 1;
-        // 随机开奖结果
-        var res = this.randomRes();
-        // 暂时保存开奖记录
-        var lotteryNoStr = util.format("%s%s", this.noStr, tc.gf.prefixInteger(this.count, 3));
-        console.log(lotteryNoStr)
-        this.lotteryRes[lotteryNoStr] = res;
-        this.lotteryRes[util.format("%s%s", this.noStr, tc.gf.prefixInteger(this.count - 3, 3))] = null;
-    } else {
-        this.lotteryState = tc.lotteryState.lock;
-    }
+// 开奖
+Lottery.prototype.execute = function() {
+    this.state = tc.lotteryState.bet;
+    this.count += 1;
+    var res = this.randomRes();
+    // 暂时保存开奖记录
+    var lotteryNoStr = util.format("%s%s", this.noStr, tc.gf.prefixInteger(this.count, 3));
+    console.log(lotteryNoStr);
+    this.lotteryRes[lotteryNoStr] = res;
+    this.lotteryRes[util.format("%s%s", this.noStr, tc.gf.prefixInteger(this.count - 3, 3))] = null;
 };
 
 // 随机开奖结果
@@ -98,9 +96,35 @@ Lottery.prototype.randomRes = function () {
     return res;
 };
 
+// 锁定
+Lottery.prototype.lock = function() {
+    this.state = tc.lotteryState.lock;
+};
+
 // 获取当前的开奖期号
 Lottery.prototype.getNO = function() {
     return util.format("%s%s", this.noStr, tc.gf.prefixInteger(this.count, 3));
+};
+
+// 获取开奖的剩余时间
+Lottery.prototype.getReTime = function() {
+    if (this.state === tc.lotteryState.stop) {
+        return null;
+    }
+
+    var date = new Date();
+    var curMin = date.getMinutes();
+    return curMin % tc.lotteryInterval;
+};
+
+// 获取开奖状态
+Lottery.prototype.getLotteryState = function(req, res) {
+    var rTime = this.getReTime();
+    if (rTime == null) {
+        tc.gf.send(res, null, {state:this.state});
+    } else {
+        tc.gf.send(res, null, {time:rTime, state:this.state});
+    }
 };
 
 module.exports = new Lottery();

@@ -4,10 +4,10 @@ var lottery = require("./lottery/lottery");
 
 var scheduleMgr = module.exports;
 
-var lotterySchedule = null;     // 开奖的定时器
 // 启动开奖的定时任务
 scheduleMgr.lottery = ()=> {
     var rule = new schedule.RecurrenceRule();
+    var lockrule = new schedule.RecurrenceRule();
 
     // 生成开奖的范围时间
     var hours = [];
@@ -17,29 +17,26 @@ scheduleMgr.lottery = ()=> {
         }
     });
     rule.hour = hours;
+    lockrule.hour = hours;
 
     // 分钟间隔时间
     var minutes = [];
-    var interval =  tc.lotteryInterval / 2;
-    var minCount = Math.floor(60 / interval);
-    for(var i=0; i<= minCount; i++) {
-        minutes.push(i * interval);
+    var lockminutes = [];
+    var count = Math.floor(60 / tc.lotteryInterval);
+    for(var i=0; i< count; i++) {
+        var t = i * tc.lotteryInterval
+        minutes.push(t);
+        lockminutes.push(t + tc.lotteryInterval - tc.lotteryLock);
     }
     rule.minute = minutes;
-
-    var curMinute = null;
-    lotterySchedule = schedule.scheduleJob(rule, ()=>{
-        if(curMinute == null) {
-            var date = new Date();
-            curMinute = date.getMinutes();
-            curMinute = curMinute - curMinute % interval;
-        } else {
-            curMinute = curMinute + interval;
-        }
-        if(curMinute >= 60) {
-            curMinute = curMinute - 60
-        }
-        lottery.schedule(curMinute);
+    lockrule.minute = lockminutes;
+    // 开奖定时触发
+    schedule.scheduleJob(rule, ()=>{
+        lottery.execute();
+    });
+    // 锁定定时触发
+    schedule.scheduleJob(lockrule, ()=>{
+        lottery.lock();
     });
 };
 
@@ -63,7 +60,7 @@ scheduleMgr.stopLottery = () => {
     var rule = new schedule.RecurrenceRule();
     rule.hour = hours;
     schedule.scheduleJob(rule, () => {
-        lottery.lotteryState = tc.lotteryState.stop
+        lottery.state = tc.lotteryState.stop
     });
 };
 
