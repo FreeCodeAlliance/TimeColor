@@ -6,7 +6,7 @@ var LOTTERY_COUNT = 5;
 // 开奖
 function Lottery() {
     // 开奖状态
-    this.lotteryState = tc.lotteryState.bet;
+    this.lotteryState = tc.lotteryState.stop;
 
     // 开奖结果 一般保留三组数据
     this.lotteryRes = {};
@@ -16,7 +16,21 @@ function Lottery() {
     // 当天开奖次数
     this.count = 0;
     this.noStr = "";
-    this.refreshLotteryNo();
+    this.ctor();
+};
+
+// 初始化
+Lottery.prototype.ctor = function() {
+    var leftTime = this.refreshLotteryNo();
+    if (leftTime == null) {
+        this.lotteryState = tc.lotteryState.stop;
+    } else {
+        if (leftTime <= this.interval) {
+            this.lotteryState = tc.lotteryState.bet;
+        } else {
+            this.lotteryState = tc.lotteryState.lock;
+        }
+    }
 };
 
 // 刷新开奖期号
@@ -47,7 +61,9 @@ Lottery.prototype.refreshLotteryNo = function(){
         var curMin = date.getMinutes();
         this.count -= hours;
         this.count += Math.ceil(curMin / tc.lotteryInterval);
+        return curMin % tc.lotteryInterval;
     }
+    return null;
 };
 
 // 定时器响应
@@ -79,7 +95,7 @@ Lottery.prototype.randomRes = function () {
     for(var i=0; i < LOTTERY_COUNT; ++i) {
         res.push(random());
     }
-    return res
+    return res;
 };
 
 // 获取当前的开奖期号

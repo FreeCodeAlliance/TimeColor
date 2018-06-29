@@ -53,8 +53,23 @@ scheduleMgr.refreshLotteryNo = ()=> {
     });
 };
 
+// 刷新开奖停止响应
+scheduleMgr.stopLottery = () => {
+    var hours = [];
+    for(var i = 0, len = tc.lotteryTimes.length; i < len; i++) {
+        hours.push(tc.lotteryTimes[i][2]);
+    }
+
+    var rule = new schedule.RecurrenceRule();
+    rule.hour = hours;
+    schedule.scheduleJob(rule, () => {
+        lottery.lotteryState = tc.lotteryState.stop
+    });
+};
+
 // 启动定时器
 scheduleMgr.start = ()=> {
     scheduleMgr.refreshLotteryNo();
+    scheduleMgr.stopLottery();
     scheduleMgr.lottery();
 };
