@@ -7,6 +7,7 @@ tc.errorCode = {
     account_null:'账号未注册',
     password_error:'密码错误',
     token_fail:'token验证失败',
+    lottery_none:'未开奖',
 };
 
 // 开奖间隔时间 单位分钟

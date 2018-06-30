@@ -1,4 +1,5 @@
 var util = require('util');
+var lotterySql = require('../sql/lotterySql');
 
 // 开奖个数
 var LOTTERY_COUNT = 5;
@@ -80,6 +81,8 @@ Lottery.prototype.execute = function() {
     console.log(lotteryNoStr);
     this.lotteryRes[lotteryNoStr] = res;
     this.lotteryRes[util.format("%s%s", this.noStr, tc.gf.prefixInteger(this.count - 3, 3))] = null;
+    // 保存到数据库
+    lotterySql.insertLotteryResult(lotteryNoStr, res);
 };
 
 // 随机开奖结果
@@ -118,16 +121,44 @@ Lottery.prototype.getReTime = function() {
 
     var date = new Date();
     var curMin = date.getMinutes();
-    return curMin % tc.lotteryInterval;
+    var second = date.getSeconds();
+
+    var min = tc.lotteryInterval - curMin % tc.lotteryInterval;
+    return min * 60 - second;
 };
 
+///////////////////////////////////////////////////////////////////////////
 // 获取开奖状态
 Lottery.prototype.getLotteryState = function(req, res) {
     var rTime = this.getReTime();
     if (rTime == null) {
-        tc.gf.send(res, null, {state:this.state});
+        tc.gf.send(res, null, {state:this.state, no:this.getNO()});
     } else {
-        tc.gf.send(res, null, {time:rTime, state:this.state});
+        tc.gf.send(res, null, {time:rTime, state:this.state, no:this.getNO()});
+    }
+};
+
+// 获取开奖结果
+Lottery.prototype.getLotteryRes = function(req, res){
+    var issue = req.query.no;
+    if(issue == undefined) {
+        issue = this.getNO();
+    }
+    var result = this.lotteryRes[issue];
+    if (result) {
+        tc.gf.send(res, null, result);
+    } else {
+        lotterySql.getLotteryResult(issue, (err, row) => {
+            if(err) {
+                tc.gf.send(res, tc.errorCode.query_fail);
+            } else {
+                if(row){
+                    tc.gf.send(res, null, tc.gf.stringToIntArray(row.result));
+                } else {
+                    tc.gf.send(res, tc.errorCode.lottery_none);
+                }
+            }
+        });
     }
 };
 

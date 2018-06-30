@@ -20,14 +20,5 @@ router.get('/login', (req, res) => {
 });
 
 ////////////////////开奖相关接口
-// 获取服务器的开奖配置信息
-router.get('/lotteryConfig', (req, res) => {
-    tc.gf.send(res, null, {interval:tc.lotteryInterval, lock:tc.lotteryLock, times:tc.lotteryTimes});
-});
-
-// 获取开奖状态
-router.get('/lotteryState', (req, res) => {
-    lottery.getLotteryState(req, res);
-});
 
 module.exports = router;

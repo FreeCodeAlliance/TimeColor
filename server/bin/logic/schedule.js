@@ -38,7 +38,7 @@ scheduleMgr.lottery = ()=> {
     schedule.scheduleJob(lockrule, ()=>{
         lottery.lock();
     });
-
+    // 停止定时触发
     if (60 % tc.lotteryInterval != 0) {
         var stoprule = new schedule.RecurrenceRule();
         stoprule.hour = hours;
@@ -54,8 +54,8 @@ scheduleMgr.refreshLotteryNo = ()=> {
     var rule = new schedule.RecurrenceRule();
     rule.hour = [0];
     schedule.scheduleJob(rule, ()=>{
-        lottery.count = 0;
         lottery.refreshLotteryNo();
+        lottery.count = 0;
     });
 };
 
