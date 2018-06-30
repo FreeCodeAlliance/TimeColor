@@ -20,5 +20,8 @@ router.get('/login', (req, res) => {
 });
 
 ////////////////////开奖相关接口
+router.post('/bet', (req, res) => {
+
+});
 
 module.exports = router;

@@ -48,14 +48,13 @@ lotterySql.getLotteryResult = (issue, callback) => {
 
 // 用户下注
 lotterySql.bet = (issue, uid, moneyArray, callback) => {
-    // 万 千 百 十 个 大 小
-    var fields = ['tth', 'tho', 'hun', 'ten', 'ind', 'big', 'small'];
     mysql.query({
         sql:`SELECT * FROM bet WHERE issue = ${issue} AND uid = ${uid}`,
         func:(err, rows) => {
             if (err) {
                 callback(err)
             } else {
+                var fields = tc.BET_FIELDS;
                 if (rows.length == 0) {
                     var sqlfields = [];
                     var marks = [];
@@ -77,6 +76,36 @@ lotterySql.bet = (issue, uid, moneyArray, callback) => {
                         var field = fields[i];
                         sqlfields.push(`${field}=?`);
                         args.push(row[field] + moneyArray[i]);
+                    }
+                    sqlStr += sqlfields.join(',');
+                    sqlStr += ` WHERE issue = ${issue} AND uid = ${uid}`;
+                    mysql.query({sql:sqlStr, args:args, func:callback});
+                }
+            }
+        }
+    });
+};
+
+// 用户下注  'tth', 'tho', 'hun', 'ten', 'ind', 'big', 'small'
+lotterySql.betEx = (issue, uid, bet, callback) => {
+    mysql.query({
+        sql: `SELECT * FROM bet WHERE issue = ${issue} AND uid = ${uid}`,
+        func: (err, rows) => {
+            if (err) {
+                callback(err)
+            } else {
+                if (rows.length == 0) {
+                    var sqlStr = `INSERT INTO bet(issue, uid, ${tc.BET_FIELDS.join(' ,')}) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+                    mysql.query({sql:sqlStr, args:[issue, uid, bet.tth, bet.tho, bet.hun, bet.ten, bet.ind, bet.big, bet.small], func:callback});
+                } else {
+                    var fields = tc.BET_FIELDS;
+                    var sqlStr = 'UPDATE bet SET ';
+                    var sqlfields = [];
+                    var args = [];
+                    for(var i=0, len = fields.length; i < len; i++) {
+                        var field = fields[i];
+                        sqlfields.push(`${field}=?`);
+                        args.push(bet[field]);
                     }
                     sqlStr += sqlfields.join(',');
                     sqlStr += ` WHERE issue = ${issue} AND uid = ${uid}`;
