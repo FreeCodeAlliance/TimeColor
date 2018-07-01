@@ -23,7 +23,7 @@ tokenMgr.verifyToken = (req, res, next, type) => {
     if (token) {
         try {
             var payload = jwt.decode(token, secretKey);
-            if (type === payload.type || type == "user") {
+            if (type === payload.type || type == "index") {
                 req.payload = payload;
                 next();
             } else {
