@@ -39,7 +39,6 @@ class Rechange extends Component {
 
   render() {
     const {userList, loading} = this.props;
-    console.log('userList', userList);
     const columns = [{
         title: '账户',
         dataIndex: 'account',
@@ -69,7 +68,6 @@ class Rechange extends Component {
 
 export default connect((state, ownProps) => {
   const { master} = state;
-
   return {
     userList : master.userList,
     loading : master.loading

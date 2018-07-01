@@ -21,7 +21,7 @@ class Home extends Component {
         visibleModal: false,
     };
     componentWillMount() {
-      console.log("componentWillMount:", store.get('token'))
+      //console.log("componentWillMount:", store.get('token'))
       window.addEventListener('resize', ()=>{});//Tood: reszie windows
       const { dispatch } = this.props;
       dispatch(fetchMe())
@@ -32,7 +32,7 @@ class Home extends Component {
     }
 
   handleClick = (e) => {
-    console.log('click ', e);
+    //console.log('click ', e);
     if (e.key.indexOf('mode') >= 0){
       return
     }
@@ -53,7 +53,7 @@ class Home extends Component {
   }
 
   handleCancel = (e) => {
-    console.log(e);
+    //console.log(e);
     this.setState({
       visibleModal: false,
     });

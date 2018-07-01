@@ -1,21 +1,34 @@
 import React, { Component } from 'react';
 import "./index.less"
 import { TreeSelect, Button } from 'antd';
+import {fetchLotteryStatus} from  '../../../actions/lottery'
+
+import {connect} from "react-redux";
 const TreeNode = TreeSelect.TreeNode;
 
-export default class MasterSetting extends Component {
+
+class MasterSetting extends Component {
     state = {
         value: [undefined, undefined, undefined, undefined, undefined],
     }
     constructor(props) {
         super(props);
     }
+
+
+  componentWillMount() {
+    const { dispatch } = this.props;
+    dispatch(fetchLotteryStatus())
+  }
+
     onChange = (key, value) => {
-    console.log(key, value);
-    let data = this.state.value;
-    data[key] = value
-    this.setState({ value: data });
+      console.log(key, value);
+      let data = this.state.value;
+      data[key] = value
+      this.setState({ value: data });
     };
+
+
 
   handleSetting() {
     console.log("fetch setting");
@@ -64,10 +77,18 @@ export default class MasterSetting extends Component {
               {this.renderLineSelector(2, "百")}
               {this.renderLineSelector(3, "十")}
               {this.renderLineSelector(4, "个")}
-              <div class="buttonPanel">
+              <div className="buttonPanel">
                 <Button type="danger" size="large" onClick={this.handleSetting.bind(this)}>确定开奖</Button>
               </div>
             </div>
         );
     }
 }
+
+export default connect((state, ownProps) => {
+  const { master, lottery} = state;
+  return {
+    status : lottery.status,
+    loading : master.loading
+  };
+})(MasterSetting);

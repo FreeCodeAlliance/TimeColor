@@ -4,6 +4,7 @@ import { routerReducer } from 'react-router-redux';
 import * as Types from '../actions/types';
 import * as userReducer from './user';
 import * as masterReducer from './master';
+import * as lotteryReducer from './lottery'
 
 function keyboard(state = {
   isShow: false,
@@ -66,7 +67,8 @@ const rootReducer = combineReducers({
   consumeRecords,
 
   ...userReducer,
-  ...masterReducer
+  ...masterReducer,
+  ...lotteryReducer
 });
 
 export default rootReducer;

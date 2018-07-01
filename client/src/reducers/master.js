@@ -6,7 +6,7 @@ export function master(state = {
   loading: false,
   userList: [],
 }, action = {}) {
-  console.log("master reduces", action.type)
+  //console.log("master reduces", action.type)
   switch (action.type) {
     case MasterTypes.REQUEST_GET_USER_LIST:
     case MasterTypes.REQUEST_MASTER_LOGIN:

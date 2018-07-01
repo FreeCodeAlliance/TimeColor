@@ -76,7 +76,7 @@ export function fetchMe() {
         UserTypes.RECEIVE_ME_SUCCESS,
         Types.RECEIVE_API_FAILURE,
       ],
-      url: '/user/getInfo',
+      url: '/index/getInfo',
       method: 'GET',
       isRequireAuth: true,
     },
