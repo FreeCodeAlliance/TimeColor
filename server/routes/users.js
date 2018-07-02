@@ -2,7 +2,8 @@ var express = require('express');
 var router = express.Router();
 var register = require('../bin/logic/login/register');
 var login = require('../bin/logic/login/login');
-var lottery = require('../bin/logic/lottery/lottery');
+//var lottery = require('../bin/logic/lottery/lottery');
+var bet = require('../bin/logic/lottery/bet');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
@@ -20,8 +21,9 @@ router.get('/login', (req, res) => {
 });
 
 ////////////////////开奖相关接口
+// 下注
 router.post('/bet', (req, res) => {
-
+    bet.execute(req, res);
 });
 
 module.exports = router;

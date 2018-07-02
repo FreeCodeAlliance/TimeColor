@@ -17,6 +17,7 @@
 | Url | 参数（body）| 返回值（data） | Description |
 |---- |------------|------- |-------------|
 | /users/register  |account, password |  {uid:xx} | 用户注册申请 |
+| /users/bet | data | {} | 玩家下注, 其中data的数据格式 例如：{"1":{"0":5}, "5":45} 其中 1和5 表示万 千 百 十 个 大 小这样顺序的序号，其中{"0":5}表示玩家在千位下注5个金币压数字0
 | /masters/register  |account, password |  {uid:xx} | 管理员注册申请 | 
 | /masters/recharge  |account, value |  {value:xx} | 其中account是要充值的账号，返回的value是账号的当前额度 |
 | /masters/modify  | result |  {} | 其中result是5个元素数组 [万, 千, 百, 十, 个]  |

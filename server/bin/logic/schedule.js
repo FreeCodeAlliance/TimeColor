@@ -1,6 +1,7 @@
 // 定时管理
 var schedule = require("node-schedule");
 var lottery = require("./lottery/lottery");
+var bet = require('./lottery/bet');
 
 var scheduleMgr = module.exports;
 
@@ -32,6 +33,7 @@ scheduleMgr.lottery = ()=> {
     lockrule.minute = lockminutes;
     // 开奖定时触发
     schedule.scheduleJob(rule, ()=>{
+        bet.settle(); // 下注结算
         lottery.execute();
     });
     // 锁定定时触发

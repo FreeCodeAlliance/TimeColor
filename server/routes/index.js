@@ -25,19 +25,7 @@ router.get('/lotteryRes', (req, res) => {
 
 // 获取开奖赔率 先写死
 router.get('/lotteryOdds', (req, res) => {
-    var odds = [];
-    for(var i=0, len = tc.BET_FIELDS.length; i < len; i++) {
-        if (i >= 5 ) {
-            odds.push(2.2);
-        } else {
-            var list = [];
-            for(var j = 0; j < 9; j++) {
-                list.push(2.2);
-            }
-            odds.push(list);
-        }
-    }
-    tc.gf.send(res, null, odds);
+    tc.gf.send(res, null, tc.gf.initBetArray(2.2));
 });
 
 module.exports = router;

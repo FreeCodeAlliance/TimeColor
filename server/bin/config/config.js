@@ -26,6 +26,7 @@ tc.lotteryState = {
 };
 // 下注字段名  万 千 百 十 个 大 小
 tc.BET_FIELDS = ['tth', 'tho', 'hun', 'ten', 'ind', 'big', 'small'];
+tc.BET_FIELDS_IDX = {tth:0, tho:1, hun:2, ten:3, ind:4, big:5, small:6};
 
 // 测试模式
 tc.TEST_MODE = false;
