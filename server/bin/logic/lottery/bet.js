@@ -7,6 +7,8 @@ function Bet() {
     // 当前下注数据
     this.bets = {};
     this.ctor();
+    // 赔率
+    this.odds = tc.gf.initBetArray(tc.ODDS);
 };
 
 // 初始化
@@ -88,7 +90,53 @@ Bet.prototype.statistic = function() {
 
 // 结算
 Bet.prototype.settle = function() {
-    this.reset();
+    var self = this;
+    var bets = self.bets;
+    lottery.queryResult((issue, result) => {
+        var sum = 0;
+        result.forEach((v) => {
+           sum += v;
+        });
+        var sizeRes = tc.BET_FIELDS_IDX.none;
+        if(sum < 23) {
+            sizeRes = tc.BET_FIELDS_IDX.small;
+        } else if(sum > 23) {
+            sizeRes = tc.BET_FIELDS_IDX.big;
+        }
+        var gains = [];
+        for (var uid in bets) {
+            var bet = bets[uid];
+            var gain = 0;
+            tc.gf.forBetFieldsEx((idx, num, field) => {
+                if(result[idx] == num) {
+                    gain += bet[idx][num] * self.odds[idx][num];
+                }
+            }, (idx, field) => {
+                if(idx == sizeRes) {
+                    gain += self.odds[idx] * bet[idx];
+                }
+            });
+            gains.push({u:uid, g:gain});
+        }
+
+        // 刷新数据库
+        var settleSql = function(idx) {
+            var d = gains[idx];
+            if(d) {
+                userSql.addUserQuota(d.u, d.g, (err, rows) => {
+                    if(!err) {
+                        lotterySql.updateGain(issue, d.u, d.g, (err, row) => {
+                            settleSql(idx + 1);
+                        });
+                    } else {
+                        settleSql(idx + 1);
+                    }
+                })
+            }
+        };
+        settleSql(0);
+    });
+    self.reset();
 };
 
 // 循环下注的json数据
@@ -163,6 +211,18 @@ Bet.prototype.execute = function(req, res){
                     });
                 }
             }
+        }
+    });
+};
+
+Bet.prototype.betGain = function(req, res) {
+    var uid = req.payload && req.payload.userid || req.query.uid;
+    var issue = req.query.issue;
+    lotterySql.getBetGain(issue, uid, (err, row) => {
+        if (err || row == undefined) {
+            tc.gf.send(res, tc.errorCode.query_fail);
+        } else {
+            tc.gf.send(res, null, {gain:row.gain});
         }
     });
 };

@@ -13,7 +13,7 @@ var query = function(params) {
     var func = params.func;
 
     function callback(err, rows, log) {
-        if (!log) {
+        if (log) {
             console.log(log);
         }
         if(func) {

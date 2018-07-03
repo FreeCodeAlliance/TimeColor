@@ -21,6 +21,12 @@ router.get('/login', (req, res) => {
 });
 
 ////////////////////开奖相关接口
+
+// 获取下注的获利
+router.get('/betgain', (req, res) => {
+    bet.betGain(req, res);
+});
+
 // 下注
 router.post('/bet', (req, res) => {
     bet.execute(req, res);

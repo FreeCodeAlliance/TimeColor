@@ -138,3 +138,17 @@ lotterySql.updateGain = (issue, uid, gain, callback) => {
         func:callback
     });
 };
+
+// 获取下注的获利
+lotterySql.getBetGain = (issue, uid, callback) => {
+    mysql.query({
+        sql: `SELECT * FROM bet WHERE issue = ${issue} AND uid = ${uid}`,
+        func:(err, rows) => {
+            if(err) {
+                callback(err);
+            } else {
+                callback(err, rows[0]);
+            }
+        }
+    });
+};

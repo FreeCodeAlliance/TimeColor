@@ -3,6 +3,7 @@
 | Url | 参数（body）| 返回值（data） | Description |
 |---- |------------|------- |-------------|
 | /users/login  |account , password |  {account:xx, disktype:xx, quota:xx, token:xx} | 用户登录 |
+| /users/betgain | issue | {gain:xx} | 获取下注的获利，如果返回-1表示还未结算 |
 | /masters/registerCheck | account, check | {} | 注册审核是否通过，check为true通过，false不通过 |	
 | /masters/checkList | | [{account:xx, password:xx, disktype:xx, date:xx, remark:xx}] | 获取审核列表 | 
 | /masters/login | account , password | {account:xx, token:xx} | 管理员登录 |
