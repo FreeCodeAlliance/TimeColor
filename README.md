@@ -12,13 +12,13 @@
 | /index/lotteryState | | {time:xxx, state:x, no:"xxxx"} | 获取开奖状态：time剩余时间（单位是秒） state开奖状态 1下注阶段 2锁盘阶段 3停止开奖 no开奖期号 |
 | /index/lotteryConfig | | {interval:xx, lock:xx, times:[[9, 11], [13, 21]]} | 获取服务器开奖的配置：interval开奖间隔时间 lock每次开奖的锁盘时间 times开奖的区间时间 单位是分 |
 | /index/lotteryRes | no | [1, 2, 3, 4, 5] | 获取开奖结果：数组顺序是 万 千 百 十 个   no是开奖期号 如果不加期号默认是当前开奖的期号 |
-| /index/lotteryOdds | | [[0, 1, 2, 3, 4, 5, 6, 7, 8, 9], ...] |  获取开奖赔率: 数组顺序是 万 千 百 十 个 大 小，其中前5个元素是一个大小为9的数组对应0-9数字的赔率，后两个元素是大小赔率 |
+| /index/lotteryOdds | | [[0, 1, 2, 3, 4, 5, 6, 7, 8, 9], ...] |  获取开奖赔率: 数组顺序是 万 千 百 十 个 大 小 单 双，其中前5个元素是一个大小为9的数组对应0-9数字的赔率，后4个元素是大小赔率 |
 
 #### 2. POST 
 | Url | 参数（body）| 返回值（data） | Description |
 |---- |------------|------- |-------------|
 | /users/register  |account, password |  {uid:xx} | 用户注册申请 |
-| /users/bet | data | {} | 玩家下注, 其中data的数据格式 例如：{"1":{"0":5}, "5":45} 其中 1和5 表示万 千 百 十 个 大 小这样顺序的序号，其中{"0":5}表示玩家在千位下注5个金币压数字0
+| /users/bet | data | {} | 玩家下注, 其中data的数据格式 例如：{"1":{"0":5}, "5":45} 其中 1和5 表示万 千 百 十 个 大 小 单 双这样顺序的序号（从0开始），其中{"0":5}表示玩家在千位下注5个金币压数字0
 | /masters/register  |account, password |  {uid:xx} | 管理员注册申请 | 
 | /masters/recharge  |account, value |  {value:xx} | 其中account是要充值的账号，返回的value是账号的当前额度 |
 | /masters/modify  | result |  {} | 其中result是5个元素数组 [万, 千, 百, 十, 个]  |

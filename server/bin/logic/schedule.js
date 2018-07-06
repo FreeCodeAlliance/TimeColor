@@ -7,73 +7,71 @@ var scheduleMgr = module.exports;
 
 // 启动开奖的定时任务
 scheduleMgr.lottery = ()=> {
+    var handleMin = (jobs, hour, min) => {
+        if(min >= 60) {
+            hour += 1;
+            min -= 60;
+        }
+        var keyhour = hour;
+        if(hour == 24) {
+            keyhour = 0;
+        }
+        if(jobs[keyhour] == undefined) {
+            jobs[keyhour] = [];
+        }
+        jobs[keyhour].push(min);
+        return [hour, min];
+    };
 
+    var addScheduleJobs = (jobs, callback) => {
+        for(var key in jobs) {
+            var rule = new schedule.RecurrenceRule();
+            rule.hour = key;
+            rule.minute = jobs[key];
+            schedule.scheduleJob(rule, ()=>{
+                callback();
+            });
+        }
+    };
 
-
-    // 生成开奖的范围时间
-    var hours = [];
+    var lotteryJobs = {};
+    var lockJobs = {};
+    var stopJobs = {};
     tc.lotteryTimes.forEach((interval)=>{
-        for(var i = interval[0]; i < interval[1]; i++) {
-            hours.push(i);
+        var curH = interval[0];
+        var curM = tc.lotteryMin;
+        while (true) {
+            var resA = handleMin(lotteryJobs, curH, curM + tc.lotteryInterval);
+            curH = resA[0];
+            curM = resA[1];
+            handleMin(lockJobs, curH, curM + tc.lotteryInterval - tc.lotteryLock);
+
+            if(curH + curM / 60 == interval[1] + tc.lotteryMin / 60) {
+                handleMin(stopJobs, curH, curM);
+                break;
+            }
         }
     });
 
-    // 分钟间隔时间
-    var minutes = [];
-    var lockminutes = [];
-    var count = Math.floor(60 / tc.lotteryInterval);
-    var isAddHour = false;
-    for(var i=0; i< count; i++) {
-        var t = i * tc.lotteryInterval + tc.lotteryMin
-        minutes.push(t);
-        if (t + tc.lotteryInterval - tc.lotteryLock > 60) {
-            lockminutes.push(t + tc.lotteryInterval - tc.lotteryLock - 60);
-            isAddHour = true
-        } else {
-            lockminutes.push(t + tc.lotteryInterval - tc.lotteryLock);
-        }
-    }
+    // console.log(lotteryJobs);
+    // console.log(lockJobs);
+    // console.log(stopJobs);
 
-    var lockhours =  [];
-    if (isAddHour) {
-        for(var i =0, len = hours.length; i < len; i++) {
-            if (hours[i] + 1 == 24) {
-                lockhours.push(0);
-            } else {
-                lockhours.push(hours[i] + 1);
-            }
-        }
-        lockhours = Array.from(new Set(lockhours));
-    }
-    //console.log(hours, lockhours, minutes, lockminutes);
-
-    var rule = new schedule.RecurrenceRule();
-    rule.hour = hours;
-    rule.minute = minutes;
     // 开奖定时触发
-    schedule.scheduleJob(rule, ()=>{
-        bet.settle(); // 下注结算
+    addScheduleJobs(lotteryJobs, () => {
+        bet.settle();           // 下注结算
         lottery.execute();
     });
 
-    var lockrule = new schedule.RecurrenceRule();
-    lockrule.hour = lockhours;
-    lockrule.minute = lockminutes;
     // 锁定定时触发
-    schedule.scheduleJob(lockrule, ()=>{
+    addScheduleJobs(lockJobs, () => {
         lottery.lock();
     });
 
     // 停止定时触发
-    if (60 % tc.lotteryInterval != 0) {
-        var stoprule = new schedule.RecurrenceRule();
-        stoprule.hour = hours;
-
-        stoprule.minute = [60 - 60 % tc.lotteryInterval + tc.lotteryMin];
-        schedule.scheduleJob(lockrule, ()=>{
-            lottery.stop();
-        });
-    }
+    addScheduleJobs(stopJobs, () => {
+        lottery.stop();
+    });
 };
 
 // 刷新开奖期号
@@ -87,27 +85,8 @@ scheduleMgr.refreshLotteryNo = ()=> {
     });
 };
 
-// 刷新开奖停止响应
-scheduleMgr.stopLottery = () => {
-    var hours = [];
-    for(var i = 0, len = tc.lotteryTimes.length; i < len; i++) {
-        if (tc.lotteryTimes[i][1] == 24) {
-            hours.push(0);
-        } else {
-            hours.push(tc.lotteryTimes[i][1]);
-        }
-    }
-    var rule = new schedule.RecurrenceRule();
-    rule.hour = hours;
-    rule.minute = tc.lotteryMin;
-    schedule.scheduleJob(rule, () => {
-        lottery.stop();
-    });
-};
-
 // 启动定时器
 scheduleMgr.start = ()=> {
     scheduleMgr.refreshLotteryNo();
-    scheduleMgr.stopLottery();
     scheduleMgr.lottery();
 };

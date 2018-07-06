@@ -58,7 +58,7 @@ gf.prefixInteger = (int, num) => {
 // 将字符串转成int的数组
 gf.stringToIntArray = (str) => {
     var array = str.split('');
-    for(var i =0, len = array.length; i < len; i++) {
+    for(var i = 0, len = array.length; i < len; i++) {
         array[i] = parseInt(array[i]);
     }
     return array;
@@ -66,7 +66,7 @@ gf.stringToIntArray = (str) => {
 
 // 循环下注的字段名  numFunc数字下注的回调  sizeFunc大小下注的回调
 gf.forBetFields = (numFunc, sizeFunc) => {
-    for(var i=0, len = tc.BET_FIELDS.length; i < len; i++) {
+    for(var i = 0, len = tc.BET_FIELDS.length; i < len; i++) {
         if (i < 5) {
             numFunc(i, tc.BET_FIELDS[i]);
         } else {
@@ -76,7 +76,7 @@ gf.forBetFields = (numFunc, sizeFunc) => {
 };
 
 gf.forBetFieldsEx = (numFunc, sizeFunc) => {
-    for(var i=0, len = tc.BET_FIELDS.length; i < len; i++) {
+    for(var i = 0, len = tc.BET_FIELDS.length; i < len; i++) {
         if (i < 5) {
             for (var j = 0; j < 10; j ++) {
                 numFunc(i, j, tc.BET_FIELDS[i]);

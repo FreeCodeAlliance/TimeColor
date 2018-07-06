@@ -103,13 +103,16 @@ lotterySql.bet = (issue, uid, bet, callback) => {
                 callback(err)
             } else {
                 if (rows.length == 0) {
-                    var sqlStr = `INSERT INTO bet(issue, uid, ${tc.BET_FIELDS.join(' ,')}) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+                    var sqlStr = [];
                     var args = [issue, uid];
                     tc.gf.forBetFields((idx, field) => {
                         args.push(JSON.stringify(bet[idx]));
+                        sqlStr.push('?');
                     }, (idx, field) => {
                         args.push(bet[idx]);
+                        sqlStr.push('?');
                     });
+                    var sqlStr = `INSERT INTO bet(issue, uid, ${tc.BET_FIELDS.join(' ,')}) VALUES(?, ?, ${sqlStr.join(' ,')})`;
                     mysql.query({sql:sqlStr, args:args, func:callback});
                 } else {
                     var sqlStr = 'UPDATE bet SET ';

@@ -8,7 +8,10 @@ function Bet() {
     this.bets = {};
     this.ctor();
     // 赔率
-    this.odds = tc.gf.initBetArray(tc.ODDS);
+    this.odds = tc.gf.initBetArray(tc.NUMODDS);
+    for(var i = tc.BET_FIELDS_IDX.big; i <= tc.BET_FIELDS_IDX.double; i++) {
+        this.odds[i] = tc.COMODDS;
+    }
 };
 
 // 初始化
@@ -88,6 +91,24 @@ Bet.prototype.statistic = function() {
 
 };
 
+// 大小结果
+Bet.prototype.getSizeRes = function(sum) {
+    if(sum < 23) {
+        return tc.BET_FIELDS_IDX.small;
+    } else if(sum > 23) {
+        return tc.BET_FIELDS_IDX.big;
+    }
+    return tc.BET_FIELDS_IDX.none;
+};
+
+// 单双结果
+Bet.prototype.getSinDouRes = function(sum) {
+    if (sum % 2 == 0) {
+        return tc.BET_FIELDS_IDX.even;
+    }
+    return tc.BET_FIELDS_IDX.singal;
+};
+
 // 结算
 Bet.prototype.settle = function() {
     var self = this;
@@ -97,12 +118,11 @@ Bet.prototype.settle = function() {
         result.forEach((v) => {
            sum += v;
         });
-        var sizeRes = tc.BET_FIELDS_IDX.none;
-        if(sum < 23) {
-            sizeRes = tc.BET_FIELDS_IDX.small;
-        } else if(sum > 23) {
-            sizeRes = tc.BET_FIELDS_IDX.big;
-        }
+        // 大小结果
+        var sizeRes = self.getSizeRes(sum);
+        // 单双结果
+        var comRes = self.getSinDouRes(sum);
+
         var gains = [];
         for (var uid in bets) {
             var bet = bets[uid];
@@ -112,7 +132,7 @@ Bet.prototype.settle = function() {
                     gain += bet[idx][num] * self.odds[idx][num];
                 }
             }, (idx, field) => {
-                if(idx == sizeRes) {
+                if(idx == sizeRes || idx == comRes) {
                     gain += self.odds[idx] * bet[idx];
                 }
             });
