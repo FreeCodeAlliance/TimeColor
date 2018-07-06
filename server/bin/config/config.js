@@ -26,7 +26,7 @@ tc.lotteryState = {
     stop:3,                     // 停止
 };
 // 下注字段名  万 千 百 十 个 大 小
-tc.BET_FIELDS = ['tth', 'tho', 'hun', 'ten', 'ind', 'big', 'small', 'singal', 'even'];
+tc.BET_FIELDS = ['tth', 'tho', 'hun', 'ten', 'ind', 'big', 'small', 'single', 'even'];
 tc.BET_FIELDS_IDX = {none:-1, tth:0, tho:1, hun:2, ten:3, ind:4, big:5, small:6, singal:7, even:8,};
 // 默认赔率
 tc.NUMODDS = 9.8;
