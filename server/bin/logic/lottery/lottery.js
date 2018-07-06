@@ -59,7 +59,7 @@ Lottery.prototype.refreshLotteryNo = function(){
     var oneHour = Math.floor(60 / tc.lotteryInterval);
     this.count = hours * oneHour;
     if (isInterval) {
-        var curMin = date.getMinutes();
+        var curMin = date.getMinutes() - tc.lotteryMin;
         this.count -= oneHour;
         this.count += Math.floor(curMin / tc.lotteryInterval);
         if(curMin >= 60 - 60 % tc.lotteryInterval) {

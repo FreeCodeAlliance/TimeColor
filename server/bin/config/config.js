@@ -15,9 +15,10 @@ tc.errorCode = {
 // 开奖间隔时间 单位分钟
 tc.lotteryInterval = 10;
 // 开奖锁定时间 单位分钟
-tc.lotteryLock = 5;
+tc.lotteryLock = 2;
 // 开奖的区间时间 单位小时
-tc.lotteryTimes = [[9, 11], [13, 21]];
+tc.lotteryTimes = [[0, 2], [10, 24]];
+tc.lotteryMin = 3;      // 开奖区间的分钟偏移值
 // 开奖状态
 tc.lotteryState = {
     bet:1,                      // 下注
