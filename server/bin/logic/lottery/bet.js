@@ -106,7 +106,7 @@ Bet.prototype.getSinDouRes = function(sum) {
     if (sum % 2 == 0) {
         return tc.BET_FIELDS_IDX.even;
     }
-    return tc.BET_FIELDS_IDX.singal;
+    return tc.BET_FIELDS_IDX.single;
 };
 
 // 结算
