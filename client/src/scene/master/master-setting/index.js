@@ -35,7 +35,7 @@ class MasterSetting extends Component {
   }
 
     renderLineSelector(key, text) {
-       const placeholder = `设置开奖号码 (${text})`
+       const placeholder = `設置開獎號碼 (${text})`
        return (
          <div className= "lineSelector">
              <p>{text}</p>
@@ -69,8 +69,8 @@ class MasterSetting extends Component {
         return (
             <div className="masterSetting">
               <h4>
-                下次开奖设置: 9 7 5 6 0
-                <p>剩余开奖时间: 00:06</p>
+                下次開獎設置: 9 7 5 6 0
+                <p>剩餘開獎時間: 00:06</p>
               </h4>
               {this.renderLineSelector(0, "万")}
               {this.renderLineSelector(1, "千")}
@@ -78,7 +78,7 @@ class MasterSetting extends Component {
               {this.renderLineSelector(3, "十")}
               {this.renderLineSelector(4, "个")}
               <div className="buttonPanel">
-                <Button type="danger" size="large" onClick={this.handleSetting.bind(this)}>确定开奖</Button>
+                <Button type="danger" size="large" onClick={this.handleSetting.bind(this)}>改變開獎號碼</Button>
               </div>
             </div>
         );

@@ -49,7 +49,7 @@ export default class Shuangmian extends Component {
         {data.map( (v, k) => this.renderItem(v))}
            */
         }
-        双面盘口界面（还未实现）
+        另一個玩法（还未实现）
       </div>
     );
   }

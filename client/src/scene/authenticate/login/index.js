@@ -45,11 +45,11 @@ class Login extends Component {
 
     isErrorcheckInput() {
         if (validate("account", this.state.account)) {
-            message.warn("账号格式不对")
+            message.warn("賬號格式不對")
             return true
         }
         if (validate("password", this.state.password )) {
-            message.warn("密码格式不对")
+            message.warn("密碼格式不對")
             return true
         }
         return null
@@ -65,7 +65,7 @@ class Login extends Component {
 
     handleRegister = () => {
           if ( this.state.account === 'master') {
-            message.warn("已被注册")
+            message.warn("已被注冊")
             return true
           }
         if ( this.isErrorcheckInput()) {
@@ -122,7 +122,7 @@ class Login extends Component {
                         router.replace("home");
                 }
             } else {
-                message.error('网络不佳');
+                message.error('網絡不佳');
             }
         });
     };
@@ -139,7 +139,7 @@ class Login extends Component {
                       type="text"
                       name="mobile"
                       maxLength="11"
-                      placeholder="请输入账号"
+                      placeholder="請輸入賬號"
                       value={this.state.account}
                       error={this.state.accountError}
                       onChange={value => this.handleChange('account', value)}
@@ -150,7 +150,7 @@ class Login extends Component {
                       type="password"
                       name="password"
                       maxLength="12"
-                      placeholder="密码，至少六位"
+                      placeholder="密碼，至少六偉"
                       error={this.state.passwordError}
                       onChange={value => this.handleChange('password', value)}
                       onBlur={() => this.handleBlur('password')}
@@ -160,7 +160,7 @@ class Login extends Component {
                         <Button
                             style={{height: '48px', fontSize: '20px', width: '26%'}}
                             onClick={this.handleRegister.bind(this)}
-                        >注册</Button>
+                        >注冊</Button>
                         <Button
                             onClick={this.handleLogin.bind(this)}
                             loading={loading}
@@ -183,12 +183,3 @@ export default connect((state, ownProps) => {
         master
     };
 })(Login);
-
-/*
- export default connect((state, ownProps) => {
- const { consumeRecords} = state;
- return {
- consumeRecords
- };
- })(ConsumeRecord);
- */
