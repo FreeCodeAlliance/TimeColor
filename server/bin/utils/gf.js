@@ -58,10 +58,49 @@ gf.prefixInteger = (int, num) => {
 // 将字符串转成int的数组
 gf.stringToIntArray = (str) => {
     var array = str.split('');
-    for(var i =0, len = array.length; i < len; i++) {
+    for(var i = 0, len = array.length; i < len; i++) {
         array[i] = parseInt(array[i]);
     }
     return array;
+};
+
+// 循环下注的字段名  numFunc数字下注的回调  sizeFunc大小下注的回调
+gf.forBetFields = (numFunc, sizeFunc) => {
+    for(var i = 0, len = tc.BET_FIELDS.length; i < len; i++) {
+        if (i < 5) {
+            numFunc(i, tc.BET_FIELDS[i]);
+        } else {
+            sizeFunc(i, tc.BET_FIELDS[i]);
+        }
+    }
+};
+
+gf.forBetFieldsEx = (numFunc, sizeFunc) => {
+    for(var i = 0, len = tc.BET_FIELDS.length; i < len; i++) {
+        if (i < 5) {
+            for (var j = 0; j < 10; j ++) {
+                numFunc(i, j, tc.BET_FIELDS[i]);
+            }
+        } else {
+            sizeFunc(i, tc.BET_FIELDS[i]);
+        }
+    }
+};
+
+// 初始化下注的数据数组 cnum 默认是0
+gf.initBetArray = (cnum) => {
+    cnum = cnum ? cnum : 0;
+    var betArray = [];
+    gf.forBetFields((idx, field) => {
+        var array = [];
+        for(var i = 0; i < 10; i++) {
+            array.push(cnum);
+        }
+        betArray.push(array);
+    }, (idx, field) => {
+        betArray.push(cnum);
+    });
+    return betArray;
 };
 
 tc.gf = gf;

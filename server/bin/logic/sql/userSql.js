@@ -23,3 +23,15 @@ userSql.updateUserQuota = (uid, quota, callback) => {
     });
 };
 
+// 增加额度
+userSql.addUserQuota = (uid, quota, callback) => {
+    userSql.getUserInfo(uid, (err, rows) => {
+        if(err || rows.length == 0) {
+            callback(true)
+        } else {
+            var row = rows[0];
+            userSql.updateUserQuota(uid, row.quota + quota, callback);
+        }
+    });
+};
+

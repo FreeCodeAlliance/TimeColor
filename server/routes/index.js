@@ -25,7 +25,7 @@ router.get('/lotteryRes', (req, res) => {
 
 // 获取开奖赔率 先写死
 router.get('/lotteryOdds', (req, res) => {
-    tc.gf.send(res, null, [2.2, 2.2, 2.2, 2.2, 2.2, 2.2, 2.2]);
+    tc.gf.send(res, null, tc.gf.initBetArray(tc.ODDS));
 });
 
 module.exports = router;

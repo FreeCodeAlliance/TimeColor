@@ -141,7 +141,7 @@ var register = {
                 if(err) {
                     tc.gf.send(res, tc.errorCode.query_fail);
                 } else {
-                    tc.gf.send(res, null, tc.gf.filterRows(rows));
+                    tc.gf.send(res, null, rows);
                 }
             },
         });

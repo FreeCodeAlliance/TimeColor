@@ -31,6 +31,7 @@ Lottery.prototype.ctor = function() {
             this.state = tc.lotteryState.lock;
         }
     }
+    this.queryResult((issue, res)=>{});
 };
 
 // 刷新开奖期号
@@ -58,7 +59,7 @@ Lottery.prototype.refreshLotteryNo = function(){
     var oneHour = Math.floor(60 / tc.lotteryInterval);
     this.count = hours * oneHour;
     if (isInterval) {
-        var curMin = date.getMinutes();
+        var curMin = date.getMinutes() - tc.lotteryMin;
         this.count -= oneHour;
         this.count += Math.floor(curMin / tc.lotteryInterval);
         if(curMin >= 60 - 60 % tc.lotteryInterval) {
@@ -111,6 +112,24 @@ Lottery.prototype.stop = function() {
 // 获取当前的开奖期号
 Lottery.prototype.getNO = function() {
     return util.format("%s%s", this.noStr, tc.gf.prefixInteger(this.count, 3));
+};
+
+// 查询开奖结果
+Lottery.prototype.queryResult = function(callback) {
+    var self = this;
+    var issue = self.getNO();
+    var result = self.lotteryRes[issue];
+    if (result) {
+        callback(issue, result);
+        return ;
+    }
+    lotterySql.getLotteryResult(issue, (err, row) => {
+        if(!err && row) {
+            result = tc.gf.stringToIntArray(row.result);
+            self.lotteryRes[issue] = result;
+            callback(issue, result);
+        }
+    });
 };
 
 // 获取开奖的剩余时间
