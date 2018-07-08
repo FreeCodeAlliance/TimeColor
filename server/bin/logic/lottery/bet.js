@@ -224,7 +224,7 @@ Bet.prototype.execute = function(req, res){
                                 if(err){
                                     tc.gf.send(res, tc.errorCode.query_fail);
                                 } else {
-                                    tc.gf.send(res);
+                                    tc.gf.send(res, null, {quota:quota});
                                 }
                             });
                         }
