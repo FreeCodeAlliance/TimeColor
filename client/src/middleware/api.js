@@ -27,6 +27,9 @@ export default () => next => (action) => {
       });
   }
   console.log("header",headers)
+
+  console.log(JSON.stringify(body))
+
   const withBody = method.toUpperCase() === 'POST' || method.toUpperCase() === 'PUT';
   return fetch(API_ROOT + url, {
       method,

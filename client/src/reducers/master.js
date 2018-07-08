@@ -6,11 +6,12 @@ export function master(state = {
   loading: false,
   userList: [],
 }, action = {}) {
-  //console.log("master reduces", action.type)
+  console.log("master reduces--------------->", action.type, action)
   switch (action.type) {
     case MasterTypes.REQUEST_GET_USER_LIST:
     case MasterTypes.REQUEST_MASTER_LOGIN:
     case MasterTypes.REQUEST_RECHARGE:
+    case MasterTypes.REQUEST_MODIFY_RESULT:
       return Object.assign({}, state, {
         loading: true,
       });
@@ -28,6 +29,11 @@ export function master(state = {
       return Object.assign({}, state, {
         loading: false,
         userList: action.response.data
+      });
+    case MasterTypes.RECEIVE_MODIFY_RESULT_SUCCESS:
+      console.log("RECEIVE_MODIFY_RESULT_SUCCESS", action.response.data)
+      return Object.assign({}, state, {
+        loading: false,
       });
     case MasterTypes.RECEIVE_RECHARGE_SUCCESS:
       return Object.assign({}, state, {

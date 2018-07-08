@@ -58,3 +58,21 @@ export function userRecharge(account, value) {
     },
   };
 }
+
+export function modifyResult(result) {
+  return {
+    [CALL_API]: {
+      types: [
+        MasterTypes.REQUEST_MODIFY_RESULT,
+        MasterTypes.RECEIVE_MODIFY_RESULT_SUCCESS,
+        Types.RECEIVE_API_FAILURE,
+      ],
+      url: '/masters/modify',
+      method: 'POST',
+      isRequireAuth: true,
+      body: {
+        result,
+      },
+    },
+  };
+}
