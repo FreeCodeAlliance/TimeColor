@@ -3,20 +3,27 @@ import * as LotteryTypes from '../actions/types/lotteryTypes';
 
 export function lottery(state = {
   loading: false,
-  status: [],
+  status: {state:0 },
+  lotteryResult:{}
 }, action = {}) {
-  console.log("lottery reduces", action.type)
+  //console.log("lottery reduces", action.type)
   switch (action.type) {
     case LotteryTypes.REQUEST_LOTTERY:
+    case LotteryTypes.REQUEST_FETCH_lOTTERY_RESULT:
       return Object.assign({}, state, {
         loading: true,
       });
     case LotteryTypes.RECEIVE_LOTTERY_SUCCESS:
-      console.log("action.response.data", action.response.data);
       return Object.assign({}, state, {
         loading: false,
         isPop: false,
         status: action.response.data
+      });
+    case LotteryTypes.RECEIVE_FETCH_lOTTERY_RESULT_SUCCESS:
+      console.log(" LotteryTypes.RECEIVE_FETCH_lOTTERY_RESULT_SUCCESS", action.response)
+      return Object.assign({}, state, {
+        loading: false,
+        lotteryResult: action.response.data
       });
     case  Types.RECEIVE_API_FAILURE:
       return Object.assign({}, state, {

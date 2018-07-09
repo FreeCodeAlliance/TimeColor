@@ -1,41 +1,96 @@
 import React, { Component } from 'react';
 import "./index.less"
-import { TreeSelect, Button } from 'antd';
-import {fetchLotteryStatus} from  '../../../actions/lottery'
-
+import { TreeSelect, Button, message } from 'antd';
+import {fetchLotteryStatus, fetchLotterResult} from  '../../../actions/lottery'
+import {modifyResult} from  '../../../actions/master'
+import {format} from  '../../../component/utils'
 import {connect} from "react-redux";
 const TreeNode = TreeSelect.TreeNode;
 
+const LotteryState = ["服務器異常", "下注階段", "封盤階段", "停滯開獎"]
 
 class MasterSetting extends Component {
-    state = {
-        value: [undefined, undefined, undefined, undefined, undefined],
-    }
-    constructor(props) {
-        super(props);
-    }
+  state = {
+      value: [undefined, undefined, undefined, undefined, undefined],
+      leftTime: "-- --"
+  };
+  constructor(props) {
+      super(props);
+      this.loopHanle = undefined;
+      this.leftTimeValue = -1
+  }
 
 
   componentWillMount() {
     const { dispatch } = this.props;
-    dispatch(fetchLotteryStatus())
+    dispatch(fetchLotteryStatus()).then((res)=>{
+      if (res.response && !res.response.errorCode) {
+        const data = res.response.data;
+        if (data.time > 0) {
+          this.leftTimeValue = data.time;
+          this.setState({leftTime: this.formatLeftTime(data.time)})
+        }
+      }
+    });
+    this.syncOpenNumber()
+
+    this.loopHanle = setInterval(()=>{
+      if (this.leftTimeValue > 0) {
+        this.leftTimeValue--;
+        this.formatLeftTime(this.leftTimeValue)
+        this.setState({leftTime: this.formatLeftTime(this.leftTimeValue)})
+      }
+    }, 1000)
   }
 
-    onChange = (key, value) => {
-      console.log(key, value);
-      let data = this.state.value;
-      data[key] = value
-      this.setState({ value: data });
-    };
+  componentWillUnmount() {
+    if (this.loopHanle) {
+      clearInterval(this.loopHanle)
+    }
+  }
 
+  formatLeftTime(time) {
+    const m = Math.floor(time/60);
+    const s = format("%02d", time % 60);
+    let formatTime = `${m}:${s}`;
+    return formatTime
+  }
 
+  syncOpenNumber() {
+    let result = "隨機";
+    const { dispatch } = this.props;
+    dispatch(fetchLotterResult())
+    return result
+  }
+
+  onChange = (key, value) => {
+    console.log(key, value);
+    let data = this.state.value;
+    data[key] = value
+    this.setState({ value: data });
+  };
 
   handleSetting() {
-    console.log("fetch setting");
+    for(let k in this.state.value) {
+      if (this.state.value[k] === undefined) {
+        message.warn("信息不完整")
+        return
+      }
+    }
+    const {dispatch} = this.props;
+    dispatch(modifyResult(this.state.value)).then((res)=>{
+      if (res.response) {
+        if (res.response.error) {
+          message.error(res.response.error)
+        }
+        this.syncOpenNumber();
+      }
+    })
   }
 
-    renderLineSelector(key, text) {
-       const placeholder = `设置开奖号码 (${text})`
+
+  renderLineSelector(key, text) {
+       const placeholder = `設置開獎號碼 (${text})`
        return (
          <div className= "lineSelector">
              <p>{text}</p>
@@ -64,13 +119,15 @@ class MasterSetting extends Component {
        )
     }
     render() {
-        //let tab = this.state.tab;
+      const {lotteryResult, status} = this.props;
+      console.log(status,LotteryState[status.state]);
         //let floatView = `floatView-${tab}`;
         return (
             <div className="masterSetting">
               <h4>
-                下次开奖设置: 9 7 5 6 0
-                <p>剩余开奖时间: 00:06</p>
+                當前處於{LotteryState[status.state]}  <br/>
+                下次開獎結果: {lotteryResult.toString()}
+                <p>剩餘開獎時間: {this.state.leftTime}</p>
               </h4>
               {this.renderLineSelector(0, "万")}
               {this.renderLineSelector(1, "千")}
@@ -78,7 +135,7 @@ class MasterSetting extends Component {
               {this.renderLineSelector(3, "十")}
               {this.renderLineSelector(4, "个")}
               <div className="buttonPanel">
-                <Button type="danger" size="large" onClick={this.handleSetting.bind(this)}>确定开奖</Button>
+                <Button type="danger" size="large" onClick={this.handleSetting.bind(this)}>改變開獎號碼</Button>
               </div>
             </div>
         );
@@ -89,6 +146,7 @@ export default connect((state, ownProps) => {
   const { master, lottery} = state;
   return {
     status : lottery.status,
+    lotteryResult: lottery.lotteryResult,
     loading : master.loading
   };
 })(MasterSetting);

@@ -1,12 +1,28 @@
 @import "../../../component/theme/theme";
 
 .zhupansi-content {
-  //background-color: #86ffaa;
+  background-color: @brand-primary;
   display: flex;
   width: 100%;
   flex-direction: column;
+  height: 100%;
+  padding: 0 5px;
+  justify-content: center;
+  //align-items: center;
+  > h3 {
+    align-self: center;
+    text-align: center;
+    background-color: @brand-highlight;
+    width: 100%;
+    padding: 2px;
+    font-size: 20px;
+    border-radius: 5px;
+  }
   .zps-title {
-    background-color: gray;
+    padding: 5px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    background-color: @brand-primary;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -41,19 +57,17 @@
     }
   }
 
-  >table {
-    >tbody {
-      >tr {
-        >th {
-          //color: #c42830;
-          //padding: 5px;
-          white-space:pre-wrap;
-          text-align: center;
-        }
-      }
+  .userSelector {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    >p {
+      background-color: #32CDFF;
+      margin-bottom: 0px;
+      font-size: 16px;
+      text-align: center;
     }
   }
-
   .zps-title-panel2-circle {
     width: 20px;
     height: 20px;
@@ -64,19 +78,30 @@
   }
 
   .touzhuPanel {
-    background-color: #c5c5c5;
+    background-color: @brand-primary;
     //height: 25px;
-    border: 1px solid black;
+    margin-top: 5px;
+   // border: 1px solid black;
+    align-self: center;
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
     align-items: center;
+    border-radius: 5px;
+    padding: 5px;
     >p {
       margin: 0 5px;
       text-align: center;
+      color: #333;
+      font-weight: 600;
+      font-size: 16px;
+    }
+    >input {
+      width: 100px;
     }
     >button {
       margin: 0 5px;
+      padding: 3px;
     }
   }
 

@@ -46,7 +46,7 @@ scheduleMgr.lottery = ()=> {
             curM = resA[1];
             handleMin(lockJobs, curH, curM + tc.lotteryInterval - tc.lotteryLock);
 
-            if(curH + curM / 60 == interval[1] + tc.lotteryMin / 60) {
+            if(curH + curM / 60 >= interval[1]) {
                 handleMin(stopJobs, curH, curM);
                 break;
             }
