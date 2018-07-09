@@ -17,53 +17,99 @@ function Lottery() {
     this.noStr = "";
     // 记录开奖的时间
     this.lotteryDate = new Date();
-    this.ctor();
-    console.log(this.count, this.noStr, this.state);
 };
 
 // 初始化
-Lottery.prototype.ctor = function() {
+Lottery.prototype.ctor = function(lotteryJobs) {
     var self = this;
-    var date = this.refreshLotteryNo();
+    var date = self.refreshLotteryNo();
     var hour = date.getHours();
     var min = date.getMinutes();
-    var day = date.getDay();
-    var compareDay = day;
-    if(hour + min < tc.lotteryTimes[0][0] + tc.lotteryMin) {
-        var preDate = new Date(date.getTime() - 24 * 60 * 60 * 1000);
-        self.refreshLotteryNo(preDate);
-        compareDay -= 1;
+    var day = date.getDate();
+    var year = date.getFullYear();
+    var month = date.getMonth();
+
+    function refreshDate(time) {
+        var newDate = new Date(date.getTime() - time);
+        day = newDate.getDay();
+        year = newDate.getFullYear();
+        month = newDate.getMonth();
+        return newDate;
     }
-    var sumMins = 0;
-    var isInterval = false;
-    tc.lotteryTimes.forEach(function(interval){
-        if(day > compareDay) {
-            sumMins += (interval[1] - interval[0]) * 60;
-        } else {
-            if(hour * 60 + min >= interval[0] * 60 + tc.lotteryMin){
-                if(hour <= interval[1]){
-                    sumMins += hour * 60 + min - interval[0] * 60 - tc.lotteryMin;
-                    isInterval = true;
-                } else {
-                    sumMins += (interval[1] - interval[0]) * 60;
-                }
+
+    function calcCount(curHour) {
+        for (var i=0; i < curHour; i++) {
+            if (lotteryJobs[i]) {
+                self.count += lotteryJobs[i].length;
             }
         }
-    });
-    var count = sumMins / tc.lotteryInterval;
-    this.count = Math.ceil(count);
-    if(isInterval) {
-        var rTime = (this.count - count) * tc.lotteryInterval;
-        if(rTime <= tc.lotteryLock) {
-            self.state = tc.lotteryState.lock;
-        } else {
-            self.state = tc.lotteryState.bet;
-        }
-        this.lotteryDate = new Date(date.getTime() - rTime * 60 * 1000);
-    } else {
-        self.state = tc.lotteryState.stop;
     }
-    self.queryResult((issue, res)=>{});
+
+    var sortF = (x, y) => {
+        if (x < y) {
+            return -1;
+        } else if (x > y) {
+            return 1;
+        } else {
+            return 0;
+        }
+    };
+
+    calcCount(hour);
+    var jobs = lotteryJobs[hour];
+    if(jobs == undefined || (jobs && min < jobs[0])) {
+        hour -= 1;
+        if (hour < 0) {
+            hour = 23;
+            self.refreshLotteryNo(refreshDate(24 * 60 * 60 * 1000));
+            calcCount(hour);
+        }
+        jobs = lotteryJobs[hour];
+        if(jobs == undefined) {
+            self.state = tc.lotteryState.stop;
+        } else {
+            jobs.sort(sortF);
+
+            var maxMin = jobs[jobs.length - 1];
+            min += 60;
+            if(maxMin + tc.lotteryInterval <= min) {
+                self.state = tc.lotteryState.stop;
+            } else {
+                if(min - maxMin >= tc.lotteryInterval - tc.lotteryLock) {
+                    self.state = tc.lotteryState.lock;
+                } else {
+                    self.state = tc.lotteryState.bet;
+                }
+                self.lotteryDate = new Date(year, month, day, hour, maxMin, 0, 0);
+            }
+        }
+    } else {
+        jobs.sort(sortF);
+
+        var len = jobs.length;
+        if(min < jobs[len - 1] + tc.lotteryInterval) {
+            for(var i = 1; i <= len; i++) {
+                self.count += 1;
+                if ((jobs && min < jobs[i]) || i == len) {
+                    self.lotteryDate = new Date(year, month, day, hour, jobs[i - 1], 0, 0);
+                    if(min - jobs[i] >= tc.lotteryInterval - tc.lotteryLock) {
+                        self.state = tc.lotteryState.lock;
+                    } else {
+                        self.state = tc.lotteryState.bet;
+                    }
+                    break;
+                }
+            }
+        } else {
+            self.state = tc.lotteryState.stop;
+            self.count += len;
+        }
+    }
+
+    console.log(self.count, self.noStr, self.state, tc.gf.getCurTimeFormat(self.lotteryDate));
+    self.queryResult((iss, res) => {
+        console.log('queryResult complete!');
+    });
 };
 
 // 刷新开奖期号
@@ -75,34 +121,6 @@ Lottery.prototype.refreshLotteryNo = function(date){
     var day = date.getDate();
     this.noStr = util.format("%d%s%s", year, tc.gf.prefixInteger(month), tc.gf.prefixInteger(day));
     return date;
-
-    // var curHour = date.getHours();
-    // var hours = 0;
-    // var isInterval = false;
-    // tc.lotteryTimes.forEach(function(interval){
-    //     if(curHour >= interval[0]){
-    //         if(curHour <= interval[1]){
-    //             hours += curHour - interval[0];
-    //             isInterval = true;
-    //         } else {
-    //             hours += interval[1] - interval[0];
-    //         }
-    //     }
-    // });
-    // var oneHour = Math.floor(60 / tc.lotteryInterval);
-    // this.count = hours * oneHour;
-    // if (isInterval) {
-    //     var curMin = date.getMinutes() - tc.lotteryMin;
-    //     this.count -= oneHour;
-    //     this.count += Math.floor(curMin / tc.lotteryInterval);
-    //     if(curMin >= 60 - 60 % tc.lotteryInterval) {
-    //         return null;
-    //     } else {
-    //         this.count += 1;
-    //         return curMin % tc.lotteryInterval;
-    //     }
-    // }
-    // return null;
 };
 
 // 开奖
@@ -173,7 +191,7 @@ Lottery.prototype.getReTime = function() {
     }
 
     var date = new Date();
-    return math.ceil(parseInt(date - this.lotteryDate) / 1000);
+    return Math.ceil(tc.lotteryInterval * 60 - parseInt(date - this.lotteryDate) / 1000);
 };
 
 ///////////////////////////////////////////////////////////////////////////

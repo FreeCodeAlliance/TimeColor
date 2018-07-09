@@ -57,6 +57,10 @@ scheduleMgr.lottery = ()=> {
     console.log(lockJobs);
     console.log(stopJobs);
 
+    // 初始化开奖
+    lottery.ctor(lotteryJobs);
+
+
     // 开奖定时触发
     addScheduleJobs(lotteryJobs, () => {
         bet.settle();           // 下注结算
@@ -73,7 +77,7 @@ scheduleMgr.lottery = ()=> {
         var date = new Date();
         if (date.getHours() == 0) {
             lottery.refreshLotteryNo();
-            lottery.count = 0;
+            lottery.count = 1;
         }
         lottery.stop();
     });

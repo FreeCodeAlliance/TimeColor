@@ -17,8 +17,8 @@ gf.md5 = (text) => {
 };
 
 // 获取当前时间 格式：'YYYY-MM-DD HH:mm:ss'
-gf.getCurTimeFormat = () => {
-    return sdTime.format(new Date(), 'YYYY-MM-DD HH:mm:ss');
+gf.getCurTimeFormat = (date) => {
+    return sdTime.format(date ? date : new Date(), 'YYYY-MM-DD HH:mm:ss');
 };
 
 // 将格式装换成时间戳
