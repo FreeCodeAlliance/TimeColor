@@ -53,9 +53,9 @@ scheduleMgr.lottery = ()=> {
         }
     });
 
-    // console.log(lotteryJobs);
-    // console.log(lockJobs);
-    // console.log(stopJobs);
+    console.log(lotteryJobs);
+    console.log(lockJobs);
+    console.log(stopJobs);
 
     // 开奖定时触发
     addScheduleJobs(lotteryJobs, () => {
@@ -70,23 +70,16 @@ scheduleMgr.lottery = ()=> {
 
     // 停止定时触发
     addScheduleJobs(stopJobs, () => {
+        var date = new Date();
+        if (date.getHours() == 0) {
+            lottery.refreshLotteryNo();
+            lottery.count = 0;
+        }
         lottery.stop();
-    });
-};
-
-// 刷新开奖期号
-scheduleMgr.refreshLotteryNo = ()=> {
-    var rule = new schedule.RecurrenceRule();
-    rule.hour = [0];
-    rule.minute = tc.lotteryMin;
-    schedule.scheduleJob(rule, ()=>{
-        lottery.refreshLotteryNo();
-        lottery.count = 0;
     });
 };
 
 // 启动定时器
 scheduleMgr.start = ()=> {
-    scheduleMgr.refreshLotteryNo();
     scheduleMgr.lottery();
 };
