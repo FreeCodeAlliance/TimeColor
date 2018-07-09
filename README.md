@@ -8,7 +8,7 @@
 | /masters/checkList | | [{account:xx, password:xx, disktype:xx, date:xx, remark:xx}] | 获取审核列表 | 
 | /masters/login | account , password | {account:xx, token:xx} | 管理员登录 |
 | /masters/getUsers | starLine, count 或 null | [{account:x, disktype:x, quota:x}, {account:xx, disktype:xx, quota:xx}, ...] | 获取用户列表,其中startLine和count可以不发送 默认获取服务器设置的最大数量 |
-| /index/getInfo | | {account:xx, disktype:xx, quota:xx, token:xx} 或 {account:xx, token:xx} | 登录者自己的信息 |
+| /index/getInfo | | {account:xx, disktype:xx, quota:xx, token:xx, value:xx} 或 {account:xx, token:xx} | 登录者自己的信息, 其中value是玩家今日输赢 |
 | /index/lotteryState | | {time:xxx, state:x, no:"xxxx"} | 获取开奖状态：time剩余时间（单位是秒） state开奖状态 1下注阶段 2锁盘阶段 3停止开奖 no开奖期号 |
 | /index/lotteryConfig | | {interval:xx, lock:xx, times:[[9, 11], [13, 21]]} | 获取服务器开奖的配置：interval开奖间隔时间 lock每次开奖的锁盘时间 times开奖的区间时间 单位是分 |
 | /index/lotteryRes | no | [1, 2, 3, 4, 5] | 获取开奖结果：数组顺序是 万 千 百 十 个   no是开奖期号 如果不加期号默认是当前开奖的期号 |

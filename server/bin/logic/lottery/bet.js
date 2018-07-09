@@ -127,16 +127,19 @@ Bet.prototype.settle = function() {
         for (var uid in bets) {
             var bet = bets[uid];
             var gain = 0;
+            var betNum = 0;
             tc.gf.forBetFieldsEx((idx, num, field) => {
                 if(result[idx] == num) {
+                    betNum += bet[idx][num];
                     gain += bet[idx][num] * self.odds[idx][num];
                 }
             }, (idx, field) => {
                 if(idx == sizeRes || idx == comRes) {
+                    betNum += bet[idx];
                     gain += self.odds[idx] * bet[idx];
                 }
             });
-            gains.push({u:uid, g:gain});
+            gains.push({u:uid, g:gain, r:gain - betNum});
         }
 
         // 刷新数据库
@@ -145,7 +148,7 @@ Bet.prototype.settle = function() {
             if(d) {
                 userSql.addUserQuota(d.u, d.g, (err, rows) => {
                     if(!err) {
-                        lotterySql.updateGain(issue, d.u, d.g, (err, row) => {
+                        lotterySql.updateGain(issue, d.u, d.g, d.r, (err, row) => {
                             settleSql(idx + 1);
                         });
                     } else {

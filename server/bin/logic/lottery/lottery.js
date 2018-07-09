@@ -211,6 +211,14 @@ Lottery.prototype.getLotteryRes = function(req, res){
     if(issue == undefined) {
         issue = this.getNO();
     }
+
+    // 用户不能提前知道开奖结果
+    var type = req.payload.type;
+    if(type == 'users' && issue == this.getNO()) {
+        tc.gf.send(res, tc.errorCode.lottery_none);
+        return ;
+    }
+
     var result = this.lotteryRes[issue];
     if (result) {
         tc.gf.send(res, null, result);

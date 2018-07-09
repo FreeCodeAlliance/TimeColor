@@ -1,4 +1,5 @@
 // 开奖的数据库操作
+var util = require('util');
 var mysql = require('../../db/mysql');
 
 var lotterySql = module.exports;
@@ -45,46 +46,6 @@ lotterySql.getLotteryResult = (issue, callback) => {
         }
     });
 };
-
-// 用户下注
-// lotterySql.bet = (issue, uid, moneyArray, callback) => {
-//     mysql.query({
-//         sql:`SELECT * FROM bet WHERE issue = ${issue} AND uid = ${uid}`,
-//         func:(err, rows) => {
-//             if (err) {
-//                 callback(err)
-//             } else {
-//                 var fields = tc.BET_FIELDS;
-//                 if (rows.length == 0) {
-//                     var sqlfields = [];
-//                     var marks = [];
-//                     var args = [issue, uid];
-//                     for(var i=0, len = fields.length; i < len; i++) {
-//                         var field = fields[i];
-//                         sqlfields.push(fields[i]);
-//                         marks.push('?');
-//                         args.push(moneyArray[i]);
-//                     }
-//                     var sqlStr = `INSERT INTO bet(issue, uid, ${sqlfields.join(' ,')}) VALUES(?, ?, ${marks.join(' ,')})`;
-//                     mysql.query({sql:sqlStr, args:args, func:callback});
-//                 } else {
-//                     var row = rows[0];
-//                     var args = [];
-//                     var sqlStr = 'UPDATE bet SET ';
-//                     var sqlfields = [];
-//                     for(var i=0, len = fields.length; i < len; i++) {
-//                         var field = fields[i];
-//                         sqlfields.push(`${field}=?`);
-//                         args.push(row[field] + moneyArray[i]);
-//                     }
-//                     sqlStr += sqlfields.join(',');
-//                     sqlStr += ` WHERE issue = ${issue} AND uid = ${uid}`;
-//                     mysql.query({sql:sqlStr, args:args, func:callback});
-//                 }
-//             }
-//         }
-//     });
-// };
 
 // 获取数据库中未结算的下注情况
 lotterySql.getBetRows = (callback) => {
@@ -135,9 +96,9 @@ lotterySql.bet = (issue, uid, bet, callback) => {
 };
 
 // 刷新下注的获利
-lotterySql.updateGain = (issue, uid, gain, callback) => {
+lotterySql.updateGain = (issue, uid, gain, res, callback) => {
     mysql.query({
-        sql:`UPDATE bet SET gain = ${gain} WHERE issue = ${issue} AND uid = ${uid}`,
+        sql:`UPDATE bet SET gain = ${gain}, res = ${res} WHERE issue = ${issue} AND uid = ${uid}`,
         func:callback
     });
 };
@@ -155,3 +116,32 @@ lotterySql.getBetGain = (issue, uid, callback) => {
         }
     });
 };
+
+// 获取玩家的今日输赢
+lotterySql.getUserRes = (uid, callback) => {
+    var date =  new Date();
+    var year = date.getFullYear();
+    var month = date.getMonth() + 1;
+    var day = date.getDate();
+    var minIssue = util.format("%d%s%s000", year, tc.gf.prefixInteger(month), tc.gf.prefixInteger(day));
+    var maxIssue = util.format("%d%s%s999", year, tc.gf.prefixInteger(month), tc.gf.prefixInteger(day));
+    mysql.query({
+        sql: `SELECT * FROM bet WHERE issue > ${minIssue} AND issue < ${maxIssue} AND uid = ${uid} AND gain >= 0`,
+        func:(err, rows) => {
+            if(err) {
+                callback(0);
+            } else {
+                if(rows.length > 0) {
+                    var sum = 0;
+                    for(var idx in rows) {
+                        var row = rows[idx];
+                        sum += row.res;
+                    }
+                    callback(sum);
+                } else {
+                    callback(0);
+                }
+            }
+        }
+    });
+}
