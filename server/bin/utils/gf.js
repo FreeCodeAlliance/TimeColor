@@ -21,6 +21,19 @@ gf.getCurTimeFormat = (date) => {
     return sdTime.format(date ? date : new Date(), 'YYYY-MM-DD HH:mm:ss');
 };
 
+// 获取当前时间
+gf.getCurTimeJson = () => {
+    var date = new Date();
+    return {
+        year:date.getFullYear(),
+        month:date.getMonth() + 1,
+        day:date.getDate(),
+        hour:date.getHours(),
+        min:date.getMinutes(),
+        sec:date.getSeconds()
+    };
+};
+
 // 将格式装换成时间戳
 gf.toTime = (str) => {
     return new Date(str).getTime();

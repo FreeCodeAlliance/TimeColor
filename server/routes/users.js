@@ -32,4 +32,9 @@ router.post('/bet', (req, res) => {
     bet.execute(req, res);
 });
 
+// 下注记录
+router.get('/betlog', (req, res) => {
+
+});
+
 module.exports = router;

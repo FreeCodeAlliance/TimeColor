@@ -237,4 +237,21 @@ Lottery.prototype.getLotteryRes = function(req, res){
     }
 };
 
+// 获取今日开奖结果
+Lottery.prototype.getTodayRes = function(req, res) {
+    var self = this;
+    lotterySql.getTodayResult(self.getNO(), (err, rows) => {
+        if(err) {
+            tc.gf.send(res, tc.errorCode.query_fail);
+        } else {
+            var array = [];
+            for(var i in rows) {
+                var row = rows[i];
+                array.push({no:row.issue, res:tc.gf.stringToIntArray(row.result)});
+            }
+            tc.gf.send(res, null, array);
+        }
+    });
+};
+
 module.exports = new Lottery();

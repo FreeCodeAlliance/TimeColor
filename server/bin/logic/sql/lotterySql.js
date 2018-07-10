@@ -47,6 +47,22 @@ lotterySql.getLotteryResult = (issue, callback) => {
     });
 };
 
+// 获取今日开奖结果
+lotterySql.getTodayResult = (issue, callback) => {
+    var json = tc.gf.getCurTimeJson();
+    var minIssue = util.format("%d%s%s000", json.year, tc.gf.prefixInteger(json.month), tc.gf.prefixInteger(json.day));
+    mysql.query({
+        sql: `SELECT * FROM lottery WHERE issue > ${minIssue} AND issue < ${issue}`,
+        func:(err, rows) => {
+            if(err) {
+                callback(err);
+            } else {
+                callback(err, rows);
+            }
+        }
+    });
+};
+
 // 获取数据库中未结算的下注情况
 lotterySql.getBetRows = (callback) => {
     mysql.query({

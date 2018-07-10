@@ -28,4 +28,9 @@ router.get('/lotteryOdds', (req, res) => {
     tc.gf.send(res, null, tc.gf.initBetArray(tc.ODDS));
 });
 
+// 获取今日的开奖结果
+router.get('/todayRes', (req, res) => {
+    lottery.getTodayRes(req, res);
+});
+
 module.exports = router;
