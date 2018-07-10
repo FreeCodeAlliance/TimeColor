@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import "./index.less"
 import { TreeSelect, Button, message } from 'antd';
-import {fetchLotteryStatus, fetchLotterResult} from  '../../../actions/lottery'
+import {fetchLotteryStatus, fetchLotteryResult} from  '../../../actions/lottery'
 import {modifyResult} from  '../../../actions/master'
 import {format} from  '../../../component/utils'
 import {connect} from "react-redux";
@@ -19,7 +19,6 @@ class MasterSetting extends Component {
       this.loopHanle = undefined;
       this.leftTimeValue = -1
   }
-
 
   componentWillMount() {
     const { dispatch } = this.props;
@@ -57,10 +56,8 @@ class MasterSetting extends Component {
   }
 
   syncOpenNumber() {
-    let result = "隨機";
     const { dispatch } = this.props;
-    dispatch(fetchLotterResult())
-    return result
+    dispatch(fetchLotteryResult())
   }
 
   onChange = (key, value) => {
@@ -120,7 +117,6 @@ class MasterSetting extends Component {
     }
     render() {
       const {lotteryResult, status} = this.props;
-      console.log(status,LotteryState[status.state]);
         //let floatView = `floatView-${tab}`;
         return (
             <div className="masterSetting">

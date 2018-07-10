@@ -19,17 +19,35 @@ export function fetchLotteryStatus() {
   }
 }
 
-export function fetchLotterResult() {
+export function fetchLotteryResult() {
   return {
     [CALL_API]: {
       types: [
-        LotteryTypes.REQUEST_FETCH_lOTTERY_RESULT,
-        LotteryTypes.RECEIVE_FETCH_lOTTERY_RESULT_SUCCESS,
+        LotteryTypes.REQUEST_FETCH_LOTTERY_RESULT,
+        LotteryTypes.RECEIVE_FETCH_LOTTERY_RESULT_SUCCESS,
         Types.RECEIVE_API_FAILURE,
       ],
       url: '/index/lotteryRes',
       method: 'GET',
       isRequireAuth: true,
+    },
+  };
+}
+
+export function bet(data) {
+  return {
+    [CALL_API]: {
+      types: [
+        LotteryTypes.REQUEST_BET_lOTTERY_RESULT,
+        LotteryTypes.RECEIVE_BET_lOTTERY_RESULT_SUCCESS,
+        Types.RECEIVE_API_FAILURE,
+      ],
+      url: '/users/bet',
+      method: 'POST',
+      isRequireAuth: true,
+      body: {
+        data
+      }
     },
   };
 }
