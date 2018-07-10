@@ -64,6 +64,7 @@ scheduleMgr.lottery = ()=> {
     addScheduleJobs(lotteryJobs, () => {
         bet.settle();           // 下注结算
         if (scheduleMgr.isLotteryTime()) {
+            console.log('lotteryJobs');
             lottery.execute();
         }
     });
@@ -71,6 +72,7 @@ scheduleMgr.lottery = ()=> {
     // 锁定定时触发
     addScheduleJobs(lockJobs, () => {
         if(lottery.state == tc.lotteryState.bet) {
+            console.log('lockJobs');
             lottery.lock();
         }
     });
@@ -81,6 +83,7 @@ scheduleMgr.lottery = ()=> {
             lottery.refreshLotteryNo();
             lottery.count = 1;
         } else {
+            console.log('stopJobs');
             lottery.stop();
         }
     });
@@ -91,7 +94,7 @@ scheduleMgr.isLotteryTime = () => {
     var date =  new Date();
     var hour = date.getHours();
     var min = date.getMinutes();
-    for(var i, len = tc.lotteryTimes.length; i < len; i++) {
+    for(var i = 0, len = tc.lotteryTimes.length; i < len; i++) {
         var interval = tc.lotteryTimes[i];
         if(hour * 60 + min >= interval[0] * 60 + tc.lotteryMin && hour * 60 + min < interval[1] * 60 + tc.lotteryMin) {
             return true;

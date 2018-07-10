@@ -163,15 +163,15 @@ Bet.prototype.settle = function() {
 };
 
 // 循环下注的json数据
-Bet.prototype.forBetJson = (btnJsons, callback) => {
+Bet.prototype.forBetJson = function(btnJsons, callback) {
     for (var field in btnJsons) {
         var idx = tc.BET_FIELDS_IDX[field];
-        if(i < 5) {
-            for (var j in btnJsons[i]) {
-                callback(idx, parseInt(j), btnJsons[i][j]);
+        if(idx < 5) {
+            for (var j in btnJsons[field]) {
+                callback(idx, parseInt(j), parseInt(btnJsons[field][j]));
             }
         } else {
-            callback(idx, -1, btnJsons[i]);
+            callback(idx, -1, parseInt(btnJsons[field]));
         }
     }
 };
