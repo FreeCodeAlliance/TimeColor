@@ -38,8 +38,8 @@ export function bet(data) {
   return {
     [CALL_API]: {
       types: [
-        LotteryTypes.REQUEST_BET_lOTTERY_RESULT,
-        LotteryTypes.RECEIVE_BET_lOTTERY_RESULT_SUCCESS,
+        LotteryTypes.REQUEST_BET_LOTTERY_RESULT,
+        LotteryTypes.RECEIVE_BET_LOTTERY_RESULT_SUCCESS,
         Types.RECEIVE_API_FAILURE,
       ],
       url: '/users/bet',
@@ -48,6 +48,21 @@ export function bet(data) {
       body: {
         data
       }
+    },
+  };
+}
+//
+export function fetchtodayLotteryRecords() {
+  return {
+    [CALL_API]: {
+      types: [
+        LotteryTypes.REQUEST_TODAY_LOTTERY_RECORDS,
+        LotteryTypes.RECEIVE_TODAY_LOTTERY_RECORDS_SUCCESS,
+        Types.RECEIVE_API_FAILURE,
+      ],
+      url: '/index/todayRes',
+      method: 'GET',
+      isRequireAuth: true
     },
   };
 }

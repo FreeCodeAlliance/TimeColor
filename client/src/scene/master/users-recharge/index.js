@@ -36,7 +36,6 @@ class Rechange extends Component {
   handleChange(key,evt){
     this.inputData[key] = evt.target.value
   }
-
   render() {
     const {userList, loading} = this.props;
     const columns = [{

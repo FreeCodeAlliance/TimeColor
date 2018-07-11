@@ -1,17 +1,15 @@
 import React, { Component } from 'react';
 
-import { Menu, Icon } from 'antd';
+import { Menu, Icon, Modal, Table } from 'antd';
 //import {Link } from 'react-router'
 import "./index.less"
-//require "../../lib/qrcode.min"
 //import { Tabs } from 'antd';
 //const TabPane = Tabs.TabPane;
-import {Modal, Button} from 'antd';
 import {connect} from "react-redux";
-import store from "store"
+//import store from "store"
 import {fetchMe} from "../../actions/user";
-
-const SubMenu = Menu.SubMenu;
+import {fetchtodayLotteryRecords} from "../../actions/lottery";
+//const SubMenu = Menu.SubMenu;
 //var QRCode = require('qrcode.react');
 //QRCode value="http://www.baidu.com" size={256}
 
@@ -45,72 +43,110 @@ class Home extends Component {
     router.push(routerStr);
   };
 
-  handleOk = (e) => {
+  handleModelCancel = (e) => {
     console.log(e);
     this.setState({
       visibleModal: false,
     });
   }
 
-  handleCancel = (e) => {
-    //console.log(e);
-    this.setState({
-      visibleModal: false,
-    });
-  }
+
   renderModal() {
+    const columns = [{
+      title: '期號',
+      dataIndex: 'no',
+    }, {
+      title: '開獎號碼',
+      dataIndex: 'res',
+      render:(_, data, key) =>{
+        return(
+          <span key={key}>{data.res.toString()}</span>
+        );
+      }
+    }, {
+      title: '輸贏',
+      dataIndex: 'result',
+      render:() =>(
+        <span>0</span>
+      )
+    },{
+      title: '下注記錄',
+      dataIndex: 'recharge',
+      render: (_,data,key) => (
+        <span>
+          <a href="javascript:;">查看詳情</a>
+        </span>
+      )
+    }];
+    const {lotteryRecords, loading} = this.props;
     return(
       <Modal
         title="开奖记录"
         visible={this.state.visibleModal}
-        onOk={this.handleOk}
-        onCancel={this.handleCancel}
+        onCancel={this.handleModelCancel}
+        footer={null}
       >
-        <p>详细记录1...</p>
-        <p>详细记录2...</p>
-        <p>详细记录3...</p>
+        <Table
+            key="records"
+            columns={columns}
+            dataSource={lotteryRecords}
+            size="small"
+            loading={loading}
+            pagination={{ pageSize: 8 }}
+        />
       </Modal>
     );
   }
 
+  renderHeadNavigation() {
+    return(
+        <Menu
+            onClick={this.handleClick.bind(this)}
+            selectedKeys={[this.state.current]}
+            mode="horizontal"
+            theme="dark"
+            style={{border: "2px black solid"}}
+        >
+            <Menu.Item key="zhupansi" style={{marginLeft: 0}}>
+                <Icon type="select" />重慶時時彩
+            </Menu.Item>
+            <Menu.Item key="shuangmian">
+                新疆時時彩
+            </Menu.Item>
+          {/*
+              <Menu.Item key="zonghelonghu" >
+                总和龙虎
+            </Menu.Item>
+          */}
+        </Menu>
+    );
+  }
 
-    renderHeadNavigation() {
-      return(
-          <Menu
-              onClick={this.handleClick.bind(this)}
-              selectedKeys={[this.state.current]}
-              mode="horizontal"
-              theme="dark"
-              style={{border: "2px black solid"}}
-          >
-              <Menu.Item key="zhupansi" style={{marginLeft: 0}}>
-                  <Icon type="select" />重慶時時彩
-              </Menu.Item>
-              <Menu.Item key="shuangmian">
-                  新疆時時彩
-              </Menu.Item>
-            {/*
-                <Menu.Item key="zonghelonghu" >
-                  总和龙虎
-              </Menu.Item>
-            */}
-          </Menu>
-      );
+  handleFooterNavigation(evt) {
+    if (evt.key === 'lotteryRecords') {
+       this.setState({visibleModal: !this.state.visibleModal })
+        const {lotteryRecords, dispatch} = this.props;
+       if (lotteryRecords && lotteryRecords.length < 1) {
+         dispatch(fetchtodayLotteryRecords());
+       }
     }
+  }
 
   renderBottomNavigation() {
       return(
         <Menu
+          onClick={this.handleFooterNavigation.bind(this)}
           style={{width:"auto"}}
-          defaultSelectedKeys={['-1']}
           mode="horizontal"
           theme="dark"
+          defaultSelectedKeys={['-1']}
+          selectedKeys={["-1"]}
         >
-          <Menu.Item key="2">
-            <span>開獎結果</span>
+          <Menu.Item key="lotteryRecords">
+            <Icon type="database" />今日開獎記錄
           </Menu.Item>
           <Menu.Item key="3">
-            <span>下注記錄</span>
+            退出
           </Menu.Item>
         </Menu>
       );
@@ -119,7 +155,6 @@ class Home extends Component {
     render() {
     //let data = {id:666 ,name: "shenl", age:23};
     return (
-
         <div className="user">
           <div className="user-header">
             {this.renderHeadNavigation()}
@@ -137,8 +172,9 @@ class Home extends Component {
 }
 
 export default connect((state, ownProps) => {
-    const { user} = state;
+    const { user, lottery} = state;
     return {
-        userInfo: user.userInfo
+        userInfo: user.userInfo,
+        lotteryRecords: lottery.lotteryRecords
     };
 })(Home);
