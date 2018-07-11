@@ -160,4 +160,41 @@ lotterySql.getUserRes = (uid, callback) => {
             }
         }
     });
-}
+};
+
+// 查询开奖结果
+lotterySql.getlotterylog = (uid, minIssue, maxIssue, callback) => {
+    var sqlStr = `SELECT lottery.issue AS issue, lottery.result AS result, lottery.date AS date, bet.res AS win FROM lottery LEFT JOIN bet ON bet.uid = ${uid} AND lottery.issue = bet.issue WHERE lottery.issue > ${minIssue} AND lottery.issue < ${maxIssue} ORDER BY lottery.issue DESC`
+    mysql.query({
+        sql: sqlStr,
+        func:(err, rows) => {
+            if(err) {
+                callback(err);
+            } else {
+                callback(err, rows);
+            }
+        }
+    });
+};
+
+// 获取下注记录
+lotterySql.getbetlog = (uid, issue, callback) => {
+    mysql.query({
+        sql:`SELECT tth, tho, hun, ten, ind, big, small, single, even, res FROM bet WHERE uid = ${uid} AND issue = ${issue}`,
+        func:(err, rows) => {
+            if(err) {
+                callback(err);
+            } else {
+                var row = rows[0];
+                if(row) {
+                    tc.gf.forBetFields((idx, key) => {
+                        row[key] = JSON.parse(row[key]);
+                    }, (idx, key) => {
+                        row[key] = parseInt(row[key]);
+                    });
+                }
+                callback(err, row);
+            }
+        }
+    });
+};

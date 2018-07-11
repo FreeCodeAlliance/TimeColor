@@ -251,4 +251,18 @@ Bet.prototype.betGain = function(req, res) {
     });
 };
 
+// 获取下注记录
+Bet.prototype.getBetlog = function(req, res) {
+    var uid = req.payload && req.payload.userid || req.query.uid;
+    var issue = req.query.issue;
+
+    lotterySql.getbetlog(uid, issue, (err, row) => {
+        if(err) {
+            tc.gf.send(res, tc.errorCode.query_fail);
+        } else {
+            tc.gf.send(res, null, row);
+        }
+    });
+};
+
 module.exports = new Bet();

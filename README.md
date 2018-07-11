@@ -4,6 +4,8 @@
 |---- |------------|------- |-------------|
 | /users/login  |account , password |  {account:xx, disktype:xx, quota:xx, token:xx} | 用户登录 |
 | /users/betgain | issue | {gain:xx} | 获取下注的获利，如果返回-1表示还未结算 |
+| /users/lotterylog | day or 空 | {issue:xx, result:[], date:xx, win:xx} | 获取开奖记录：其中day是获取几天内的开奖记录，没有参数默认三天， 返回期号、开奖结果、开奖的时间、输赢 |
+| /users/betlog | issue | {tth:[], tho:[], hun:[], ten:[], ind:[], big:xx, small:xx, single:xx, even:xx, res:xx} | 获取期号相对应的玩家下注详细信息：万 千 百 十 个 大 小 单 双， res是这一期的输赢结果 |
 | /masters/registerCheck | account, check | {} | 注册审核是否通过，check为true通过，false不通过 |	
 | /masters/checkList | | [{account:xx, password:xx, disktype:xx, date:xx, remark:xx}] | 获取审核列表 | 
 | /masters/login | account , password | {account:xx, token:xx} | 管理员登录 |
@@ -13,6 +15,7 @@
 | /index/lotteryConfig | | {interval:xx, lock:xx, times:[[9, 11], [13, 21]]} | 获取服务器开奖的配置：interval开奖间隔时间 lock每次开奖的锁盘时间 times开奖的区间时间 单位是分 |
 | /index/lotteryRes | no | [1, 2, 3, 4, 5] | 获取开奖结果：数组顺序是 万 千 百 十 个   no是开奖期号 如果不加期号默认是当前开奖的期号 |
 | /index/lotteryOdds | | [[0, 1, 2, 3, 4, 5, 6, 7, 8, 9], ...] |  获取开奖赔率: 数组顺序是 万 千 百 十 个 大 小 单 双，其中前5个元素是一个大小为9的数组对应0-9数字的赔率，后4个元素是大小赔率 |
+| /index/todayRes | | [{no:xx, res:[0, 1, 2, 3, 4]} ...] | 获取今日的开奖结果返回数组 数组里面no是期号，res是结果数组
 
 #### 2. POST 
 | Url | 参数（body）| 返回值（data） | Description |

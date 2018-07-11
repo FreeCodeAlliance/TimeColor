@@ -254,4 +254,27 @@ Lottery.prototype.getTodayRes = function(req, res) {
     });
 };
 
+// 获取开奖记录
+Lottery.prototype.getLotteryLog = function(req, res) {
+    var self = this;
+    var uid = req.payload && req.payload.userid || req.query.uid;
+    var day = req.query.day || 3;
+
+    var date = new Date();
+    var dayDate = new Date(date.getTime() - day * 24 * 3600 * 1000);
+    var minIssue = util.format("%d%s%s000", dayDate.getFullYear(), tc.gf.prefixInteger(dayDate.getMonth() + 1), tc.gf.prefixInteger(dayDate.getDate()));
+    var maxIssue = self.getNO();
+    lotterySql.getlotterylog(uid, minIssue, maxIssue, (err, rows) => {
+        if (err) {
+            tc.gf.send(res, tc.errorCode.query_fail);
+        } else {
+            for(var i in rows) {
+                var row = rows[i];
+                row.result = tc.gf.stringToIntArray(row.result);
+            }
+            tc.gf.send(res, null, rows);
+        }
+    });
+};
+
 module.exports = new Lottery();

@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var register = require('../bin/logic/login/register');
 var login = require('../bin/logic/login/login');
-//var lottery = require('../bin/logic/lottery/lottery');
+var lottery = require('../bin/logic/lottery/lottery');
 var bet = require('../bin/logic/lottery/bet');
 
 /* GET users listing. */
@@ -34,7 +34,12 @@ router.post('/bet', (req, res) => {
 
 // 下注记录
 router.get('/betlog', (req, res) => {
+    bet.getBetlog(req, res);
+});
 
+// 获取开奖记录
+router.get('/lotterylog', (req, res) => {
+    lottery.getLotteryLog(req, res);
 });
 
 module.exports = router;
