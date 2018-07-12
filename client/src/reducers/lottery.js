@@ -5,6 +5,7 @@ export function lottery(state = {
   loading: false,
   status: {state:0 },
   lotteryRecords: [],
+  betLog:{},
   lotteryResult:[]
 }, action = {}) {
   //console.log("lottery reduces", action.type)
@@ -13,6 +14,7 @@ export function lottery(state = {
     case LotteryTypes.REQUEST_FETCH_LOTTERY_RESULT:
     case LotteryTypes.REQUEST_BET_LOTTERY_RESULT:
     case LotteryTypes.REQUEST_TODAY_LOTTERY_RECORDS:
+    case  LotteryTypes.REQUEST_RET_LOG:
       return Object.assign({}, state, {
         loading: true,
       });
@@ -29,10 +31,15 @@ export function lottery(state = {
         lotteryResult: action.response.data
       });
     case LotteryTypes.RECEIVE_TODAY_LOTTERY_RECORDS_SUCCESS:
-      //console.log(" LotteryTypes.RECEIVE_TODAY_LOTTERY_RECORDS_SUCCESS--------------", action.response)
       return Object.assign({}, state, {
         loading: false,
-        lotteryRecords: action.response.data.reverse()
+        lotteryRecords: action.response.data//.reverse()
+      });
+    case LotteryTypes.RECEIVE_RET_LOG_SUCCESS:
+      console.log(" LotteryTypes.RECEIVE_RET_LOG_SUCCESS", action.response)
+      return Object.assign({}, state, {
+        loading: false,
+        betLog: action.response.data//.reverse()
       });
     case LotteryTypes.RECEIVE_BET_LOTTERY_RESULT_SUCCESS:
     case Types.RECEIVE_API_FAILURE:

@@ -9,7 +9,7 @@ export function user(state = {
     userInfo: {},
     searchUser: {},
 }, action = {}) {
-    //console.log("userReduces", action.type, action);
+    console.log("userReduces", action.type, action);
     switch (action.type) {
         case UserTypes.REQUEST_ME:
         case UserTypes.REQUEST_REGISTER:
@@ -33,7 +33,9 @@ export function user(state = {
           return Object.assign({}, state, {
             userInfo: action.response.data
           });
-        case  Types.RECEIVE_API_FAILURE:
+        case UserTypes.RECEIVE_LOGOUT:
+          store.remove('token');
+        case Types.RECEIVE_API_FAILURE:
             return Object.assign({}, state, {
                 loading: false,
             });
