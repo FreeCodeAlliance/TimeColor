@@ -129,13 +129,13 @@ Bet.prototype.settle = function() {
             var gain = 0;
             var betNum = 0;
             tc.gf.forBetFieldsEx((idx, num, field) => {
+                betNum += bet[idx][num];
                 if(result[idx] == num) {
-                    betNum += bet[idx][num];
                     gain += bet[idx][num] * self.odds[idx][num];
                 }
             }, (idx, field) => {
+                betNum += bet[idx];
                 if(idx == sizeRes || idx == comRes) {
-                    betNum += bet[idx];
                     gain += self.odds[idx] * bet[idx];
                 }
             });
