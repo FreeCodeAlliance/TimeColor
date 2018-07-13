@@ -1,15 +1,11 @@
 import React, { Component } from 'react';
-
 import { Menu, Icon, Modal, Table } from 'antd';
-//import {Link } from 'react-router'
 import "./index.less"
-//import { Tabs } from 'antd';
-//const TabPane = Tabs.TabPane;
 import {connect} from "react-redux";
-//import store from "store"
 import {fetchMe, logout} from "../../actions/user";
 import {fetchTodayLotteryRecords, getBetLogByIssue} from "../../actions/lottery";
-//const SubMenu = Menu.SubMenu;
+//const MenuItemGroup = Menu.ItemGroup;
+const SubMenu = Menu.SubMenu;
 //var QRCode = require('qrcode.react');
 //QRCode value="http://www.baidu.com" size={256}
 
@@ -69,7 +65,6 @@ class Home extends Component {
 
   renderBetDetailModal() {
     const {betLog} = this.props;
-    console.log("================================>",betLog )
     const title = `${this.state.queryCurrNo} 期 購買記錄(還沒完善)`;
     return (
       <Modal
@@ -130,7 +125,7 @@ class Home extends Component {
           );
       }
     }];
-    const {lotteryRecords, loading} = this.props;
+    const {lotteryRecords} = this.props;
     return(
       <Modal
         title="开奖记录"
@@ -143,7 +138,7 @@ class Home extends Component {
             columns={columns}
             dataSource={lotteryRecords}
             size="small"
-            loading={loading}
+            loading={false}
             pagination={{ pageSize: 8 }}
         />
       </Modal>
@@ -152,25 +147,26 @@ class Home extends Component {
 
   renderHeadNavigation() {
     return(
-        <Menu
-            onClick={this.handleClick.bind(this)}
-            selectedKeys={[this.state.current]}
-            mode="horizontal"
-            theme="dark"
-            style={{border: "2px black solid"}}
-        >
-            <Menu.Item key="zhupansi" style={{marginLeft: 0}}>
-                <Icon type="select" />重慶時時彩
-            </Menu.Item>
-            <Menu.Item key="shuangmian">
-                新疆時時彩
-            </Menu.Item>
-          {/*
-              <Menu.Item key="zonghelonghu" >
-                总和龙虎
-            </Menu.Item>
-          */}
-        </Menu>
+      <Menu
+        onClick={this.handleFooterNavigation.bind(this)}
+        style={{width:"auto"}}
+        mode="horizontal"
+        theme="dark"
+        defaultSelectedKeys={['-1']}
+        selectedKeys={["-1"]}
+      >
+        <SubMenu title={<span>時時彩</span>}>
+          <Menu.Item key="setting:1">新疆</Menu.Item>
+          <Menu.Item key="setting:2">重慶</Menu.Item>
+        </SubMenu>
+        <Menu.Item key="lotteryRecords">
+          <Icon type="database" />今日開獎
+        </Menu.Item>
+        <Menu.Item key="exit">
+          退出
+        </Menu.Item>
+      </Menu>
+
     );
   }
 
@@ -217,9 +213,6 @@ class Home extends Component {
           </div>
           <div className="user-content">
             {this.props.children}
-          </div>
-          <div className="user-footer">
-            {this.renderBottomNavigation()}
           </div>
           {this.renderModal()}
           {this.renderBetDetailModal()}
