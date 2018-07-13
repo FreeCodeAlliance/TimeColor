@@ -3,6 +3,7 @@ var lottery = require('./lottery');
 var lotterySql = require('../sql/lotterySql');
 var userSql = require('../sql/userSql');
 
+// 初始化
 function Bet() {
     // 当前下注数据
     this.bets = {};
