@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50718
 File Encoding         : 65001
 
-Date: 2018-07-07 18:45:08
+Date: 2018-07-13 20:55:32
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -20,7 +20,7 @@ SET FOREIGN_KEY_CHECKS=0;
 -- ----------------------------
 DROP TABLE IF EXISTS `bet`;
 CREATE TABLE `bet` (
-  `issue` varchar(12) NOT NULL,
+  `issue` varchar(13) NOT NULL,
   `uid` smallint(10) NOT NULL,
   `tth` text NOT NULL COMMENT '万',
   `tho` text NOT NULL COMMENT '千',
@@ -32,6 +32,7 @@ CREATE TABLE `bet` (
   `single` int(20) unsigned zerofill NOT NULL,
   `even` int(20) unsigned zerofill NOT NULL,
   `gain` int(20) NOT NULL DEFAULT '-1' COMMENT '赢取多少金额',
+  `res` int(20) NOT NULL DEFAULT '0' COMMENT '输赢结果',
   PRIMARY KEY (`issue`,`uid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -44,7 +45,7 @@ CREATE TABLE `bet` (
 -- ----------------------------
 DROP TABLE IF EXISTS `lottery`;
 CREATE TABLE `lottery` (
-  `issue` varchar(12) NOT NULL,
+  `issue` varchar(13) NOT NULL,
   `result` varchar(5) NOT NULL COMMENT '万千百十个',
   `date` datetime NOT NULL,
   PRIMARY KEY (`issue`)
@@ -77,15 +78,11 @@ INSERT INTO `masterinfo` VALUES ('1', 'master', 'e10adc3949ba59abbe56e057f20f883
 DROP TABLE IF EXISTS `modifylottery`;
 CREATE TABLE `modifylottery` (
   `masterid` smallint(10) NOT NULL,
-  `issue` varchar(12) NOT NULL,
+  `issue` varchar(13) NOT NULL,
   `date` datetime NOT NULL,
   `modify` varchar(5) NOT NULL COMMENT '万千百十个',
   PRIMARY KEY (`masterid`,`issue`,`date`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of modifylottery
--- ----------------------------
 
 -- ----------------------------
 -- Table structure for `recharge`
@@ -98,10 +95,6 @@ CREATE TABLE `recharge` (
   `masterid` smallint(10) NOT NULL,
   PRIMARY KEY (`userid`,`value`,`date`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of recharge
--- ----------------------------
 
 -- ----------------------------
 -- Table structure for `register`
@@ -132,8 +125,4 @@ CREATE TABLE `userinfo` (
   `quota` int(20) unsigned zerofill NOT NULL DEFAULT '00000000000000000000' COMMENT '额度',
   `date` datetime NOT NULL,
   PRIMARY KEY (`uid`,`account`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of userinfo
--- ----------------------------
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
