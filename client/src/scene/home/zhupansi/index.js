@@ -25,6 +25,27 @@ class Zhupansi extends Component {
   }
 
   componentWillMount() {
+    this.refreshLotteryStatus();
+
+    this.loopHanle = setInterval(()=>{
+      if (this.leftTimeValue > 0) {
+          this.leftTimeValue--;
+          this.formatLeftTime(this.leftTimeValue)
+          this.setState({lotteryLeftTime: this.formatLeftTime(this.leftTimeValue),
+            fpLeftTime: this.formatpyLeftTime( this.leftTimeValue)})
+      } else {
+        this.refreshLotteryStatus();
+      }
+    }, 1000)
+  }
+
+  componentWillUnmount() {
+    if (this.loopHanle) {
+      clearInterval(this.loopHanle)
+    }
+  }
+
+  refreshLotteryStatus(){
     const { dispatch } = this.props;
     dispatch(fetchLotteryStatus()).then((res)=>{
       if (res.response && !res.response.errorCode) {
@@ -35,21 +56,6 @@ class Zhupansi extends Component {
         }
       }
     });
-
-    this.loopHanle = setInterval(()=>{
-      if (this.leftTimeValue > 0) {
-          this.leftTimeValue--;
-          this.formatLeftTime(this.leftTimeValue)
-          this.setState({lotteryLeftTime: this.formatLeftTime(this.leftTimeValue),
-            fpLeftTime: this.formatpyLeftTime( this.leftTimeValue)})
-      }
-    }, 1000)
-  }
-
-  componentWillUnmount() {
-    if (this.loopHanle) {
-      clearInterval(this.loopHanle)
-    }
   }
 
   formatLeftTime(time) {
@@ -141,7 +147,6 @@ class Zhupansi extends Component {
       }
     });
   }
-
 
   getBetCounts() {
     var count = 0;

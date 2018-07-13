@@ -51,8 +51,9 @@ export function bet(data) {
     },
   };
 }
-//
-export function fetchtodayLotteryRecords() {
+
+export function fetchTodayLotteryRecords(day) {
+  day = day || 0;
   return {
     [CALL_API]: {
       types: [
@@ -60,7 +61,22 @@ export function fetchtodayLotteryRecords() {
         LotteryTypes.RECEIVE_TODAY_LOTTERY_RECORDS_SUCCESS,
         Types.RECEIVE_API_FAILURE,
       ],
-      url: '/index/todayRes',
+      url: `/users/lotterylog?day=${day}`,
+      method: 'GET',
+      isRequireAuth: true
+    },
+  };
+}
+
+export function getBetLogByIssue(issue) {
+  return {
+    [CALL_API]: {
+      types: [
+        LotteryTypes.REQUEST_RET_LOG,
+        LotteryTypes.RECEIVE_RET_LOG_SUCCESS,
+        Types.RECEIVE_API_FAILURE,
+      ],
+      url: `/users/betlog?issue=${issue}`,
       method: 'GET',
       isRequireAuth: true
     },

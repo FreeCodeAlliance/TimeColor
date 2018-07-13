@@ -79,6 +79,8 @@ class MasterSetting extends Component {
       if (res.response) {
         if (res.response.error) {
           message.error(res.response.error)
+        } else {
+          message.success("修改成功 嘻嘻");
         }
         this.syncOpenNumber();
       }
