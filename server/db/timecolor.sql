@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50718
 File Encoding         : 65001
 
-Date: 2018-07-13 20:55:33
+Date: 2018-07-15 10:16:23
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -85,6 +85,10 @@ CREATE TABLE `modifylottery` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
+-- Records of modifylottery
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for `recharge`
 -- ----------------------------
 DROP TABLE IF EXISTS `recharge`;
@@ -95,6 +99,10 @@ CREATE TABLE `recharge` (
   `masterid` smallint(10) NOT NULL,
   PRIMARY KEY (`userid`,`value`,`date`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of recharge
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for `register`
@@ -125,4 +133,8 @@ CREATE TABLE `userinfo` (
   `quota` int(20) unsigned zerofill NOT NULL DEFAULT '00000000000000000000' COMMENT '额度',
   `date` datetime NOT NULL,
   PRIMARY KEY (`uid`,`account`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of userinfo
+-- ----------------------------
