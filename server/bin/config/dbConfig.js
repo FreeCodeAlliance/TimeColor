@@ -7,6 +7,7 @@ tc.sqlconfig = {
     user:'root',                                                    // 用户名
     password:'',                                            // 密码
     database:'shenltestdb',                                           // 数据库名
+    //database:'timecolor',                                           // 数据库名
     port:'3307',                                                    // 端口号
 };
 
