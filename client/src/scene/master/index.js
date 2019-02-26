@@ -5,7 +5,7 @@ import {connect} from "react-redux";
 
 class MasterHome extends Component {
     state = {
-        current: 'setting',
+        current: 'gifts',
     };
 
     constructor(props) {
@@ -26,17 +26,19 @@ class MasterHome extends Component {
     renderMaserHeadNavigation() {
         return(
             <Menu
-                style={{backgroundColor: "#6fe6ee"}}
                 onClick={this.handleClick.bind(this)}
                 selectedKeys={[this.state.current]}
+                //defaultSelectedKeys={[this.state.current]}
+                defaultSelectedKeys={['gifts']}
+                defaultOpenKeys={['gifts']}
                 mode="horizontal"
             >
-                <Menu.Item key="recharge" style={{marginLeft: 0}}>
-                    <Icon type="pay-circle-o" />用户充值
+                <Menu.Item key="gifts" >
+                    组织人员统计
                 </Menu.Item>
-                <Menu.Item key="setting" >
-                  <Icon type="setting" /> 开奖设置
-                </Menu.Item>
+                {/*<Menu.Item key="recharge" style={{marginLeft: 0}}>*/}
+                    {/*<Icon type="pay-circle-o" />成员DKP*/}
+                {/*</Menu.Item>*/}
             </Menu>
         );
     }

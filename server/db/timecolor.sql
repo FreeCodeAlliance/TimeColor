@@ -137,3 +137,35 @@ CREATE TABLE `userinfo` (
 -- ----------------------------
 -- Records of userinfo
 -- ----------------------------
+
+DROP TABLE IF EXISTS `giftsuserinfo`;
+CREATE TABLE `giftsuserinfo` (
+  `uid` smallint(10) NOT NULL AUTO_INCREMENT COMMENT '用户id 自动增加',
+  `name` varchar(20) NOT NULL COMMENT '玩家姓名',
+  `fightTimes` int(20) NOT NULL DEFAULT 0 COMMENT '参战次数',
+  PRIMARY KEY (`uid`,`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--INSERT INTO `giftsUserInfo` VALUES ('1', 'No.23旋律军师', 0);
+
+DROP TABLE IF EXISTS `giftsdetail`;
+CREATE TABLE `giftsdetail` (
+  `uid` smallint(10) NOT NULL AUTO_INCREMENT COMMENT '用户id 自动增加',
+  `userId` smallint(10) NOT NULL COMMENT '玩家ID',
+  `name` varchar(20) NOT NULL COMMENT '玩家姓名',
+  `giftQuality` ENUM('传说','英雄','精英') DEFAULT '精英',
+  `date` datetime NOT NULL,
+  PRIMARY KEY (`uid`,`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+--INSERT INTO `giftsdetail` VALUES ('1', 'No.23旋律军师', '传说', '2018-06-23 21:39:15');
+
+
+
+
+
+
+
+
+
+
+

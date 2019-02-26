@@ -1,0 +1,35 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'E:\\bin\\nodejs\\node.exe',
+1 verbose cli   'E:\\bin\\nodejs\\node_modules\\npm\\bin\\npm-cli.js',
+1 verbose cli   'start' ]
+2 info using npm@3.10.10
+3 info using node@v6.14.4
+4 verbose run-script [ 'prestart', 'start', 'poststart' ]
+5 info lifecycle timecolor@0.0.0~prestart: timecolor@0.0.0
+6 silly lifecycle timecolor@0.0.0~prestart: no script for prestart, continuing
+7 info lifecycle timecolor@0.0.0~start: timecolor@0.0.0
+8 verbose lifecycle timecolor@0.0.0~start: unsafe-perm in lifecycle true
+9 verbose lifecycle timecolor@0.0.0~start: PATH: E:\bin\nodejs\node_modules\npm\bin\node-gyp-bin;E:\TimeColor\server\node_modules\.bin;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\iCLS\;C:\Program Files\Intel\Intel(R) Management Engine Components\iCLS\;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\ProgramData\Oracle\Java\javapath;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\GtkSharp\2.12\bin;C:\Program Files\TortoiseSVN\bin;C:\Program Files (x86)\Windows Kits\8.1\Windows Performance Toolkit\;C:\Program Files\Microsoft SQL Server\110\Tools\Binn\;C:\Program Files (x86)\Microsoft SDKs\TypeScript\1.0\;C:\Program Files\Microsoft SQL Server\120\Tools\Binn\;C:\Program Files\Intel\WiFi\bin\;C:\Program Files\Common Files\Intel\WirelessCommon\;E:\bin\Git\cmd;C:\WINDOWS\System32\OpenSSH\;E:\bin\TortoiseGit\bin;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;E:\bin\nodejs\;C:\Program Files\PowerShell\6-preview\preview;E:\bin\python3x\Scripts\;E:\bin\python3x\;C:\Cocos\Cocos2d-x\Cocos2d-x-3.10\templates;C:\Cocos\Cocos2d-x\Cocos2d-x-3.10\tools\cocos2d-console\bin;C:\Users\jiuqu\AppData\Local\Microsoft\WindowsApps;E:\bin\Git\usr\bin;E:\bin\lua;E:\bin\adb-win;E:\bin\watchman;C:\Users\jiuqu\AppData\Roaming\npm;C:\Users\jiuqu\AppData\Roaming\Python\Python37\Scripts;E:\bin\Microsoft VS Code\bin;E:\bin\flutter\bin;E:\bin\flutter\bin\cache\dart-sdk\bin;;E:\bin\miniGameIDE\Huawei FastApp IDE\bin
+10 verbose lifecycle timecolor@0.0.0~start: CWD: E:\TimeColor\server
+11 silly lifecycle timecolor@0.0.0~start: Args: [ '/d /s /c', 'nodemon ./bin/www' ]
+12 verbose stack Error: kill ENOSYS
+12 verbose stack     at Object.exports._errnoException (util.js:1020:11)
+12 verbose stack     at process.kill (internal/process.js:191:18)
+12 verbose stack     at process.listener (E:\bin\nodejs\node_modules\npm\node_modules\npmlog\node_modules\gauge\node_modules\signal-exit\index.js:86:15)
+12 verbose stack     at emitNone (events.js:91:20)
+12 verbose stack     at process.emit (events.js:185:7)
+12 verbose stack     at processEmit (E:\bin\nodejs\node_modules\npm\node_modules\npmlog\node_modules\gauge\node_modules\signal-exit\index.js:146:32)
+12 verbose stack     at processEmit (E:\bin\nodejs\node_modules\npm\node_modules\npm-registry-client\node_modules\npmlog\node_modules\gauge\node_modules\signal-exit\index.js:146:32)
+12 verbose stack     at Signal.wrap.onsignal (internal/process.js:217:44)
+13 verbose cwd E:\TimeColor\server
+14 error Windows_NT 10.0.17134
+15 error argv "E:\\bin\\nodejs\\node.exe" "E:\\bin\\nodejs\\node_modules\\npm\\bin\\npm-cli.js" "start"
+16 error node v6.14.4
+17 error npm  v3.10.10
+18 error code ENOSYS
+19 error errno ENOSYS
+20 error syscall kill
+21 error kill ENOSYS
+22 error If you need help, you may report this error at:
+22 error     <https://github.com/npm/npm/issues>
+23 verbose exit [ 1, true ]

@@ -14,9 +14,8 @@ export default class App extends Component {
 		super(props);
 		this.state = {
 		};
-        document.title = "皇冠国际";
+        document.title = "No.组织管理系统";
 	}
-
 	render() {
 		return(
 			<Provider store={store}>

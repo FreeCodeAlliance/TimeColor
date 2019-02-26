@@ -9,7 +9,6 @@ export function user(state = {
     userInfo: {},
     searchUser: {},
 }, action = {}) {
-    console.log("userReduces", action.type, action);
     switch (action.type) {
         case UserTypes.REQUEST_ME:
         case UserTypes.REQUEST_REGISTER:

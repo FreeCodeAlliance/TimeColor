@@ -5,6 +5,7 @@ import * as Types from '../actions/types';
 import * as userReducer from './user';
 import * as masterReducer from './master';
 import * as lotteryReducer from './lottery'
+import * as giftReducer from './gift'
 
 function keyboard(state = {
   isShow: false,
@@ -66,6 +67,7 @@ const rootReducer = combineReducers({
   windowSize,
   consumeRecords,
 
+  ...giftReducer,
   ...userReducer,
   ...masterReducer,
   ...lotteryReducer

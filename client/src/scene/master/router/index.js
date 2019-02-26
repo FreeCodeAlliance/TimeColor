@@ -1,20 +1,12 @@
 export default {
     childRoutes: [
         {
-            path: 'recharge',
+            path: 'gifts',
             getComponent(location, cb) {
                 require.ensure([], require => {
-                    cb(null, require('../users-recharge').default)
+                    cb(null, require('../users-gifts').default)
                 }, 'master')
             },
-        },
-        {
-            path: 'setting',
-            getComponent(location, cb) {
-                require.ensure([], require => {
-                    cb(null, require('../master-setting').default)
-                }, 'master')
-            },
-        },
+        }
     ]
 }

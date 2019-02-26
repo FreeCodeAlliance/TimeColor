@@ -9,6 +9,7 @@ var token = require('./bin/utils/token');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var mastersRouter = require('./routes/masters');
+var gitfsRouter = require('./routes/gifts');
 
 var app = express();
 
@@ -41,17 +42,19 @@ app.use('/:id', (req, res, next)=> {
 
 // 验证token
 app.use('/:router/:operate', (req, res, next)=> {
-    var operate = req.params.operate;
-    if (operate != 'login' && operate != 'register' && !tc.TEST_MODE) {
-        token.verifyToken(req, res, next, req.params.router);
-    } else {
-        next();
-    }
+    // var operate = req.params.operate;
+    // if (operate != 'login' && operate != 'register' && !tc.TEST_MODE) {
+    //     token.verifyToken(req, res, next, req.params.router);
+    // } else {
+    //     next();
+    // }
+    next();
 });
 
 app.use('/index', indexRouter);
 app.use('/users', usersRouter);
 app.use('/masters', mastersRouter);
+app.use('/gifts', gitfsRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -26,7 +26,7 @@ export const routes = {
               cb(null, require('../scene/home').default)
           },'home')
       },
-      indexRoute: { onEnter: (nextState, replace) => replace('/home/zhupansi') },
+      indexRoute: { onEnter: (nextState, replace) => replace('/home/user') },
       childRoutes: [
           require("../scene/home/router").default,
       ]
@@ -38,7 +38,7 @@ export const routes = {
               cb(null, require('../scene/master').default)
           },'home')
       },
-      indexRoute: { onEnter: (nextState, replace) => replace('/master/setting') },
+      indexRoute: { onEnter: (nextState, replace) => replace('/master/gifts') },
       childRoutes: [
           require("../scene/master/router").default,
       ]

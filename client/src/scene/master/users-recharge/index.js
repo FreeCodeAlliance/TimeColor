@@ -38,11 +38,13 @@ class Rechange extends Component {
   }
   render() {
     const {userList, loading} = this.props;
+    console.warn('userList', userList);
     const columns = [{
-        title: '账户',
+        title: '玩家',
         dataIndex: 'account',
-    }, {
-        title: '余额',
+    },
+    {
+        title: 'DKP',
         dataIndex: 'quota',
     }, {
         title: '充值',
@@ -50,15 +52,15 @@ class Rechange extends Component {
         render: (_,data,key) => (
             <span>
                   <input className="rechargeInput" type="number" onChange={this.handleChange.bind(this, key)}/>
-                  <Popconfirm title="确定充值吗?" onConfirm={() => this.handleRecharge(data, key)}>
-                    <a href="javascript:;">充值</a>
+                  <Popconfirm title="确定加分吗?" onConfirm={() => this.handleRecharge(data, key)}>
+                    <a href="javascript:;">加分</a>
                   </Popconfirm>
             </span>
         )
     }];
     return(
         <div className="users-recharge-root">
-            <h4 style={{textAlign:'center', backgroundColor:"#32CDFF", margin: 0, padding: "10px 0"}}>用户数据</h4>
+            <h4 style={{textAlign:'center', backgroundColor:"#32CDFF", margin: 0, padding: "10px 0"}}>玩家数据</h4>
             <Table columns={columns} dataSource={userList} size="small"  loading={loading} />
         </div>
     )
