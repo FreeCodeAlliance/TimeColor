@@ -116,6 +116,23 @@ export function getUserGifts() {
     };
 }
 
+export function userUpadteName(uid, name) {
+    return {
+        [CALL_API]: {
+            types: [
+                GiftUserTypes.REQUEST_UPDATE_NAME,
+                GiftUserTypes.RECEIVE_UPDATE_NAME_SUCCESS,
+                Types.RECEIVE_API_FAILURE,
+            ],
+            url: `/gifts/userUpdateName`,
+            method: 'post',
+            isRequireAuth: true,
+            body: { uid, name }
+        },
+    };
+}
+
+
 
 
 

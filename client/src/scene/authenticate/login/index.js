@@ -133,7 +133,8 @@ class Login extends Component {
         return (
             <div className="authenticate-login">
                 <div className="authenticate-login-content">
-                    <p1 className="authenticate-login-title">No.组织管理系统</p1>
+                    <p2 className="authenticate-login-title">No.组织系统v1.1</p2>
+                    <img src={require('../../../icon/logo.jpg')}/>
                     <FormInput
                       key="1"
                       type="text"

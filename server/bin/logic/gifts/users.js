@@ -71,3 +71,19 @@ export const userSignIn = (req, res) => {
         }
     });
 }
+
+
+export const userUpdateName = (req, res) => {
+    const { uid, name } = req.body;
+    mysql.query({
+        sql:'UPDATE giftsuserinfo SET name = ? WHERE uid = ?',
+        args:[name, uid],
+        func:(err, rows) => {
+            if(err){
+                tc.gf.send(res, tc.errorCode.query_fail);
+            } else {
+                tc.gf.send(res, null, {result: true});
+            }
+        }
+    });
+}

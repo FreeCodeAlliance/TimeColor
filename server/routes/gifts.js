@@ -5,7 +5,8 @@ import {
     getUsersInfo,
     createUser,
     removeUser,
-    userSignIn
+    userSignIn,
+    userUpdateName,
 } from '../bin/logic/gifts/users'
 
 import { 
@@ -52,6 +53,10 @@ router.post('/removeGiftRecord', (req, res, next) => {
 
 router.post('/userSignIn', (req, res, next) => {
     userSignIn(req, res);
+});
+
+router.post('/userUpdateName', (req, res, next) => {
+    userUpdateName(req, res);
 });
 
 

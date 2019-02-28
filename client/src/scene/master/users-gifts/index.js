@@ -4,7 +4,7 @@ import {Table , Popconfirm, Button, Modal, message} from 'antd';
 import "./index.less"
 import {connect} from "react-redux";
 import {getGiftUserList, createGiftUser, removeGiftRecord,
-    removeGiftUser, getUserGifts} from "../../../actions/gift";
+    removeGiftUser, getUserGifts, userUpadteName} from "../../../actions/gift";
 import AddUserDialog from './addUserDialog'
 import ControlUserDialog from './controlUserDialog'
 
@@ -61,6 +61,19 @@ class UsersGifts extends Component {
             message.success('添加成功');
             dispatch(getGiftUserList())
         });
+    };
+    onUserUpdateName = (uid, name) => {
+        const { dispatch } = this.props;
+        //userInfoDialog: true userUpadteName
+        dispatch(userUpadteName(uid, name)).then((resp) => {
+            if(resp.response && resp.response.errorCode) {
+                message.error(resp.errorCode);
+                return;
+            }
+            message.success('修改成功');
+            dispatch(getGiftUserList())
+        });
+
     };
     onCloseControlDialog = () => {
         this.setState({ userInfoDialog: false});
@@ -204,6 +217,10 @@ class UsersGifts extends Component {
         this.sortUserInfo();
         const columns = [
             {
+                title: 'ID',
+                dataIndex: 'uid',
+            },
+            {
                 title: '玩家',
                 dataIndex: 'name',
             },
@@ -212,12 +229,12 @@ class UsersGifts extends Component {
                 dataIndex: 'fightTimes',
             },
             {
-                title: '得包/出战比',
+                title: '得包率',
                 dataIndex: 'score',
                 render: (_,data,key) => {
                     return (
                         <span key={key}>
-                            {`${data.score}===>`}
+                            {`${data.score}=>`}
                             <a onClick={(e) => { this.showUserGifts(e, data.uid) }}>查看详情</a>
                         </span>
                     )
@@ -265,6 +282,8 @@ class UsersGifts extends Component {
                     onGiveGift={ ()=>{  this.refresh(); this.onCloseControlDialog()}}
                     onDelete={this.onDeleteUser}
                     onUserSign={this.onUserSign}
+                    onUserUpdateName={this.onUserUpdateName}
+                    
                 />
                 {this.renderModal()}
             </div>
