@@ -121,7 +121,7 @@ class ControlUserDialog extends PureComponent {
                     <Button type="primary" onClick={this.onUserUpdateName} disabled={userUpdateName.length <= 0} >玩家改名</Button>
                 </div>
                 <div className="dialog-footer">
-                    <Button type="danger" onClick={this.onDelete}>删除用户</Button>
+                    <Button type="danger" onClick={this.onDelete}>删除用户及其礼包数据</Button>
                 </div>
             </Modal>
         )

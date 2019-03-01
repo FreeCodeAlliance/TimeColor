@@ -7,6 +7,7 @@ import {getGiftUserList, createGiftUser, removeGiftRecord,
     removeGiftUser, getUserGifts, userUpadteName} from "../../../actions/gift";
 import AddUserDialog from './addUserDialog'
 import ControlUserDialog from './controlUserDialog'
+import SearchMention from './searchMention'
 
 const giftScore = {
     "传说": 4,
@@ -91,7 +92,8 @@ class UsersGifts extends Component {
                 return;
             }
             message.success('删除成功');
-            dispatch(getUserGifts())
+            dispatch(getGiftUserList());
+            this.onCloseControlDialog();
         });
     };
     onUserSign = () => {
@@ -103,6 +105,17 @@ class UsersGifts extends Component {
         this.setState({
             userInfo: record,
             userInfoDialog: true
+        });
+    };
+    onSearch = (name) =>{
+        const { usersInfo } = this.props;
+        usersInfo.map((value, key)=>{
+            if (value.name === name) {
+                this.setState({
+                    userInfo: value,
+                    userInfoDialog: true
+                });
+            }
         });
     };
     getUserGiftsById(userId) {
@@ -132,6 +145,7 @@ class UsersGifts extends Component {
         for (let k = 0; k<=usersInfo.length; k++) {
             const user = usersInfo[k];
             if (user) {
+                user.index = k + 1;
                 user.score = (this.getUserGiftsScore(user.uid) / user.fightTimes).toFixed(2);
             }
         }
@@ -150,7 +164,6 @@ class UsersGifts extends Component {
         }
     }
     handleRemoveGiftRecordDetail = (giftRecord) => {
-        console.warn(giftRecord);
         const { dispatch } = this.props;
         dispatch(removeGiftRecord(giftRecord.uid)).then((resp) => {
             if(resp.response && resp.response.errorCode) {
@@ -218,7 +231,14 @@ class UsersGifts extends Component {
         const columns = [
             {
                 title: 'ID',
-                dataIndex: 'uid',
+                dataIndex: 'index',
+                render: (index,data,key) => {
+                    return (
+                        <span key={key}>
+                            {index}
+                        </span>
+                    )
+                }
             },
             {
                 title: '玩家',
@@ -248,9 +268,11 @@ class UsersGifts extends Component {
                         type="primary"
                         icon="usergroup-add"
                         onClick={this.handleCreateUser}
-                    >添加新玩家
+                    >
+                        {`添加新玩家 当前总人数:${usersInfo.length}`}
                     </Button>
                 </div>
+                <SearchMention data={usersInfo} onSelected={this.onSearch}/>
                 {
                     isArray(usersInfo) &&
                     <Table
@@ -282,8 +304,7 @@ class UsersGifts extends Component {
                     onGiveGift={ ()=>{  this.refresh(); this.onCloseControlDialog()}}
                     onDelete={this.onDeleteUser}
                     onUserSign={this.onUserSign}
-                    onUserUpdateName={this.onUserUpdateName}
-                    
+                    onUserUpdateName={this.onUserUpdateName}    
                 />
                 {this.renderModal()}
             </div>
