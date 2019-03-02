@@ -104,7 +104,7 @@ class ControlUserDialog extends PureComponent {
                 <div className='divLine' />
                 <div className='userControlCell'>
                     <p>本周次数</p>
-                    <InputNumber min={-3} max={3} defaultValue={this.state.fightTime} onChange={this.onTimesChange} />
+                    <InputNumber min={-4} max={4} defaultValue={this.state.fightTime} onChange={this.onTimesChange} />
                     <Button type="primary" onClick={this.onUserSign}>参战签到</Button>
                 </div>
                 <div className='divLine' />
