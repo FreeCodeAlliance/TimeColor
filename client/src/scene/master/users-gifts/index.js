@@ -146,10 +146,13 @@ class UsersGifts extends Component {
             const user = usersInfo[k];
             if (user) {
                 user.index = k + 1;
-                user.score = (this.getUserGiftsScore(user.uid) / user.fightTimes).toFixed(2);
+                user.score = user.fightTimes !== 0 ? (this.getUserGiftsScore(user.uid) / user.fightTimes).toFixed(2) : 0
             }
         }
         usersInfo.sort( (o1, o2)=> {
+            if ( o1.score - o2.score === 0) {
+                return o2.fightTimes - o1.fightTimes;
+            }
             return o1.score - o2.score;
         })
     }
@@ -304,7 +307,7 @@ class UsersGifts extends Component {
                     onGiveGift={ ()=>{  this.refresh(); this.onCloseControlDialog()}}
                     onDelete={this.onDeleteUser}
                     onUserSign={this.onUserSign}
-                    onUserUpdateName={this.onUserUpdateName}    
+                    onUserUpdateName={this.onUserUpdateName}
                 />
                 {this.renderModal()}
             </div>
