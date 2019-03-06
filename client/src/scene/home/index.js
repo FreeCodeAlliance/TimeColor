@@ -3,6 +3,8 @@ import { isArray } from 'lodash';
 import {Tabs , Popconfirm, Button, Modal, message} from 'antd';
 import "./index.less"
 import {connect} from "react-redux";
+import GroupViewer from './group';
+
 const TabPane = Tabs.TabPane;
 class Home extends Component {
     constructor(props) {
@@ -28,10 +30,7 @@ class Home extends Component {
                         </div>
                     </TabPane>
                     <TabPane tab="组织战常用阵容" key="2">
-                        <img
-                            width="100%"
-                            src={require('./group/image/group1.jpg')}
-                        />
+                        <GroupViewer />
                     </TabPane>
                 </Tabs>
             </div>
