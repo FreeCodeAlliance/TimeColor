@@ -7,7 +7,7 @@ import { giveGiftUser, userSignIn } from "../../../../actions/gift"
 
 const RadioGroup = Radio.Group;
 
-const giftsDesc = ["传说", "精英", "英雄"];
+const giftsDesc = ["传说", "英雄", "精英",];
 
 class ControlUserDialog extends PureComponent {
     static propTypes = {
