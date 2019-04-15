@@ -154,7 +154,7 @@ CREATE TABLE `giftsdetail` (
   `uid` smallint(10) NOT NULL AUTO_INCREMENT COMMENT '用户id 自动增加',
   `userId` smallint(10) NOT NULL COMMENT '玩家ID',
   `name` varchar(20) NOT NULL COMMENT '玩家姓名',
-  `giftQuality` ENUM('传说','英雄','精英') DEFAULT '精英',
+  `giftQuality` ENUM('传说','英雄','精英', '跨传说', '跨英雄', '跨精英') DEFAULT '精英',
   `date` datetime NOT NULL,
   PRIMARY KEY (`uid`,`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

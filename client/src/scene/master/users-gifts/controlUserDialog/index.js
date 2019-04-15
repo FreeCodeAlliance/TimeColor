@@ -4,10 +4,10 @@ import { InputNumber, Modal, Radio, Button, message, Input, Icon } from 'antd';
 import { connect } from "react-redux";
 import './index.less'
 import { giveGiftUser, userSignIn } from "../../../../actions/gift"
+import {GIFT_DESC} from "../../../../constant/gift";
 
 const RadioGroup = Radio.Group;
-
-const giftsDesc = ["传说", "英雄", "精英",];
+const giftsDesc = GIFT_DESC;
 
 class ControlUserDialog extends PureComponent {
     static propTypes = {
@@ -95,9 +95,12 @@ class ControlUserDialog extends PureComponent {
             >
                 <div className='userControlCell'>
                     <RadioGroup onChange={this.onGiftSelectChange} value={this.state.giftIndex}>
-                        <Radio value={0} className="gift-level1">传说</Radio>
-                        <Radio value={1} className="gift-level2">英雄</Radio>
-                        <Radio value={2} className="gift-level3">精英</Radio>
+                        <Radio value={0} className="gift-level1">{GIFT_DESC[0]}</Radio>
+                        <Radio value={1} className="gift-level2">{GIFT_DESC[1]}</Radio>
+                        <Radio value={2} className="gift-level3">{GIFT_DESC[2]}</Radio>
+                        <Radio value={3} className="gift-level1">{GIFT_DESC[3]}</Radio>
+                        <Radio value={4} className="gift-level2">{GIFT_DESC[4]}</Radio>
+                        <Radio value={5} className="gift-level3">{GIFT_DESC[5]}</Radio>
                     </RadioGroup>
                     <Button type="primary" onClick={this.onGiveGift}>记礼包</Button>
                 </div>

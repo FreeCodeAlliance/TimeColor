@@ -8,17 +8,10 @@ import {getGiftUserList, createGiftUser, removeGiftRecord,
 import AddUserDialog from './addUserDialog'
 import ControlUserDialog from './controlUserDialog'
 import SearchMention from './searchMention'
+import {GIFT_SCORE, GIFT_COLOR} from "../../../constant/gift";
 
-const giftScore = {
-    "传说": 4,
-    "英雄": 3,
-    "精英": 2,
-};
-const giftColor = {
-    "传说": {color: 'gold'},
-    "英雄": {color: 'rebeccapurple'},
-    "精英": {color: 'deepskyblue'},
-};
+const giftScore = GIFT_SCORE
+const giftColor = GIFT_COLOR
 
 class UsersGifts extends Component {
     constructor(props) {

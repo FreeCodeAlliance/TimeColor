@@ -4,17 +4,10 @@ import {Table , Popconfirm, Button, Modal, message} from 'antd';
 import "./index.less"
 import {connect} from "react-redux";
 import {getGiftUserList, getUserGifts} from "../../../actions/gift";
+import {GIFT_COLOR, GIFT_SCORE} from "../../../constant/gift";
 
-const giftScore = {
-    "传说": 4,
-    "英雄": 3,
-    "精英": 2,
-};
-const giftColor = {
-    "传说": {color: 'gold'},
-    "英雄": {color: 'rebeccapurple'},
-    "精英": {color: 'deepskyblue'},
-};
+const giftScore = GIFT_SCORE;
+const giftColor = GIFT_COLOR;
 class Home extends Component {
     constructor(props) {
         super(props);
