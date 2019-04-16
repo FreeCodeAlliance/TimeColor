@@ -26,9 +26,6 @@ export default () => next => (action) => {
           'x-access-token' : store.get('token')
       });
   }
-  console.log("header",headers)
-
-  console.log(JSON.stringify(body))
 
   const withBody = method.toUpperCase() === 'POST' || method.toUpperCase() === 'PUT';
   return fetch(API_ROOT + url, {

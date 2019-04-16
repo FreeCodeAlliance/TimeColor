@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { isArray } from 'lodash';
-import {Table , Popconfirm, Button, Modal, message} from 'antd';
+import {Table ,Modal} from 'antd';
 import "./index.less"
 import {connect} from "react-redux";
 import {getGiftUserList, getUserGifts} from "../../../actions/gift";
@@ -148,6 +148,13 @@ class Home extends Component {
                 }
             }
         ];
+        if (loading) {
+            return (
+                <div className="user-Loading">
+                    <p>Loading...</p>
+                </div>
+            );
+        }
         return(
             <div className="gifts-users">
                 {

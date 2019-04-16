@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { isArray } from 'lodash';
-import {Table , Popconfirm, Button, Modal, message} from 'antd';
+import {Table , Button, Modal, message} from 'antd';
 import "./index.less"
 import {connect} from "react-redux";
 import {getGiftUserList, createGiftUser, removeGiftRecord,
@@ -102,7 +102,7 @@ class UsersGifts extends Component {
     };
     onSearch = (name) =>{
         const { usersInfo } = this.props;
-        usersInfo.map((value, key)=>{
+        usersInfo.map((value)=>{
             if (value.name === name) {
                 this.setState({
                     userInfo: value,
@@ -115,7 +115,7 @@ class UsersGifts extends Component {
       const { gifts } = this.props;
       const userGifts = [];
         if (gifts && gifts.length > 0) {
-            gifts.map((value, key)=>{
+            gifts.map((value)=>{
                 if (value.userId === userId) {
                     const { uid, giftQuality, date} = value;
                     userGifts.push({ uid, giftQuality, date});
@@ -127,9 +127,7 @@ class UsersGifts extends Component {
     getUserGiftsScore(userId) {
         const userGifts = this.getUserGiftsById(userId);
         let score = 0;
-        userGifts.map((v) => {
-            score = score + giftScore[v.giftQuality];
-        });
+        userGifts.map((v) => score = score + giftScore[v.giftQuality]);
         return score;
     };
 
@@ -257,6 +255,13 @@ class UsersGifts extends Component {
                 }
             }
         ];
+        if (loading) {
+            return (
+                <div className="gifts-Loading">
+                    <p>Loading...</p>
+                </div>
+            );
+        }
         return(
             <div className="gifts-users">
                 <div className="gifts-users-head">

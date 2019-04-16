@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import {Menu,Icon } from 'antd';
 import {connect} from "react-redux";
+import './index.less'
 
 class MasterHome extends Component {
     state = {

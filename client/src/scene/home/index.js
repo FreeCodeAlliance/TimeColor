@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { isArray } from 'lodash';
-import {Tabs , Popconfirm, Button, Modal, message} from 'antd';
+import { Tabs } from 'antd';
 import "./index.less"
 import {connect} from "react-redux";
 import GroupViewer from './group';
