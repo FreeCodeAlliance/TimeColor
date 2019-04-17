@@ -36,7 +36,7 @@ export const routes = {
       getComponent(location,cb) {
           require.ensure([], require => {
               cb(null, require('../scene/master').default)
-          },'home')
+          },'master')
       },
       indexRoute: { onEnter: (nextState, replace) => replace('/master/gifts') },
       childRoutes: [
