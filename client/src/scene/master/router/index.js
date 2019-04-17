@@ -5,7 +5,7 @@ export default {
             getComponent(location, cb) {
                 require.ensure([], require => {
                     cb(null, require('../users-gifts').default)
-                }, 'master')
+                }, 'master-gifts')
             },
         }
     ]
