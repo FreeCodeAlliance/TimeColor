@@ -147,7 +147,7 @@ class UsersGifts extends Component {
             return o1.score - o2.score;
         })
     }
-    showUserGifts(evt, userId) {
+    showUserGifts = (evt, userId) => {
         const currGiftsInfo = this.getUserGiftsById(userId);
         this.setState({personalDetailModel: true, currGiftsInfo});
         let e = evt || window.event;
@@ -306,6 +306,7 @@ class UsersGifts extends Component {
                     onDelete={this.onDeleteUser}
                     onUserSign={this.onUserSign}
                     onUserUpdateName={this.onUserUpdateName}
+                    onFindGits={this.showUserGifts}
                 />
                 {this.renderModal()}
             </div>

@@ -21,6 +21,7 @@ class ControlUserDialog extends PureComponent {
         onDelete: PropTypes.func,
         onUserSign: PropTypes.func,
         onUserUpdateName: PropTypes.func,
+        onFindGits: PropTypes.func,
     };
     constructor(props) {
         super(props);
@@ -82,6 +83,12 @@ class ControlUserDialog extends PureComponent {
     onChangeUserName = (e) => {
         this.setState({ userUpdateName: e.target.value });
     };
+    findGifts = (e) => {
+       const { onFindGits, userInfo } = this.props;
+       if (onFindGits) {
+        onFindGits(e, userInfo.uid)
+       }
+    }
     renderRecordGift = () => {
         return (
             <div className='userControlCell'>
@@ -136,6 +143,7 @@ class ControlUserDialog extends PureComponent {
                 maskClosable
                 onCancel={onCancel}
             >
+                <div className='findGiftDetail' onClick={(e) => this.findGifts(e) }>  查看礼包记录</div>
                 <Tabs
                     defaultActiveKey="1"
                     tabPosition="left"
