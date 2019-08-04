@@ -24,13 +24,11 @@ export const giveUserGift = (req, res) => {
 }
 
 /*
- 删除用户 post
- name:
- fightTimes: 
+ 删除礼包 post
+ body: id 
 */
 export const removeGiftRecord = (req, res) => {
     const { id } = req.body;
-    console.warn('func--------->', id);
     mysql.query({
         sql:`DELETE FROM giftsdetail WHERE uid="${id}"`,
         func:(err, rows) => {
@@ -59,4 +57,23 @@ export const getUerGifts = (req, res) => {
             }
         }
     })
+}
+
+/*
+ 删除用户所有礼包 post
+ body: id 
+*/
+export const removeAllGiftsRecord = (req, res) => {
+    const { id } = req.body;
+    mysql.query({
+        sql:`DELETE FROM giftsdetail WHERE userId="${id}"`,
+        func:(err, rows) => {
+            if(err == null && rows.affectedRows > 0)
+            {
+                tc.gf.send(res);
+            } else {
+                tc.gf.send(res, tc.errorCode.query_fail);
+            }
+        },
+    });
 }

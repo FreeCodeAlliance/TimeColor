@@ -13,6 +13,7 @@ import {
     giveUserGift,
     removeGiftRecord,
     getUerGifts,
+    removeAllGiftsRecord,
 } from '../bin/logic/gifts/userGifts'
 
 router.get('/users', (req, res, next) => {
@@ -32,15 +33,16 @@ router.post('/addUsers', (req, res, next) => {
 
 router.post('/removeUser', (req, res, next) => {
     removeUser(req, res);
+    removeAllGiftsRecord(req, res)
 });
 
-router.post('/giveUserGift', (req, res, next) => {
-    removeUser(req, res);
-});
+// router.post('/giveUserGift', (req, res, next) => {
+//     removeUser(req, res);
+// });
 
-router.post('/removeUserGift', (req, res, next) => {
-    removeUser(req, res);
-});
+// router.post('/removeUserGift', (req, res, next) => {
+//     removeUser(req, res);
+// });
 
 //给用户发礼包
 router.post('/addGift', (req, res, next) => {
