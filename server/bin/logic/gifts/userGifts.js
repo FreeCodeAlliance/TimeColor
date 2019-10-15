@@ -34,9 +34,10 @@ export const removeGiftRecord = (req, res) => {
         func:(err, rows) => {
             if(err == null && rows.affectedRows > 0)
             {
-                tc.gf.send(res);
+                console.log(res);
+		tc.gf.send(res);
             } else {
-                tc.gf.send(res, tc.errorCode.query_fail);
+                return  tc.gf.send(res, tc.errorCode.query_fail);
             }
         },
     });

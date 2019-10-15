@@ -46,9 +46,9 @@ export const removeUser = (req, res) => {
         sql:`DELETE FROM giftsuserinfo WHERE uid="${id}"`,
         func:(err, rows) => {
             if(err){
-                tc.gf.send(res, tc.errorCode.query_fail);
+                return tc.gf.send(res, tc.errorCode.query_fail);
             } else {
-                tc.gf.send(res, null, {uid:rows.insertId});
+                return tc.gf.send(res, null, {uid:rows.insertId});
             }
         },
     });
